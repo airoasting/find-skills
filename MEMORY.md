@@ -10,6 +10,15 @@
 
 ## 결정 기록
 
+### 2026-10-03. `video`(동영상 제작) 카테고리 신설, 7개 입고·7개 제거
+
+- **무엇**: 실행력 제고 메타의 디자인 바로 다음에 `video`(🎬 동영상 제작) 카테고리를 만들고 HyperFrames, Video Use, OpenMontage, Open Edit, Higgsfield Skills, Remotion Skills, Violin 7개를 넣었다. 150 유지를 위해 서드파티 별점 최하위 7개(Codex Insane Search, AI Co-Writing System, Design Research, ultimate-seo-geo, aeo.js, Awesome Novel Studio, Awesome Ad Video Prompts)를 뺐다. 세부 카테고리는 13개에서 14개가 됐다.
+- **왜**: 영상 편집·자막·더빙을 에이전트에 맡기는 스킬이 별점 1천 이상 규모로 쌓였고, 기존 디자인 카테고리(UI·슬라이드)로는 담을 수 없었다.
+- **컷 기준**: 사용자 결정으로 ★1,000 미만은 제외했다. 그래서 3축 평균 4.0이던 HeyGen Skills(461★, 공식 조직)와 3.7이던 claude-youtube(413★)는 빠졌다. Remotion Skills는 React 프로젝트를 전제하는 개발자 지향이라 게이트 3 경계였지만, 공식 저장소이고 평균 4.0이라 넣었다.
+- **제외 근거**: OpenCreator는 Codex 기반 데스크톱 앱, brag·guizang-product-video는 코드 저장소 전제, claude-code-video-toolkit은 클라우드 GPU 직접 구성 필요, drama-skills는 중국 숏드라마 실무자용, Premiere MCP 계열은 게이트 4로 탈락했다.
+- **에디터픽**: HyperFrames·Video Use(평균 4.7)는 사용자 승인을 받아 `editors_pick: true`로 달았다. 에디터픽은 26개에서 28개가 됐다.
+- **남은 일**: Awesome Ad Video Prompts는 영상 광고 프롬프트라 video와 맞았지만 별점 규칙대로 제거했다. 1천 미만 공식 저장소(HeyGen Skills)를 예외로 받을지는 미결이다.
+
 ### 2026-07-17. 운영 문서 체계 재편
 
 - **무엇**: `AGENTS.md`(운영 기준 정본)와 `MEMORY.md`(이 문서)를 신설하고, `CLAUDE.md`는 `AGENTS.md`로 안내하는 리다이렉트로 전환했다.

@@ -13,6 +13,7 @@ const CAT_RULES = [
   { cat: 'korea',      kws: ['korea', 'korean', '한국', 'hangul', 'hwp', 'kakao', 'toss', 'srt', 'ktx', 'naver', 'kbo', 'kr-', 'k-skill', 'legalize'] },
   { cat: 'finance',    kws: ['finance', 'trading', 'quant', 'stock', 'invest', 'bank', 'equity', 'portfolio', 'crypto', 'forex'] },
   { cat: 'research',   kws: ['research', 'paper', 'academic', 'notebooklm', 'knowledge', 'graph', 'scientific', 'deep-research'] },
+  { cat: 'video',      kws: ['video', 'remotion', 'hyperframes', 'ffmpeg', 'subtitle', 'dubbing', 'motion graphic'] },
   { cat: 'design',     kws: ['design', ' ui', 'ux', 'slide', 'presentation', 'novel', 'writing', 'humaniz', 'creative'] },
   { cat: 'automation', kws: ['playwright', 'browser', 'automation', 'ccpm', 'spec', 'harness', 'jira', 'slack', 'lark'] },
   { cat: 'legal',      kws: ['legal', 'compliance', 'contract', 'nda', 'law'] },
@@ -45,6 +46,7 @@ const CAT_ICON_PATHS = {
   // 메타: 실행력 제고
   research:   '<path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="7" rx="0.5"/><rect x="12" y="7" width="3" height="11" rx="0.5"/><rect x="17" y="4" width="3" height="14" rx="0.5"/>',
   design:     '<circle cx="13.5" cy="6.5" r=".9" fill="currentColor" stroke="none"/><circle cx="17.5" cy="10.5" r=".9" fill="currentColor" stroke="none"/><circle cx="8.5" cy="7.5" r=".9" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12.5" r=".9" fill="currentColor" stroke="none"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/>',
+  video:      '<path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
   writing:    '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
   legal:      '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>',
   career:     '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
