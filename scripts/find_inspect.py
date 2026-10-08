@@ -85,10 +85,16 @@ def front_name(text):
     return m.group(1).strip() if m else ""
 
 
-# skills CLI는 표준 위치(루트, skills/*, .claude/skills/*)에 스킬이 하나라도 있으면 거기서 멈추고,
-# 하나도 없을 때만 하위 폴더 전체를 뒤진다. 그래서 표준 위치에 다른 스킬이 있는 저장소에서
-# 표준 위치 밖의 스킬을 설치하려면 --full-depth가 필요하다. (chrisryugj/kordoc에서 확인)
-STANDARD = re.compile(r"^(SKILL\.md|skills/[^/]+/SKILL\.md|\.claude/skills/[^/]+/SKILL\.md)$")
+# skills CLI가 기본으로 뒤지는 "컨테이너" 폴더. 루트, skills/(와 .curated 등), data/skills, agent/skills,
+# 그리고 에이전트별 숨김 폴더(.claude/skills, .agents/skills, .posit/assistant/skills 등)다. 컨테이너 안은
+# 세 단계(skills/<이름>, skills/<분류>/<이름>, skills/<분류>/<분류>/<이름>)까지 내려간다.
+# 출처: vercel-labs/skills README "Skill Discovery" (2026-10 확인)
+# 컨테이너에 스킬이 하나라도 있으면 CLI는 거기서 멈추고, 하나도 없을 때만 저장소 전체를 뒤진다.
+# 그래서 컨테이너에 다른 스킬이 있는 저장소에서 컨테이너 밖의 스킬을 설치하려면 --full-depth가 필요하다.
+# (chrisryugj/kordoc에서 확인: .claude/skills/gongmunseo가 있어 plugins/kordoc/skills/kordoc를 못 찾음)
+CONTAINER = (r"(skills|skills/\.(curated|experimental|system)|data/skills|agent/skills"
+             r"|\.[\w-]+/skills|\.[\w-]+/[\w-]+/skills)")
+STANDARD = re.compile(rf"^(SKILL\.md|{CONTAINER}/([^/]+/){{1,3}}SKILL\.md)$")
 
 
 def install_hint(repo, ref, files, path, name):

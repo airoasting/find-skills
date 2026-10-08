@@ -45,5 +45,25 @@ for p in bundled:
     fail += not mod.BUNDLED.search(p)
 for p in own:
     fail += bool(mod.BUNDLED.search(p))
-print("번들 판정:", "OK" if fail == 0 else "확인 필요")
+# skills CLI 기본 탐색 위치 판정 (True면 --full-depth 없이 찾는다)
+STD = {
+    "SKILL.md": True,
+    "skills/pdf/SKILL.md": True,
+    "skills/legal/contract/SKILL.md": True,              # 분류 1단계
+    "skills/a/b/c/SKILL.md": True,                       # 3단계까지
+    ".claude/skills/gongmunseo/SKILL.md": True,
+    ".agents/skills/x/SKILL.md": True,
+    ".posit/assistant/skills/x/SKILL.md": True,
+    "skills/.curated/x/SKILL.md": True,
+    "plugins/kordoc/skills/kordoc/SKILL.md": False,      # kordoc 실사례
+    "pm-execution/skills/summarize-meeting/SKILL.md": False,
+    "rhwp-edit/SKILL.md": False,
+    "skills/a/b/c/d/SKILL.md": False,                    # 4단계는 밖
+}
+for p, want in STD.items():
+    got = bool(mod.STANDARD.match(p))
+    fail += got != want
+    if got != want:
+        print("BAD 표준 위치 판정", p, "기대", want, "결과", got)
+print("번들·표준 위치 판정:", "OK" if fail == 0 else "확인 필요")
 sys.exit(1 if fail else 0)

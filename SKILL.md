@@ -83,7 +83,7 @@ ls ~/.claude/skills ~/.agents/skills .claude/skills 2>/dev/null
 
 ## 3단계. AI Roasting 스킬 라이브러리에서 찾는다
 
-비즈니스 리더용으로 엄선한 카탈로그다. 14개 카테고리로 나뉘고, 카드마다 한국어 설명과 태그가 있다.
+비즈니스 리더용으로 엄선한 카탈로그다. 용도별 카테고리로 나뉘고, 카드마다 한국어 설명과 태그가 있다.
 
 ```bash
 python3 scripts/find_library.py               # 전체 (약 40KB)
