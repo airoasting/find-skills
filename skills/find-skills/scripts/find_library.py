@@ -18,7 +18,9 @@ import re
 import urllib.request
 
 URL = "https://skill.airoasting.com/skills.json"
-LOCAL = pathlib.Path(__file__).resolve().parent.parent / "docs" / "skills.json"
+# 카탈로그 저장소(airoasting/find-skills) 안에서 돌 때만 있는 로컬 사본: skills/find-skills/scripts → 저장소 루트
+_HERE = pathlib.Path(__file__).resolve()
+LOCAL = _HERE.parents[3] / "docs" / "skills.json" if len(_HERE.parents) > 3 else _HERE.parent / "skills.json"
 
 
 def load(source):

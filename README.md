@@ -63,18 +63,25 @@ vercel-labs의 [find-skills](https://github.com/vercel-labs/skills/blob/main/ski
 
 ## 설치
 
+**Claude Code 플러그인.** Claude Code 입력창에 차례로 넣습니다.
+
+```
+/plugin marketplace add airoasting/skills
+/plugin install find-skills@airoasting
+```
+
+**skills CLI (Claude Code, Codex 등).**
+
 ```bash
 npx skills add airoasting/find-skills -g -a claude-code
 ```
 
-Codex에서 쓰려면 `-a codex`로 바꿉니다. 설치한 뒤 새 세션부터 스킬이 잡힙니다.
+Codex에서 쓰려면 `-a codex`로 바꿉니다. 어느 쪽이든 설치한 뒤 새 세션부터 스킬이 잡힙니다. 설치되는 것은 `skills/find-skills/` 폴더(약 50KB)뿐이고, 같은 저장소의 웹 사이트 파일은 따라가지 않습니다.
 
 **필요한 것**
 - Python 3 (표준 라이브러리만 사용)
 - Node.js: skills.sh 검색에 `npx`를 씁니다
 - `gh` CLI: 선택. 없으면 GitHub 공개 API를 씁니다(시간당 60회 제한)
-
-**알아 둘 점.** 이 저장소는 스킬 라이브러리 웹 사이트(`docs/`, 약 17MB)를 함께 담고 있고 SKILL.md가 루트에 있어서, 설치하면 저장소 전체를 받습니다. 스킬이 실제로 쓰는 것은 `SKILL.md`와 `scripts/find_*.py` 세 개입니다.
 
 ## 쓰는 법
 
@@ -92,17 +99,21 @@ Codex에서 쓰려면 `-a codex`로 바꿉니다. 설치한 뒤 새 세션부터
 
 ```
 .
-├── SKILL.md                # 스킬 본문: 7단계 흐름, 판단 기준, 출력 형식
-├── scripts/
-│   ├── find_library.py     # 3단계: 라이브러리 카드를 매칭용으로 압축 출력 (107KB → 42KB)
-│   ├── find_search.py      # 4단계: skills.sh 병렬 검색, 색상 코드 제거, 중복 합치기, 요청 제한 재시도
-│   ├── find_inspect.py     # 5단계: 저장소를 받지 않고 본문·위험 신호·설치 명령 판정
-│   ├── sync-stars.py       # (카탈로그 운영용) GitHub 별·포크 수 동기화
-│   └── sync-inline.py      # (카탈로그 운영용) skills.json → index.html 인라인 블록
+├── skills/find-skills/          # 설치되는 것은 이 폴더뿐 (스킬이자 플러그인 루트)
+│   ├── .claude-plugin/plugin.json   # 플러그인 이름·버전
+│   ├── SKILL.md                 # 스킬 본문: 7단계 흐름, 판단 기준, 출력 형식
+│   └── scripts/
+│       ├── find_library.py      # 3단계: 라이브러리 카드를 매칭용으로 압축 출력 (107KB → 42KB)
+│       ├── find_search.py       # 4단계: skills.sh 병렬 검색, 색상 코드 제거, 중복 합치기, 요청 제한 재시도
+│       └── find_inspect.py      # 5단계: 저장소를 받지 않고 본문·위험 신호·설치 명령 판정
 ├── evals/
-│   ├── evals.json          # 테스트 질의 4개와 채점 기준
-│   └── test_inspect_patterns.py  # 위험 패턴·설치 위치 판정 회귀 검사
-└── docs/                   # AI Roasting 스킬 라이브러리 웹 사이트 (3단계의 데이터 소스)
+│   ├── evals.json               # 테스트 질의 4개와 채점 기준
+│   └── test_inspect_patterns.py # 위험 패턴·설치 위치 판정 회귀 검사
+├── scripts/
+│   ├── check_release.py         # 스킬을 고쳤는데 버전을 안 올렸으면 커밋을 막음
+│   ├── sync-stars.py            # (카탈로그 운영용) GitHub 별·포크 수 동기화
+│   └── sync-inline.py           # (카탈로그 운영용) skills.json → index.html 인라인 블록
+└── docs/                        # AI Roasting 스킬 라이브러리 웹 사이트 (3단계의 데이터 소스)
 ```
 
 스크립트는 정보를 모으기만 합니다. 어떤 스킬이 맞는지는 출력을 읽은 에이전트가 판단합니다. 키워드 일치 점수로 순위를 매기면 "회의록"을 찾는데 "회의실 예약" 스킬이 올라오는 식의 오류가 생기기 때문입니다.
@@ -127,6 +138,27 @@ Codex에서 쓰려면 `-a codex`로 바꿉니다. 설치한 뒤 새 세션부터
 
 ```bash
 python3 evals/test_inspect_patterns.py
+```
+
+## 고친 뒤 배포하는 법
+
+플러그인으로 설치한 사람은 **버전 번호가 바뀌어야** 새 버전을 받습니다. 스킬 파일만 고치고 버전을 그대로 두면, 푸시해도 사용자 쪽은 예전 버전에 머뭅니다.
+
+1. `skills/find-skills/` 아래를 고친다.
+2. `skills/find-skills/.claude-plugin/plugin.json`의 `version`을 올린다. 작은 수정은 1.1.0 → 1.1.1, 기능 추가는 1.1.0 → 1.2.0.
+3. 점검을 돌린다.
+   ```bash
+   python3 evals/test_inspect_patterns.py
+   claude plugin validate skills/find-skills
+   ```
+4. 커밋하고 푸시한다. 로컬 pre-commit 훅(`.githooks/pre-commit`)이 `scripts/check_release.py`를 불러, 스킬을 고쳤는데 버전이 그대로면 커밋을 막는다. 오타 수정처럼 배포가 필요 없는 변경은 `SKIP_RELEASE_CHECK=1 git commit ...`으로 넘긴다.
+5. 릴리스 태그를 남긴다. `claude plugin tag skills/find-skills`가 plugin.json과 마켓플레이스 항목이 맞는지 확인하고 `find-skills--v<버전>` 태그를 만든다. 만든 태그는 `git push --tags`로 올린다.
+
+사용자 쪽에서 새 버전을 받는 법은 이렇습니다.
+
+```bash
+claude plugin marketplace update airoasting && claude plugin update find-skills@airoasting
+npx skills update          # skills CLI로 설치한 경우
 ```
 
 ## 한계

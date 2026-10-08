@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""find_inspect.py의 위험 패턴 회귀 검사. 패턴을 고친 뒤 반드시 돌린다.
+"""skills/find-skills/scripts/find_inspect.py의 위험 패턴 회귀 검사. 패턴을 고친 뒤 반드시 돌린다.
 
 진짜 위험은 잡고(1), 정상 코드는 잡지 않아야(0) 한다. 정상 쪽 사례는 실제 오탐에서 왔다.
   - dangerouslySetInnerHTML, atob: chuspeeism/dashi-ppt-skill의 번들 JS (2026-10-08)
@@ -13,7 +13,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-spec = importlib.util.spec_from_file_location("find_inspect", ROOT / "scripts" / "find_inspect.py")
+spec = importlib.util.spec_from_file_location("find_inspect", ROOT / "skills" / "find-skills" / "scripts" / "find_inspect.py")
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
