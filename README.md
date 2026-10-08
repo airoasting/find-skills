@@ -60,6 +60,16 @@ URL 파라미터로 바로 들어갈 수도 있습니다.
 | `?cat=pick` | 에디터픽 28개만 |
 | `?cat=lab` | AI Roasting이 직접 만든 자체 스킬 8개만 |
 
+## 에이전트에게 찾게 하기: `find-skills` 스킬
+
+카탈로그를 직접 훑지 않고 Claude에게 "회의록 정리하는 스킬 있어?"라고 물으면 되도록 만든 스킬입니다. 이 라이브러리에서 먼저 찾고, 없으면 오픈 스킬 생태계([skills.sh](https://skills.sh/))로 넓힌 뒤, 설치 수·출처·SKILL.md를 확인한 후보만 추천합니다. 설치는 사용자가 승낙한 뒤에만 합니다.
+
+```bash
+npx skills add airoasting/find-skills -g
+```
+
+본문은 저장소 루트의 [SKILL.md](SKILL.md)에 있습니다. vercel-labs의 [find-skills](https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md)를 바탕으로 큐레이션 우선 검색, 비즈니스 리더 적합성 필터, 설치 전 SKILL.md 실독을 더했습니다.
+
 ## 데이터 구조
 
 ```jsonc
@@ -106,7 +116,12 @@ URL 파라미터로 바로 들어갈 수도 있습니다.
 │   ├── skills.json         # 데이터 단일 소스
 │   ├── asset/              # OG 이미지·로고·Pretendard 폰트
 │   └── .nojekyll           # GitHub Pages Jekyll 처리 비활성화
+├── SKILL.md                # find-skills 에이전트 스킬 본문
+├── evals/                  # find-skills 테스트 질의·채점 기준, 결과 뷰어
 └── scripts/
+    ├── find_library.py     # find-skills: 라이브러리 카드 압축 출력
+    ├── find_search.py      # find-skills: skills.sh 병렬 검색
+    ├── find_inspect.py     # find-skills: 후보 검증과 설치 명령 판정
     ├── sync-stars.py       # GitHub 별·포크 수 동기화
     └── sync-inline.py      # docs/skills.json → docs/index.html 인라인 블록
 ```
@@ -126,7 +141,7 @@ python3 -m http.server 8000 --directory docs
 
 ## 카드를 제안하고 싶다면
 
-추천 후보가 있으면 [Issue](https://github.com/airoasting/skill_library/issues/new)를 열어 GitHub 주소·카테고리 후보·한 줄 추천 사유를 남겨주세요. 큐레이터가 직접 검토 후 라이브러리에 반영합니다.
+추천 후보가 있으면 [Issue](https://github.com/airoasting/find-skills/issues/new)를 열어 GitHub 주소·카테고리 후보·한 줄 추천 사유를 남겨주세요. 큐레이터가 직접 검토 후 라이브러리에 반영합니다.
 
 ## 라이선스
 
