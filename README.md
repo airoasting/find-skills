@@ -1,199 +1,143 @@
+<a href="https://skill.airoasting.com/"><img src="docs/asset/og-image.svg" alt="AI Roasting · Skill Library (비즈니스 리더를 위해 엄선한 AI 스킬)" width="100%"></a>
+
 # find-skills
 
-"회의록 정리하는 스킬 있어?"라고 물으면, 에이전트가 쓸 만한 스킬을 찾아 직접 확인한 뒤 추천하고 설치까지 돕는 에이전트 스킬입니다.
+"회의록 정리하는 스킬 있어?"라고 물으면, 쓸 만한 스킬을 찾아 직접 확인한 뒤 추천하고 설치까지 돕는 에이전트 스킬입니다. Claude Code와 Codex에서 같은 절차로 동작합니다.
 
-좋은 스킬은 이미 누군가 만들어 두었을 가능성이 큽니다. 문제는 두 가지입니다. 찾는 데 시간이 들고, 찾은 것을 믿어도 되는지 알기 어렵습니다. 검색 결과에 보이는 이름과 설치 수만으로는 그 스킬이 실제로 무슨 일을 하는지, 설치하면 무엇이 내 환경에 들어오는지 알 수 없습니다. find-skills는 이 두 문제를 한 흐름으로 풉니다. 좁은 곳부터 찾고, 넓은 곳으로 나가고, 추천하기 전에 확인합니다.
+## 무엇을 하나
 
-## 무엇이 다른가
-
-vercel-labs의 [find-skills](https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md)(skills.sh 검색과 설치)를 바탕으로 세 가지를 더했습니다.
-
-- **큐레이션 우선.** 오픈 생태계보다 [AI Roasting 스킬 라이브러리](https://skill.airoasting.com/)를 먼저 봅니다. 비개발자 비즈니스 리더 기준으로 이미 걸러 낸 카드라 검증 부담이 적고, 한국 환경(HWP, 카카오, DART 등) 스킬이 따로 모여 있습니다.
-- **사용자에 맞춘 필터.** 설치 수가 많아도 사용자의 일과 맞지 않으면 뺍니다. 리더가 찾을 때는 개발 전용 도구를 권하지 않고, 개발 질의에는 이 필터를 쓰지 않습니다.
-- **추천 전 실물 확인.** 후보마다 SKILL.md 본문, 함께 들어 있는 스크립트, 저장소 상태를 읽습니다. 설치 명령도 저장소 구조를 보고 실제로 통하는 것만 냅니다.
-
-## 어떻게 동작하나
-
-```
-1. 필요 읽기      작업 의도, 도메인, 제약(한국어·형식·도구), 개발 작업인지 판단
-                  한국어 질의를 영문 검색어 2~4개로 바꿈
-2. 이미 가진 것   세션에 설치된 스킬로 되면 여기서 끝
-3. 라이브러리     AI Roasting 스킬 라이브러리에서 카드 매칭
-4. skills.sh      여러 검색어를 병렬로 검색, 공식 출처(anthropics 등)는 따로 한 번 더
-5. 확인           최종 후보 3~5개의 본문·위험 신호·설치 경로·출력 언어 확인
-6. 추천           3개 안팎, 고른 이유와 한계, 확인한 설치 명령
-7. 설치           사용자가 분명히 승낙한 뒤에만
-```
-
-5단계에서 확인하는 것은 일곱 가지입니다.
-
-| 확인 | 걸러 내는 것 |
-|---|---|
-| 하는 일이 맞는가 | 이름은 그럴듯한데 본문은 다른 일을 하는 스킬 |
-| 믿을 만한가 | 설치 수 100 미만, 1년 넘게 갱신 없음, archived |
-| 안전한가 | 하는 일과 맞지 않는 자격 증명 접근, 원격 스크립트 실행, 비밀값 외부 전송 |
-| 사용자에게 맞는가 | 리더 질의에 PR·CI/CD·배포 전용 도구 |
-| 결과가 사용자의 언어로 나오는가 | 한국어로 물었는데 영어 양식으로 고정된 스킬(한계에 표시) |
-| 발동할 수 있는가 | description이 비거나 깨져 자동으로 불리지 않는 스킬 |
-| 어떻게 설치되는가 | 그대로 치면 실패하는 설치 명령 |
-
-## 결과 예시
-
-"경영 보고용 PPT 만들어 주는 스킬 있어? 매달 이사회 보고 자료를 슬라이드로 만들어야 해서."라고 물었을 때 실제로 나온 응답의 앞부분입니다(2026-10-08).
-
-```
-이해한 작업: 매달 반복하는 이사회 보고 자료를 편집 가능한 슬라이드(PPT)로 빠르게 만드는 스킬을 찾는다.
-지금 세션에 Anthropic 공식 pptx 스킬이 이미 있어 PPTX 파일 만들기 자체는 됩니다. 매달 같은 양식으로
-반복하고 보고 구조를 잡아 주는 부분을 채우려고 라이브러리와 skills.sh를 함께 봤습니다.
-
-### 1. PPT Master  ·  skills.sh
-- 무엇: 문서나 주제를 PowerPoint 기본 도형·차트·표로 된 편집 가능한 PPTX로 만들고,
-  회사의 기존 .pptx 템플릿을 채워 넣는 데도 씁니다.
-- 왜 이걸 골랐나: 이사회 자료는 받은 쪽에서 고칠 수 있는 PPTX여야 하는 경우가 많습니다. ...
-- 신뢰: ★58,263 · 17.1K installs · 저장소 최근 갱신 2026-10 · MIT
-- 한계: 파일이 1만 개가 넘는 무거운 스킬이고 Python이 필요합니다. ...
-- 설치: /plugin marketplace add hugohe3/ppt-master 다음 /plugin install ppt-master@ppt-master
-
-### 2. Dashi PPT Skill  ·  AI Roasting 라이브러리
-...
-1번 PPT Master를 설치할까요?
-```
-
-설치된 스킬을 먼저 짚고, 그것이 못 하는 부분을 채우는 방향으로 찾은 것이 핵심입니다.
+- **좁은 곳부터 찾습니다.** 이미 설치된 스킬 → [AI Roasting 스킬 라이브러리](https://skill.airoasting.com/)(비즈니스 리더용 큐레이션) → [skills.sh](https://skills.sh/)(오픈 생태계) 순서입니다.
+- **추천 전에 실물을 확인합니다.** 후보마다 SKILL.md 본문, 스크립트, 저장소 상태를 읽고 복사본 여부, 설치 외 준비물, 위험 신호, 실제로 통하는 설치 명령을 근거 줄과 함께 확인합니다.
+- **승낙을 받고 설치합니다.** 후보는 3개 안팎만 보여 주고, 사용자가 분명히 원할 때만 설치합니다.
 
 ## 설치
 
-**Claude Code 플러그인.** Claude Code 입력창에 차례로 넣습니다.
+**Claude Code 플러그인**
 
 ```
 /plugin marketplace add airoasting/skills
 /plugin install find-skills@airoasting
 ```
 
-**skills CLI (Claude Code, Codex 등).**
+**skills CLI (Claude Code, Codex)**
 
 ```bash
 npx skills add airoasting/find-skills -g -a claude-code
 ```
 
-Codex에서 쓰려면 `-a codex`로 바꿉니다. 어느 쪽이든 설치한 뒤 새 세션부터 스킬이 잡힙니다. 설치되는 것은 `skills/find-skills/` 폴더(약 50KB)뿐이고, 같은 저장소의 웹 사이트 파일은 따라가지 않습니다.
+Codex는 `-a codex`로 바꿉니다. 새 세션부터 스킬이 잡힙니다.
 
-**필요한 것**
-- Python 3 (표준 라이브러리만 사용)
-- Node.js: skills.sh 검색에 `npx`를 씁니다
-- `gh` CLI: 선택. 없으면 GitHub 공개 API를 씁니다(시간당 60회 제한)
+**필요한 것:** Python 3.9 이상, Node.js(설치 단계에만), 네트워크(skills.sh와 GitHub 조회). `gh` CLI는 선택입니다. Codex 기본 샌드박스에서는 네트워크 허용을 요청합니다.
 
 ## 쓰는 법
 
-설치하면 이런 말에 스스로 발동합니다.
+이런 말에 스스로 발동합니다.
 
 - "회의록 정리해서 액션 아이템까지 뽑아 주는 스킬 있어?"
 - "한글(HWP) 문서 고칠 수 있는 스킬 찾아줘"
 - "next.js LCP 개선하는 데 뭐 깔면 돼?"
-- "find a skill for contract review"
 - `/find-skills 계약서 검토`
 
-"이메일 써 줘"처럼 일 자체를 바로 해 달라는 요청에는 발동하지 않습니다.
+결과는 이런 모양입니다(HWP 질의의 실제 출력을 줄인 것).
+
+```
+이해한 작업: 공공기관 제출용 .hwp를 읽고 .hwp 그대로 고쳐 저장하는 스킬을 찾습니다.
+검색 범위: 설치된 스킬 58개 중 HWP 관련 0개 → AI Roasting 라이브러리 150개 중 --grep hwp와 korea 카테고리
+          (맞는 것 1개, 일부만 맞는 것 2개) → skills.sh 후보 16개 훑음 → 본문 확인 5개 → 추천 2개
+본문 확인 후 뺀 것: rhwp(직접 빌드 필요), K-Skill hwp(읽기 전용, 1번과 겹침), HWPX Skill(.hwpx 전용)
+
+### 1. Kordoc  ·  AI Roasting 라이브러리
+...
+
+### 2. rhwp-edit  ·  AI Roasting 라이브러리(K-Skill 안의 스킬)
+- 무엇: .hwp를 .hwp 그대로 고칩니다. 수정 전용입니다.
+- 신뢰: ★7,820(모음 전체 기준) · 5,290 installs · 저장소 최근 갱신 2026-10
+- 한계: 실행할 때 원격 패키지에서 지시를 받아 오므로 설치 뒤 지시가 바뀔 수 있습니다.
+- 설치: npx skills add NomaDamas/k-skill --skill rhwp-edit -g
+- 준비물: 필수 Node.js 18+ / 선택 rhwp-advanced 스킬(배포용 문서 잠금 해제)
+
+1, 2번을 함께 설치할까요? 모든 프로젝트에서 쓰도록 전역으로 넣습니다.
+```
+
+## 동작
+
+```
+1. 필요 읽기   작업 의도, 산출 형식(.pptx, .hwp 등), 제약, 개발 작업인지 판단. 영문 검색어 2~4개를 만듦
+2. 설치된 것   지금 에이전트에 깔린 스킬로 되면 여기서 끝
+3. 라이브러리  AI Roasting 카드에서 찾음
+4. skills.sh   여러 검색어를 병렬로 검색. 설명을 붙이고, 걸린 질의 수 순으로 정렬
+5. 확인        최종 후보 3~5개를 저장소를 받지 않고 검증
+6. 추천        검색 범위 한 줄, 후보마다 고른 이유·한계·설치 명령·준비물
+7. 설치        사용자가 승낙한 뒤에만
+```
+
+5단계에서 확인하는 것입니다.
+
+| 확인 | 걸러 내는 것 |
+|---|---|
+| 하는 일 | 이름은 그럴듯한데 본문은 다른 일을 하거나 산출 형식이 다른 스킬. 껍데기(스텁) 스킬은 실제 지시 파일까지 읽음 |
+| 신뢰 | 설치 수에 비해 별이 너무 적은 복사본, 설치본 경로에 둔 사본, 이전·폐기된 저장소, 오래 방치된 저장소 |
+| 안전 | 자격 증명 접근, 원격 스크립트 실행, 실행할 때 지시를 받아 오거나 다른 스킬까지 설치·업데이트하는 구조 |
+| 사용자 적합도 | 비개발 리더에게 맞지 않는 개발 전용 도구 |
+| 준비물 | 설치 명령 밖에서 필요한 런타임, API 키, 프로그램, MCP 서버, 유료 플랜. 필수와 선택을 나눠 근거 줄과 함께 표시 |
+| 언어·발동 | 출력 양식이 다른 언어로 고정됐거나, 자동 발동이 꺼진 스킬 |
+| 설치 | 그대로 치면 실패하는 명령, 원하지 않는 스킬 수십 개를 함께 까는 묶음 플러그인, skills CLI로는 빠지는 MCP 서버 |
+
+스크립트는 근거를 모을 뿐 판정하지 않습니다. 무엇이 맞는지는 출력을 읽은 에이전트가 판단합니다.
 
 ## 구성
 
 ```
-.
-├── skills/find-skills/          # 설치되는 것은 이 폴더뿐 (스킬이자 플러그인 루트)
-│   ├── .claude-plugin/plugin.json   # 플러그인 이름·버전
-│   ├── SKILL.md                 # 스킬 본문: 7단계 흐름, 판단 기준, 출력 형식
-│   └── scripts/
-│       ├── find_library.py      # 3단계: 라이브러리 카드를 매칭용으로 압축 출력 (107KB → 42KB)
-│       ├── find_search.py       # 4단계: skills.sh 병렬 검색, 색상 코드 제거, 중복 합치기, 요청 제한 재시도
-│       └── find_inspect.py      # 5단계: 저장소를 받지 않고 본문·위험 신호·설치 명령 판정
-├── evals/
-│   ├── evals.json               # 테스트 질의 4개와 채점 기준
-│   └── test_inspect_patterns.py # 위험 패턴·설치 위치 판정 회귀 검사
-├── scripts/
-│   ├── check_release.py         # 스킬을 고쳤는데 버전을 안 올렸으면 커밋을 막음
-│   ├── sync-stars.py            # (카탈로그 운영용) GitHub 별·포크 수 동기화
-│   └── sync-inline.py           # (카탈로그 운영용) skills.json → index.html 인라인 블록
-└── docs/                        # AI Roasting 스킬 라이브러리 웹 사이트 (3단계의 데이터 소스)
+skills/find-skills/              # 설치되는 것은 이 폴더뿐 (약 140KB)
+├── SKILL.md                     # 7단계 절차, 판단 기준, 출력 양식
+├── .claude-plugin/plugin.json
+└── scripts/                     # 표준 라이브러리만 쓰는 Python
+    ├── find_installed.py        # 2단계: 설치된 스킬을 에이전트별로, 이름과 설명으로
+    ├── find_library.py          # 3단계: 라이브러리 카드 (--cat, --grep)
+    ├── find_search.py           # 4단계: skills.sh 병렬 검색, 요청 한도 구분, 동명 복사본 묶음
+    └── find_inspect.py          # 5단계: 설치 방법, 준비물, 신뢰·위험 신호, 본문 (--show로 근거 줄 열기)
+evals/
+├── evals.json                   # 테스트 질의 6개와 채점 기준
+└── test_inspect_patterns.py     # 스크립트 판정 회귀 검사 (네트워크 없이)
+docs/                            # AI Roasting 스킬 라이브러리 웹 사이트 (3단계의 데이터 소스)
+scripts/check_release.py         # 스킬을 고쳤는데 버전을 안 올렸으면 커밋을 막음
 ```
-
-스크립트는 정보를 모으기만 합니다. 어떤 스킬이 맞는지는 출력을 읽은 에이전트가 판단합니다. 키워드 일치 점수로 순위를 매기면 "회의록"을 찾는데 "회의실 예약" 스킬이 올라오는 식의 오류가 생기기 때문입니다.
 
 ## 검증
 
-**테스트 질의.** 성격이 다른 질의 3개(비개발 리더의 회의록, 한국 환경의 HWP, 개발 질의인 Next.js)를 처음 만든 버전과 스크립트를 넣은 버전으로 각각 돌려 비교했습니다(2026-10-08).
-
-| | 채점 기준 통과 | 평균 소요 | 평균 토큰 |
-|---|---|---|---|
-| 처음 버전 (스크립트 없음) | 31/31 | 199초 | 14.2만 |
-| 스크립트 도입 후 (2차 테스트) | 31/31 | 120초 | 12.2만 |
-
-두 버전의 결과물 품질은 비슷했습니다. 차이는 속도와 일관성입니다. 처음 버전은 실행하는 모델이 검증 절차를 매번 즉석에서 짜야 해서 느렸고, 그 과정이 매번 달랐습니다.
-
-**테스트로 잡은 문제.**
-- 라이브러리 카드 Kordoc의 설치 명령이 실제로는 실패했습니다. 같은 저장소의 다른 스킬이 표준 위치에 있어 CLI가 깊은 곳의 스킬을 못 찾았기 때문입니다. 이후 `find_inspect.py`가 저장소 구조를 보고 `--full-depth` 필요 여부와 플러그인 설치 명령을 판정합니다.
-- skills.sh가 요청 횟수 제한에 걸리면 오류 대신 "결과 없음"을 돌려줍니다. 검색 스크립트가 빈 결과를 한 번 더 확인합니다.
-- 함께 들어 있는 압축 JS(React, 애니메이션 라이브러리)에서 위험 신호 오탐 9건이 나왔습니다. 저자가 쓴 스크립트만 검사하도록 바꿨습니다.
-
-**회귀 검사.** 위험 패턴(진짜 위험 7건은 잡고 정상 코드 3건은 걸러 냄), 번들 판정 6건, CLI 표준 탐색 위치 판정 12건을 확인합니다. `find_inspect.py`를 고친 뒤에는 반드시 돌립니다.
+- **실사용 테스트.** 성격이 다른 질의 4개(회의록, HWP, Next.js, 이사회 PPT)를 Claude Code에서, 2개(HWP, PPT)를 Codex에서 처음부터 끝까지 돌려 채점합니다. v1.2.0 마지막 회차는 Claude Code 61/61, Codex 21/21로 모든 채점 기준을 통과했습니다(2026-10-09).
+- **회귀 검사.** 실사용에서 틀렸던 사례를 모아 124건을 확인합니다. 스크립트를 고친 뒤에는 반드시 돌립니다.
 
 ```bash
 python3 evals/test_inspect_patterns.py
 ```
 
-## 고친 뒤 배포하는 법
-
-플러그인으로 설치한 사람은 **버전 번호가 바뀌어야** 새 버전을 받습니다. 스킬 파일만 고치고 버전을 그대로 두면, 푸시해도 사용자 쪽은 예전 버전에 머뭅니다.
-
-1. `skills/find-skills/` 아래를 고친다.
-2. `skills/find-skills/.claude-plugin/plugin.json`의 `version`을 올린다. 작은 수정은 1.1.0 → 1.1.1, 기능 추가는 1.1.0 → 1.2.0.
-3. 점검을 돌린다.
-   ```bash
-   python3 evals/test_inspect_patterns.py
-   claude plugin validate skills/find-skills
-   ```
-4. 커밋하고 푸시한다. 로컬 pre-commit 훅(`.githooks/pre-commit`)이 `scripts/check_release.py`를 불러, 스킬을 고쳤는데 버전이 그대로면 커밋을 막는다. 오타 수정처럼 배포가 필요 없는 변경은 `SKIP_RELEASE_CHECK=1 git commit ...`으로 넘긴다.
-5. 릴리스 태그를 남긴다. `claude plugin tag skills/find-skills`가 plugin.json과 마켓플레이스 항목이 맞는지 확인하고 `find-skills--v<버전>` 태그를 만든다. 만든 태그는 `git push --tags`로 올린다.
-
-사용자 쪽에서 새 버전을 받는 법은 이렇습니다.
-
-```bash
-claude plugin marketplace update airoasting && claude plugin update find-skills@airoasting
-npx skills update          # skills CLI로 설치한 경우
-```
-
 ## 한계
 
-- 발동 정확도(어떤 질문에 스킬이 불리고 어떤 질문에 안 불리는지)는 아직 측정하지 않았습니다.
-- 테스트 질의는 4개이고 각 1회만 돌렸습니다. 채점까지 한 것은 3개입니다(4번째 이사회 PPT 질의는 실행만 함). 위 수치를 잰 뒤에 들어간 수정(오탐 제거, 탐색 위치 판정)은 회귀 검사로만 확인했습니다.
-- 위험 신호는 패턴 검사입니다. 판정이 아니라 읽을 곳을 가리키는 표시이고, 스크립트가 아주 많은 스킬은 일부만 검사합니다(최대 200개, 검사하지 못한 목록을 함께 출력).
-- 설치 수는 skills.sh에 등록된 스킬만 확인됩니다. 라이브러리 카드 중 skills.sh에 없는 것은 "미확인"으로 표시합니다.
+- 발동 정확도(어떤 질문에 불리고 어떤 질문에 안 불리는지)는 아직 재지 않았습니다.
+- 준비물·위험 신호는 문서와 코드의 패턴 검색입니다. 문서에 적지 않은 것은 못 찾으므로, 신호는 판정이 아니라 읽을 곳 표시입니다.
+- 복사본 판정 기준(별 1개당 설치 1,000회 초과)은 2026-10 실측값으로 잡았습니다. 빠르게 퍼진 신생 저장소는 오탐이 날 수 있습니다.
+- 설치 수는 skills.sh에 등록된 스킬만 확인됩니다.
+
+## 고친 뒤 배포하는 법
+
+플러그인 사용자는 **버전 번호가 바뀌어야** 새 버전을 받습니다.
+
+1. `skills/find-skills/`를 고치고 `.claude-plugin/plugin.json`의 `version`을 올린다(작은 수정 1.2.0 → 1.2.1, 기능 추가 → 1.3.0).
+2. 점검: `python3 evals/test_inspect_patterns.py`, `claude plugin validate skills/find-skills`
+3. 커밋한다. pre-commit 훅이 버전을 안 올렸으면 막는다(배포가 필요 없는 변경은 `SKIP_RELEASE_CHECK=1 git commit ...`).
+4. `claude plugin tag skills/find-skills`로 태그를 만들고 `git push --tags`.
+
+사용자 쪽 갱신은 `claude plugin update find-skills@airoasting`(플러그인) 또는 `npx skills update`(skills CLI)입니다.
 
 ## 데이터 소스: AI Roasting 스킬 라이브러리
 
-<a href="https://skill.airoasting.com/"><img src="docs/asset/og-image.svg" alt="AI Roasting · Skill Library (비즈니스 리더를 위해 엄선한 AI 스킬)" width="100%"></a>
+find-skills가 3단계에서 먼저 보는 카탈로그입니다. 비개발자 비즈니스 리더를 위해 큐레이션한 Claude 스킬·플러그인 150개를 14개 카테고리로 나눴고, 그중 28개가 에디터픽입니다. 사람이 둘러볼 때는 <https://skill.airoasting.com/>을 씁니다. `?cat=korea`(한국 특화), `?cat=pick`(에디터픽) 같은 파라미터로 바로 들어갈 수 있습니다.
 
-find-skills가 3단계에서 먼저 보는 카탈로그입니다. 비개발자 비즈니스 리더를 위해 큐레이션한 Claude 스킬·플러그인 150개를 3개 메타 카테고리, 14개 세부 카테고리로 나눠 담았고, 그중 28개가 에디터픽입니다. 사람이 직접 둘러볼 때는 웹 사이트를 씁니다.
-
-🌐 <https://skill.airoasting.com/>
-
-| 메타 카테고리 | 세부 카테고리 |
-|---|---|
-| 🏗 AI 에이전트팀 구축 | 하네스·에이전트 설계, AI와 일 잘하는 법, 토큰 절약, 외부 연동·자동화, 한국 특화 스킬 |
-| 📈 비즈니스 성장 | 그로스·마케팅, 투자·금융, GEO·AEO |
-| 🎯 실행력 제고 | 리서치·인사이트, 디자인, 동영상 제작, 글쓰기, 법무·컴플라이언스, 커리어·이직 |
-
-URL 파라미터로 바로 들어갈 수 있습니다. `?cat=korea`(한국 특화), `?cat=pick`(에디터픽), `?cat=lab`(AI Roasting 자체 스킬).
-
-**데이터.** `docs/skills.json` 하나가 정본입니다. 카드마다 `repo`, `author`, `stars`, `forks`, 한국어 2문장 `desc`, `tags`, `added_at`이 있고, 선택적으로 `lang`, `editors_pick`, `airoasting_lab`이 붙습니다. `file://`로 직접 열 때를 위해 `docs/index.html`에 같은 JSON이 인라인으로 들어 있으니, 두 곳을 함께 갱신합니다. `scripts/sync-inline.py`가 복사해 주고 pre-commit 훅이 커밋 직전에 부릅니다.
-
-**로컬에서 보기.** 빌드 단계가 없습니다.
-
-```bash
-python3 -m http.server 8000 --directory docs
-```
-
-**카드 제안.** 추천할 스킬이 있으면 [Issue](https://github.com/airoasting/find-skills/issues/new)에 GitHub 주소, 카테고리 후보, 한 줄 추천 사유를 남겨 주세요.
+- **데이터.** `docs/skills.json`이 정본입니다. `docs/index.html`의 인라인 사본은 pre-commit 훅이 `scripts/sync-inline.py`로 맞춥니다.
+- **로컬에서 보기.** `python3 -m http.server 8000 --directory docs`
+- **카드 제안.** [Issue](https://github.com/airoasting/find-skills/issues/new)에 GitHub 주소, 카테고리 후보, 한 줄 추천 사유를 남겨 주세요.
 
 ## 라이선스
 
-스킬 카드의 메타데이터는 라이브러리 운영을 위한 큐레이션입니다. 각 스킬의 코드와 라이선스는 원 저장소를 따릅니다.
+카드 메타데이터는 라이브러리 운영을 위한 큐레이션입니다. 각 스킬의 코드와 라이선스는 원 저장소를 따릅니다.
