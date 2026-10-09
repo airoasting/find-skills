@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """find-skills 릴리스 점검. pre-commit 훅이 커밋 직전에 부른다.
 
-스킬 파일(skills/find-skills/ 아래)을 고쳤는데 plugin.json의 version을 그대로 두면,
+스킬 파일(SKILL.md, scripts/find_*.py, .claude-plugin/)을 고쳤는데 plugin.json의 version을 그대로 두면,
 플러그인으로 설치한 사람은 `claude plugin update`를 해도 새 버전을 받지 못한다.
 플러그인 갱신이 버전 번호로 판단되기 때문이다. 그래서 그런 커밋을 막는다.
 
@@ -13,8 +13,9 @@ import re
 import subprocess
 import sys
 
-SKILL_DIR = "skills/find-skills/"
-MANIFEST = SKILL_DIR + ".claude-plugin/plugin.json"
+MANIFEST = ".claude-plugin/plugin.json"
+# 스킬로 설치되어 동작하는 파일. 카탈로그 운영용 스크립트(sync-*.py, check_release.py)와 docs/는 배포 대상이 아니다
+SKILL_FILE = re.compile(r"^(SKILL\.md|\.claude-plugin/.+|scripts/find_\w+\.py)$")
 
 
 def git(*args):
@@ -29,7 +30,7 @@ def version_at(ref):
 def main():
     if os.environ.get("SKIP_RELEASE_CHECK") == "1":
         return 0
-    staged = [p for p in git("diff", "--cached", "--name-only").splitlines() if p.startswith(SKILL_DIR)]
+    staged = [p for p in git("diff", "--cached", "--name-only").splitlines() if SKILL_FILE.match(p)]
     if not staged:
         return 0
 
@@ -37,7 +38,7 @@ def main():
     errors = []
 
     # SKILL.md의 name과 플러그인 이름이 어긋나면 설치 후 스킬 이름이 달라진다
-    body = open(SKILL_DIR + "SKILL.md").read()
+    body = open("SKILL.md").read()
     m = re.search(r"^name:\s*(\S+)", body, re.M)
     if not m or m.group(1) != new["name"]:
         errors.append(f"SKILL.md name({m.group(1) if m else '없음'})과 plugin.json name({new['name']})이 다르다")

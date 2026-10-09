@@ -30,9 +30,9 @@ URL = "https://skill.airoasting.com/skills.json"
 SELF_OWNERS = {"airoasting"}  # 라이브러리 운영자. 이 owner의 카드는 자체 제작이다
 CACHE = pathlib.Path(tempfile.gettempdir()) / "find-skills-library.json"
 CACHE_TTL = 3600
-# 카탈로그 저장소(airoasting/find-skills) 안에서 돌 때만 있는 로컬 사본: skills/find-skills/scripts → 저장소 루트
+# 로컬 사본: 스킬 폴더(scripts/의 부모) 안의 docs/skills.json. 저장소를 통째로 설치하면 함께 들어온다
 _HERE = pathlib.Path(__file__).resolve()
-LOCAL = _HERE.parents[3] / "docs" / "skills.json" if len(_HERE.parents) > 3 else _HERE.parent / "skills.json"
+LOCAL = _HERE.parent.parent / "docs" / "skills.json"
 
 
 def load(source=None):

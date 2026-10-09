@@ -19,7 +19,7 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-spec = importlib.util.spec_from_file_location("find_inspect", ROOT / "skills" / "find-skills" / "scripts" / "find_inspect.py")
+spec = importlib.util.spec_from_file_location("find_inspect", ROOT / "scripts" / "find_inspect.py")
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
@@ -262,7 +262,7 @@ rows3 = [(23, "iamseungpil/claude-for-dslab@hwpx", {}), (229, "canine89/hwpxskil
 check("라이브러리 줄이 묶음 대표", search_mod.collapse(rows3, {"canine89/hwpxskill"})[0][0][1], "canine89/hwpxskill@hwpx")
 
 # ---- 설치된 스킬 읽기 ----
-spec2 = importlib.util.spec_from_file_location("find_installed", ROOT / "skills" / "find-skills" / "scripts" / "find_installed.py")
+spec2 = importlib.util.spec_from_file_location("find_installed", ROOT / "scripts" / "find_installed.py")
 inst = importlib.util.module_from_spec(spec2)
 spec2.loader.exec_module(inst)
 check("설치된 스킬 frontmatter", inst.front("---\nname: pptx\ndescription: >-\n  Make decks.\n  Edit them.\n---\nbody"),

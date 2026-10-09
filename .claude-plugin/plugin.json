@@ -1,7 +1,7 @@
 {
   "name": "find-skills",
   "description": "설치된 스킬, AI Roasting 스킬 라이브러리, skills.sh 순으로 필요한 스킬을 찾아 검증하고 설치까지 돕는 스킬",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "airoasting"
   },

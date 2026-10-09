@@ -88,20 +88,22 @@ Codex는 `-a codex`로 바꿉니다. 새 세션부터 스킬이 잡힙니다.
 ## 구성
 
 ```
-skills/find-skills/              # 설치되는 것은 이 폴더뿐 (약 140KB)
-├── SKILL.md                     # 7단계 절차, 판단 기준, 출력 양식
-├── .claude-plugin/plugin.json
-└── scripts/                     # 표준 라이브러리만 쓰는 Python
-    ├── find_installed.py        # 2단계: 설치된 스킬을 에이전트별로, 이름과 설명으로
-    ├── find_library.py          # 3단계: 라이브러리 카드 (--cat, --grep)
-    ├── find_search.py           # 4단계: skills.sh 병렬 검색, 요청 한도 구분, 동명 복사본 묶음
-    └── find_inspect.py          # 5단계: 설치 방법, 준비물, 신뢰·위험 신호, 본문 (--show로 근거 줄 열기)
+SKILL.md                         # 7단계 절차, 판단 기준, 출력 양식
+.claude-plugin/plugin.json       # 플러그인 이름·버전
+scripts/                         # 표준 라이브러리만 쓰는 Python
+├── find_installed.py            # 2단계: 설치된 스킬을 에이전트별로, 이름과 설명으로
+├── find_library.py              # 3단계: 라이브러리 카드 (--cat, --grep)
+├── find_search.py               # 4단계: skills.sh 병렬 검색, 요청 한도 구분, 동명 복사본 묶음
+├── find_inspect.py              # 5단계: 설치 방법, 준비물, 신뢰·위험 신호, 본문 (--show로 근거 줄 열기)
+├── check_release.py             # 스킬을 고쳤는데 버전을 안 올렸으면 커밋을 막음
+└── sync-inline.py, sync-stars.py  # 카탈로그 운영용
 evals/
 ├── evals.json                   # 테스트 질의 6개와 채점 기준
 └── test_inspect_patterns.py     # 스크립트 판정 회귀 검사 (네트워크 없이)
-docs/                            # AI Roasting 스킬 라이브러리 웹 사이트 (3단계의 데이터 소스)
-scripts/check_release.py         # 스킬을 고쳤는데 버전을 안 올렸으면 커밋을 막음
+docs/                            # AI Roasting 스킬 라이브러리 웹 사이트 (3단계의 데이터 소스, 로컬 사본)
 ```
+
+설치하면 저장소 전체(약 17MB, 대부분 `docs/`의 사이트 이미지)가 들어옵니다. 스킬이 쓰는 것은 `SKILL.md`, `scripts/find_*.py`, `docs/skills.json`입니다.
 
 ## 검증
 
@@ -123,10 +125,10 @@ python3 evals/test_inspect_patterns.py
 
 플러그인 사용자는 **버전 번호가 바뀌어야** 새 버전을 받습니다.
 
-1. `skills/find-skills/`를 고치고 `.claude-plugin/plugin.json`의 `version`을 올린다(작은 수정 1.2.0 → 1.2.1, 기능 추가 → 1.3.0).
-2. 점검: `python3 evals/test_inspect_patterns.py`, `claude plugin validate skills/find-skills`
+1. `SKILL.md`나 `scripts/find_*.py`를 고치고 `.claude-plugin/plugin.json`의 `version`을 올린다(작은 수정 1.2.1 → 1.2.2, 기능 추가 → 1.3.0).
+2. 점검: `python3 evals/test_inspect_patterns.py`, `claude plugin validate .`
 3. 커밋한다. pre-commit 훅이 버전을 안 올렸으면 막는다(배포가 필요 없는 변경은 `SKIP_RELEASE_CHECK=1 git commit ...`).
-4. `claude plugin tag skills/find-skills`로 태그를 만들고 `git push --tags`.
+4. `claude plugin tag .`로 태그를 만들고 `git push --tags`.
 
 사용자 쪽 갱신은 `claude plugin update find-skills@airoasting`(플러그인) 또는 `npx skills update`(skills CLI)입니다.
 
