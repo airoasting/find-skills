@@ -815,22 +815,6 @@
       "added_at": "2026-01-08"
     },
     {
-      "category": "automation",
-      "name": "Specweave",
-      "repo": "anton-abyzov/specweave",
-      "author": "anton-abyzov",
-      "stars": 165,
-      "forks": 21,
-      "desc": "이 스킬은 기능 설명을 입력하면 기술 스펙, 구현 계획, GitHub 이슈, Jira 태스크를 자동으로 만들고 동기화해줍니다. 요구사항에서 개발 태스크까지의 거리가 명령 한 번으로 줄어들기 때문에, PM과 개발자 사이의 커뮤니케이션 비용과 스펙 누락을 함께 줄일 수 있습니다.",
-      "tags": [
-        "#spec",
-        "#jira",
-        "#github"
-      ],
-      "lang": "TypeScript",
-      "added_at": "2025-10-25"
-    },
-    {
       "category": "harness",
       "name": "Harness",
       "repo": "revfactory/harness",
@@ -1384,21 +1368,6 @@
         "#editing"
       ],
       "editors_pick": true
-    },
-    {
-      "category": "korea",
-      "name": "Nemotron Personas Korea",
-      "repo": "nvidia/Nemotron-Personas-Korea",
-      "author": "nvidia",
-      "stars": 169,
-      "forks": 0,
-      "added_at": "2026-04-26",
-      "desc": "이 데이터셋은 한국 통계청 자료를 기반으로 합성한 100만 명 분량의 한국인 페르소나 코퍼스로, NVIDIA가 공개한 CC BY 4.0 자료입니다. 한국어 LLM 파인튜닝이나 챗봇 학습에서 인구·지역·직업 분포의 다양성을 확보하려는 ML 팀에 잘 맞습니다.",
-      "tags": [
-        "#dataset",
-        "#persona",
-        "#llm-finetuning"
-      ]
     },
     {
       "category": "harness",
@@ -2503,6 +2472,37 @@
         "#localization"
       ],
       "forks": 155
+    },
+    {
+      "category": "legal",
+      "name": "Korean Law",
+      "repo": "airoasting/korean-law",
+      "author": "airoasting",
+      "stars": 0,
+      "forks": 0,
+      "added_at": "2026-10-12",
+      "desc": "이 스킬은 AI가 쓴 계약서 검토 메모나 법률 의견서의 조문·판례 인용을 법제처 원문과 대조해 통과·반려를 판정합니다. 번호는 맞지만 내용이 틀린 인용까지 시행 중인 법 기준으로 걸러 주기 때문에, AI 법무 초안을 쓰기 전에 확인하려는 리더에게 적합합니다.",
+      "tags": [
+        "#legal-citation",
+        "#korean-law",
+        "#fact-check"
+      ],
+      "airoasting_lab": true
+    },
+    {
+      "category": "video",
+      "name": "Claude Video",
+      "repo": "bradautomates/claude-video",
+      "author": "bradautomates",
+      "stars": 18349,
+      "added_at": "2026-10-12",
+      "desc": "이 스킬은 영상 URL이나 파일을 받아 타임스탬프가 붙은 장면 프레임과 자막을 뽑아 Claude가 영상을 직접 보고 답하게 해 주는 /watch 도구입니다. 긴 강연이나 회의 녹화, 경쟁사 유튜브 영상을 일일이 보지 않고 핵심 장면과 내용을 시간대별로 요약받고 싶은 리더에게 적합합니다.",
+      "tags": [
+        "#video-understanding",
+        "#transcript",
+        "#youtube"
+      ],
+      "forks": 1904
     }
   ]
 }
