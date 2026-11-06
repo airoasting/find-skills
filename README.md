@@ -152,7 +152,7 @@ python3 evals/test_inspect_patterns.py
 
 ## 데이터 소스: AI Roasting 스킬 라이브러리
 
-find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 14개 카테고리로 나눠 담았고, 그중 28개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽)을 붙이면 그 목록으로 바로 갑니다.
+find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 14개 카테고리로 나눠 담았고, 그중 30개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽)을 붙이면 그 목록으로 바로 갑니다.
 
 카드 데이터의 원본은 `docs/skills.json` 하나입니다. `docs/index.html` 안에 든 인라인 사본은 커밋할 때 pre-commit 훅이 `scripts/sync-inline.py`로 맞춰 줍니다. 사이트를 로컬에서 띄워 보려면 `python3 -m http.server 8000 --directory docs`를 실행하면 됩니다.
 
