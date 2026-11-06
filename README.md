@@ -154,6 +154,8 @@ python3 evals/test_inspect_patterns.py
 
 find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 14개 카테고리로 나눠 담았고, 그중 30개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽)을 붙이면 그 목록으로 바로 갑니다.
 
+카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 가장 최근 교체는 2026-11-06입니다. 미국·일본 상장사 공시를 한국어로 조회하는 EDGAR와 JPX, Anthropic 공식 스킬 저장소와 법무 플러그인(둘 다 에디터픽), 편집 가능한 PPT를 만드는 PPT Master, 법제처 법령을 조회하는 Korean Law MCP 등 14장을 새로 넣고 같은 수를 뺐습니다.
+
 카드 데이터의 원본은 `docs/skills.json` 하나입니다. `docs/index.html` 안에 든 인라인 사본은 커밋할 때 pre-commit 훅이 `scripts/sync-inline.py`로 맞춰 줍니다. 사이트를 로컬에서 띄워 보려면 `python3 -m http.server 8000 --directory docs`를 실행하면 됩니다.
 
 추천하고 싶은 스킬이 있으면 [Issue](https://github.com/airoasting/find-skills/issues/new)에 GitHub 주소와 카테고리 후보, 추천하는 이유 한 줄을 남겨 주세요.
