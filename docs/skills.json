@@ -2503,6 +2503,38 @@
         "#youtube"
       ],
       "forks": 1947
+    },
+    {
+      "category": "finance",
+      "name": "EDGAR SEC Filings",
+      "repo": "airoasting/edgar",
+      "author": "airoasting",
+      "stars": 0,
+      "forks": 0,
+      "added_at": "2026-11-06",
+      "desc": "이 스킬은 미국 SEC 공시에서 10-K·10-Q 실적, 8-K 가이던스, 임원 내부자 거래, 13F 기관 보유 종목을 찾아 원문 링크와 함께 한국어로 정리합니다. 코딩 없이 한국어로 묻기만 하면 되기 때문에, 미국 기업 숫자를 공시 원문에서 직접 확인하려는 리더에게 적합합니다.",
+      "tags": [
+        "#sec-filings",
+        "#us-stocks",
+        "#insider-trading"
+      ],
+      "airoasting_lab": true
+    },
+    {
+      "category": "finance",
+      "name": "JPX Earnings Tanshin",
+      "repo": "airoasting/jpx",
+      "author": "airoasting",
+      "stars": 0,
+      "forks": 0,
+      "added_at": "2026-11-06",
+      "desc": "이 스킬은 일본 상장사가 결산단신에 낸 실적과 연간 예상을 꺼내 진척률과 가이던스 수정 이력까지 한국어로 정리합니다. 일본어를 몰라도 거래처나 경쟁사의 분기 실적을 빠르게 파악할 수 있어, 일본 기업을 상대하는 경영진에게 잘 맞습니다.",
+      "tags": [
+        "#japan-stocks",
+        "#earnings",
+        "#guidance"
+      ],
+      "airoasting_lab": true
     }
   ]
 }
