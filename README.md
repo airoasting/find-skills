@@ -154,7 +154,7 @@ python3 evals/test_inspect_patterns.py
 
 find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 14개 카테고리로 나눠 담았고, 그중 30개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽)을 붙이면 그 목록으로 바로 갑니다.
 
-카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 가장 최근 교체는 2026-11-06입니다. 미국·일본 상장사 공시를 한국어로 조회하는 EDGAR와 JPX, Anthropic 공식 스킬 저장소와 법무 플러그인(둘 다 에디터픽), 편집 가능한 PPT를 만드는 PPT Master, 법제처 법령을 조회하는 Korean Law MCP 등 14장을 새로 넣고 같은 수를 뺐습니다.
+카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 가장 최근 교체는 2026-11-15입니다. 최근 한 달 GitHub에서 빠르게 떠오른 저장소 가운데 개발 도구는 빼고 비즈니스 리더가 바로 쓸 만한 16장을 넣었습니다. 사업성을 미리 검증하는 Founder Skill(에디터픽), 아웃바운드 영업 에이전트 Franco, 회의록 앱 Yogurt와 동시통역 회의록 Cicada, 낯선 분야를 익히는 Jane Street의 Socratic Tutor와 오디오 강의를 만드는 Claudemy, AI 시장 신호를 매일 모으는 New Term Radar, 나라별·날짜별 법령을 추적하는 Global Law, 결정 페이지를 만드는 No Slop, 편집 가능한 PPT를 만드는 Image2EditablePPT·Luobo PPT, 한국 채용용 AI Job Search KR 등입니다. 같은 수만큼 뺀 카드는 저장소 이름이 바뀌어 다른 카드와 겹친 2장(Claude Scientific Skills, Loop Library), 몇 달째 갱신이 없는 카드, 코드 리뷰·이슈 관리·사용량 모니터 같은 개발 전용 도구입니다. 이름이 바뀐 저장소 8곳의 주소와 전체 카드의 별·포크 수도 이때 맞췄습니다.
 
 카드 데이터의 원본은 `docs/skills.json` 하나입니다. `docs/index.html` 안에 든 인라인 사본은 커밋할 때 pre-commit 훅이 `scripts/sync-inline.py`로 맞춰 줍니다. 사이트를 로컬에서 띄워 보려면 `python3 -m http.server 8000 --directory docs`를 실행하면 됩니다.
 
