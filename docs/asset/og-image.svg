@@ -57,7 +57,7 @@
 
   <!-- Main title -->
   <text x="600" y="322" font-family="'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif" font-size="86" font-weight="800" fill="#1a1a1a" text-anchor="middle" letter-spacing="-2">비즈니스 리더를 위해</text>
-  <text x="600" y="420" font-family="'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif" font-size="86" font-weight="800" fill="#1a1a1a" text-anchor="middle" letter-spacing="-2">엄선한 AI 스킬</text>
+  <text x="600" y="420" font-family="'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Helvetica Neue', Arial, sans-serif" font-size="86" font-weight="800" fill="#1a1a1a" text-anchor="middle" letter-spacing="-2">엄선한 AI 스킬·MCP</text>
 
   <!-- Divider -->
   <rect x="500" y="446" width="200" height="2" rx="1" fill="#8a6a3a" opacity="0.38"/>

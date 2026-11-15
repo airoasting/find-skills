@@ -1,4 +1,4 @@
-<a href="https://skill.airoasting.com/"><img src="docs/asset/og-image.svg" alt="AI Roasting · Skill Library (비즈니스 리더를 위해 엄선한 AI 스킬)" width="100%"></a>
+<a href="https://skill.airoasting.com/"><img src="docs/asset/og-image.svg" alt="AI Roasting · Skill Library (비즈니스 리더를 위해 엄선한 AI 스킬·MCP)" width="100%"></a>
 
 # find-skills
 
