@@ -74,9 +74,9 @@
   .brand-txt small{font-family:var(--mono);font-size:9.5px;font-weight:500;
     letter-spacing:.2em;color:var(--signal);text-transform:uppercase;margin-top:3px}
   /* site switch : 스킬 라이브러리 ↔ MCP 허브 (두 사이트 공통) */
-  .switch{flex:none;display:inline-flex;gap:3px;padding:3px;background:var(--rack);
+  .switch{flex:none;display:inline-grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;background:var(--rack);
     border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 3px rgba(20,30,60,.07) inset}
-  .switch a{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;
+  .switch a{display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:500;
     color:var(--ink-dim);padding:7px 13px;border-radius:7px;white-space:nowrap;transition:.14s}
   .switch a::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--line);transition:.14s}
   .switch a:hover{color:var(--ink)}
@@ -193,7 +193,7 @@
   .chip:disabled{opacity:.42;cursor:default;border-color:var(--line);color:var(--ink-dim)}
 
   /* ---- legend ---- */
-  .legend{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:12px;padding:0 4px}
+  .legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:0 4px}
   .legend .llbl{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint)}
   .legend .item{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-dim)}
@@ -201,6 +201,12 @@
   .led-pick{background:var(--signal);box-shadow:0 0 7px var(--signal)}
   .led-lab{background:var(--live);box-shadow:0 0 7px var(--live)}
   .legend .item b{color:var(--ink);font-weight:600}
+  /* 범례가 곧 필터 버튼이다. 누르면 해당 카드만 남고, 다시 누르면 풀린다 */
+  .legend button.item{cursor:pointer;background:var(--panel-lo);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px 6px 11px;text-align:left;transition:.14s}
+  .legend button.item:hover{color:var(--ink);border-color:var(--ink-faint)}
+  .legend button.item.active{color:var(--ink);border-color:var(--signal);background:var(--signal-dim)}
+  .legend button.item[data-filter="lab"].active{border-color:var(--live);background:#dff3ea}
 
   /* ---- sort (범례 줄 오른쪽) ---- */
   .sort{margin-left:auto;display:inline-flex;gap:3px;padding:3px;background:var(--rack);
@@ -213,8 +219,8 @@
 
   /* ---- filter notice (모아 보기가 켜졌을 때) ---- */
   .notice{display:flex;align-items:flex-start;gap:14px;margin-top:14px;padding:14px 16px;
-    background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:12px}
-  .notice.lab{border-left-color:var(--live)}
+    background:var(--panel);border:1px solid var(--signal);border-radius:12px} /* 왼쪽 띠 없이 테두리 색으로만 구분 */
+  .notice.lab{border-color:var(--live)}
   .notice p{margin:0;flex:1;min-width:0;font-size:13.5px;line-height:1.65;color:var(--ink-dim)}
   .notice p b{color:var(--ink);font-weight:600}
   .notice button{flex:none;font-size:12.5px;font-weight:600;color:var(--ink-dim);cursor:pointer;
@@ -334,6 +340,7 @@
   .about-quote{margin:0;font-size:20px;font-weight:600;line-height:1.4;letter-spacing:-.015em}
   .about-quote + p{margin:6px 0 0;font-size:13px;color:var(--ink-faint)}
   .about-body p{margin:12px 0 0;font-size:14.5px;line-height:1.7;color:var(--ink-dim)}
+  .about-body p b{color:var(--ink);font-weight:600}
   .about-sec{margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft)}
   .about-sec h3{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;font-weight:600}
   .about-sec h3 span{font-family:var(--mono);font-size:12px;color:var(--signal)}
@@ -366,7 +373,7 @@
     .deck{gap:10px 8px}
     .brand{order:1}.deck-link{order:2;padding:8px 10px}
     .brand-txt b{font-size:16px}
-    .switch{order:3;flex-basis:100%;display:flex}.switch a{flex:1;justify-content:center}
+    .switch{order:3;flex-basis:100%;display:grid}
     .deck-search{order:4}
     .console{padding:22px 18px}
     .h1{font-size:31px}
@@ -392,13 +399,13 @@
 
   <!-- deck : brand + site switch + search -->
   <header class="deck">
-    <a class="brand" href="./" aria-label="AI ROASTING 스킬 라이브러리 홈">
+    <a class="brand" href="index.html" aria-label="AI ROASTING 스킬 라이브러리 홈">
       <img class="brand-mark" src="asset/favicon-256.png" alt="AI ROASTING 로고">
       <span class="brand-txt"><b>AI ROASTING</b><small>Skill · MCP</small></span>
     </a>
     <nav class="switch" aria-label="사이트 전환">
-      <a href="./" aria-current="page">스킬 라이브러리</a>
-      <a href="mcp/">MCP 허브</a>
+      <a href="index.html" aria-current="page">스킬 라이브러리</a>
+      <a href="mcp/index.html">MCP 허브</a>
     </nav>
     <div class="deck-search" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -438,8 +445,8 @@
   <!-- legend -->
   <div class="legend" role="note" aria-label="배지 구분">
     <span class="llbl">구분</span>
-    <span class="item"><span class="led led-pick"></span><b>Editor's Pick</b> · 효용성·대표성·신뢰성 평균 4점 이상</span>
-    <span class="item"><span class="led led-lab"></span><b>AI Roasting</b> · 직접 만들어 공개한 스킬</span>
+    <button class="item" type="button" data-filter="pick" aria-pressed="false" title="Editor's Pick 카드만 보기"><span class="led led-pick"></span><b>Editor's Pick</b> · 효용성·대표성·신뢰성 평균 4점 이상</button>
+    <button class="item" type="button" data-filter="lab" aria-pressed="false" title="AI Roasting 카드만 보기"><span class="led led-lab"></span><b>AI Roasting</b> · 직접 만들어 공개한 스킬</button>
     <div class="sort" id="sort" role="group" aria-label="정렬"></div>
   </div>
 
@@ -464,21 +471,21 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
-<!-- about -->
+<!-- about : 스킬 라이브러리와 MCP 허브가 같은 내용을 쓴다. 고치면 index.html과 mcp/index.html을 함께 고친다 -->
 <dialog class="about" id="about" aria-labelledby="about-title">
   <div class="about-in">
     <div class="about-head">
-      <div><span class="eyebrow">About</span><h2 id="about-title">스킬 라이브러리 소개</h2></div>
+      <div><span class="eyebrow">About</span><h2 id="about-title">스킬 라이브러리와 MCP 허브</h2></div>
       <button class="about-close" id="about-close" type="button" aria-label="닫기">✕</button>
     </div>
     <div class="about-body">
       <p class="about-quote">"우리에게 필요한 AI 스킬은 무엇인가요?"</p>
       <p>AI 도입 미팅 때마다 가장 많이 받는 질문입니다.</p>
-      <p>그 답을 한 곳에 모아두려고 이 페이지를 만들었습니다. AI 서비스에서 바로 쓸 수 있는 스킬 중 비즈니스 리더에게 진짜 필요한 것만 엄선했습니다.</p>
-      <p>개발 전용 스킬은 최소화하고, 비즈니스·마케팅·리서치·투자 중심으로 직접 골랐습니다. 한국 특화 K-스킬도 별도 카테고리로 분리했습니다. 외부 데이터와 서비스에 연결하는 MCP 서버는 <a href="mcp/" style="color:var(--signal);font-weight:600">MCP 허브</a>에 따로 모았습니다.</p>
+      <p>그 답을 한 곳에 모아두려고 이 사이트를 만들었습니다. AI에게 일하는 방법을 가르치는 <b>스킬</b>과, AI를 외부 데이터·서비스에 연결하는 <b>MCP 커넥터</b> 가운데 비즈니스 리더에게 진짜 필요한 것만 엄선했습니다.</p>
 
       <div class="about-sec">
-        <h3><span>01</span>선정 기준</h3>
+        <h3><span>01</span>스킬 라이브러리</h3>
+        <p>스킬은 AI에게 일하는 방법을 가르쳐 주는 설치형 지침 묶음입니다. 개발 전용 스킬은 최소화하고, 비즈니스·마케팅·리서치·투자 중심으로 직접 골랐습니다. 한국 특화 스킬도 별도 카테고리로 분리했습니다.</p>
         <ul class="about-list">
           <li>비즈니스 리더가 바로 쓸 수 있을 것</li>
           <li>실무 검증이 끝났을 것</li>
@@ -487,21 +494,32 @@
       </div>
 
       <div class="about-sec">
-        <h3><span>02</span>스킬 사용법</h3>
+        <h3><span>02</span>MCP 허브</h3>
+        <p>MCP는 AI를 외부 데이터·서비스에 연결하는 표준 규격입니다. 국내 공시·법령부터 미국 SEC 공시까지, 따로 찾지 않으면 알기 어려운 한국·틈새 커넥터를 중심으로 모았습니다.</p>
         <ul class="about-list">
-          <li><span><b>스킬 선택.</b> 원하는 스킬의 GitHub 링크를 열어 SKILL.md와 함께 들어 있는 파일을 확인합니다.</span></li>
-          <li><span><b>도구의 스킬 폴더에 복사.</b> 사용하는 AI 도구(Claude Code, Codex, Antigravity 등)의 스킬 폴더에 파일을 넣으면 자동으로 인식됩니다. 도구별 경로는 각 공식 문서를 참고합니다.</span></li>
-          <li><span><b>조합해서 쓰기.</b> 스킬은 여러 개를 함께 써도 됩니다. 하네스로 팀을 짜고 워크플로우 스킬로 진행 방식을 잡으면 시너지가 커집니다.</span></li>
+          <li>출처를 보자마자 알 수 있을 것</li>
+          <li>개발자 전용이 아니라 비즈니스 리더가 쓸 것</li>
+          <li>클로드가 이미 기본으로 연결한 유명 서비스는 제외</li>
         </ul>
       </div>
 
       <div class="about-sec">
-        <h3><span>03</span>왜 만들었나요</h3>
-        <p>조직에 AI를 도입할 때 저는 늘 "전용 스킬 라이브러리부터 만드세요"라고 조언드립니다. 표준 스킬이 먼저 깔려야 도입 속도가 달라지기 때문입니다. 이 페이지는 그 레퍼런스입니다.</p>
+        <h3><span>03</span>사용법</h3>
+        <ul class="about-list">
+          <li><span><b>스킬 선택.</b> 원하는 스킬의 GitHub 링크를 열어 SKILL.md와 함께 들어 있는 파일을 확인합니다.</span></li>
+          <li><span><b>도구의 스킬 폴더에 복사.</b> 사용하는 AI 도구(Claude Code, Codex, Antigravity 등)의 스킬 폴더에 파일을 넣으면 자동으로 인식됩니다. 도구별 경로는 각 공식 문서를 참고합니다.</span></li>
+          <li><span><b>조합해서 쓰기.</b> 스킬은 여러 개를 함께 써도 됩니다. 하네스로 팀을 짜고 워크플로우 스킬로 진행 방식을 잡으면 시너지가 커집니다.</span></li>
+          <li><span><b>MCP 커넥터 연결.</b> 카드를 눌러 저장소의 설치 안내를 따릅니다. 카드의 구분(바로 사용, 로그인만 필요, API 발급 필요)으로 준비물을 먼저 확인합니다.</span></li>
+        </ul>
       </div>
 
       <div class="about-sec">
-        <h3><span>04</span>왜 'AI Roasting'인가요</h3>
+        <h3><span>04</span>왜 만들었나요</h3>
+        <p>조직에 AI를 도입할 때 저는 늘 "전용 스킬 라이브러리부터 만드세요"라고 조언드립니다. 표준 스킬이 먼저 깔려야 도입 속도가 달라지기 때문입니다. 이 사이트는 그 레퍼런스입니다.</p>
+      </div>
+
+      <div class="about-sec">
+        <h3><span>05</span>왜 'AI Roasting'인가요</h3>
         <p>좋은 원두를 고르고 로스팅해야 마실 만한 커피가 되듯, AI 스킬도 가려내고 다듬는 손이 필요합니다. 그 역할을 하겠다는 뜻입니다.</p>
       </div>
 
@@ -2024,22 +2042,6 @@
       "airoasting_lab": true
     },
     {
-      "category": "finance",
-      "name": "DART Analyst Report",
-      "repo": "airoasting/dart",
-      "author": "airoasting",
-      "stars": 26,
-      "forks": 17,
-      "added_at": "2026-05-10",
-      "desc": "이 스킬은 DART Open API의 공시 재무 데이터로 상장사의 인터랙티브 애널리스트 HTML 리포트를 자동 생성합니다. /dart 카카오 한 줄로 13인 투자자 페르소나 평가까지 담은 리포트가 나오기 때문에, 기업 분석을 빠르게 정리해야 하는 투자자·임원에게 잘 맞습니다.",
-      "tags": [
-        "#dart",
-        "#financial-report",
-        "#investor-persona"
-      ],
-      "airoasting_lab": true
-    },
-    {
       "category": "workflow",
       "name": "GBrain",
       "repo": "garrytan/gbrain",
@@ -2131,22 +2133,6 @@
       ],
       "editors_pick": true,
       "forks": 210
-    },
-    {
-      "category": "korea",
-      "name": "Kordoc",
-      "repo": "chrisryugj/kordoc",
-      "author": "chrisryugj",
-      "stars": 2554,
-      "added_at": "2026-06-29",
-      "desc": "이 스킬은 HWP·HWPX·PDF·오피스 문서를 마크다운으로 변환하고 신구대조표 작성과 양식 자동 채우기까지 처리하는 CLI·MCP 도구입니다. 관공서 공문서를 자주 다루는 한국 비즈니스 리더가 AI로 문서 작업을 자동화하기 좋습니다.",
-      "tags": [
-        "#hwp",
-        "#document-parser",
-        "#mcp",
-        "#markdown"
-      ],
-      "forks": 472
     },
     {
       "category": "harness",
@@ -2758,22 +2744,6 @@
       "forks": 155
     },
     {
-      "category": "legal",
-      "name": "Korean Law",
-      "repo": "airoasting/korean-law",
-      "author": "airoasting",
-      "stars": 0,
-      "forks": 0,
-      "added_at": "2026-10-12",
-      "desc": "이 스킬은 AI가 쓴 계약서 검토 메모나 법률 의견서의 조문·판례 인용을 법제처 원문과 대조해 통과·반려를 판정합니다. 번호는 맞지만 내용이 틀린 인용까지 시행 중인 법 기준으로 걸러 주기 때문에, AI 법무 초안을 쓰기 전에 확인하려는 리더에게 적합합니다.",
-      "tags": [
-        "#legal-citation",
-        "#korean-law",
-        "#fact-check"
-      ],
-      "airoasting_lab": true
-    },
-    {
       "category": "video",
       "name": "Claude Video",
       "repo": "bradautomates/claude-video",
@@ -2787,38 +2757,6 @@
         "#youtube"
       ],
       "forks": 1947
-    },
-    {
-      "category": "finance",
-      "name": "EDGAR SEC Filings",
-      "repo": "airoasting/edgar",
-      "author": "airoasting",
-      "stars": 0,
-      "forks": 0,
-      "added_at": "2026-11-06",
-      "desc": "이 스킬은 미국 SEC 공시에서 10-K·10-Q 실적, 8-K 가이던스, 임원 내부자 거래, 13F 기관 보유 종목을 찾아 원문 링크와 함께 한국어로 정리합니다. 코딩 없이 한국어로 묻기만 하면 되기 때문에, 미국 기업 숫자를 공시 원문에서 직접 확인하려는 리더에게 적합합니다.",
-      "tags": [
-        "#sec-filings",
-        "#us-stocks",
-        "#insider-trading"
-      ],
-      "airoasting_lab": true
-    },
-    {
-      "category": "finance",
-      "name": "JPX Earnings Tanshin",
-      "repo": "airoasting/jpx",
-      "author": "airoasting",
-      "stars": 0,
-      "forks": 0,
-      "added_at": "2026-11-06",
-      "desc": "이 스킬은 일본 상장사가 결산단신에 낸 실적과 연간 예상을 꺼내 진척률과 가이던스 수정 이력까지 한국어로 정리합니다. 일본어를 몰라도 거래처나 경쟁사의 분기 실적을 빠르게 파악할 수 있어, 일본 기업을 상대하는 경영진에게 잘 맞습니다.",
-      "tags": [
-        "#japan-stocks",
-        "#earnings",
-        "#guidance"
-      ],
-      "airoasting_lab": true
     },
     {
       "category": "writing",
@@ -2970,7 +2908,8 @@
         "#desktop-automation",
         "#cli"
       ],
-      "forks": 1787
+      "forks": 1787,
+      "editors_pick": true
     },
     {
       "category": "automation",
@@ -3018,10 +2957,85 @@
         "#cli"
       ],
       "forks": 2276
+    },
+    {
+      "category": "business",
+      "name": "PM Skills Marketplace",
+      "repo": "phuryn/pm-skills",
+      "author": "phuryn",
+      "stars": 27997,
+      "added_at": "2026-11-15",
+      "desc": "이 컬렉션은 고객 발견부터 전략, 실행, 출시, 성장까지 제품 관리 전 과정을 100개 넘는 스킬과 명령으로 묶은 마켓플레이스입니다. /discover, /write-prd 같은 명령으로 바로 시작할 수 있어, 제품 의사결정을 체계화하려는 리더에게 적합합니다.",
+      "tags": [
+        "#product-management",
+        "#prd",
+        "#strategy"
+      ],
+      "forks": 2886
+    },
+    {
+      "category": "design",
+      "name": "Archify",
+      "repo": "tt-a1i/archify",
+      "author": "tt-a1i",
+      "stars": 96550,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 아이디어나 계획, 코드 저장소를 한 문장 요청으로 눌러 볼 수 있는 인터랙티브 다이어그램으로 바꿔 줍니다. 복잡한 구조를 그림 한 장으로 설명할 수 있기 때문에, 기획안이나 시스템 구조를 공유해야 하는 리더에게 잘 어울립니다.",
+      "tags": [
+        "#diagram",
+        "#architecture",
+        "#interactive"
+      ],
+      "forks": 6598
+    },
+    {
+      "category": "design",
+      "name": "Impeccable",
+      "repo": "pbakaus/impeccable",
+      "author": "pbakaus",
+      "stars": 110463,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 AI 에이전트에게 디자인 용어를 가르쳐 polish, bolder 같은 명령으로 화면을 다듬고 critique, audit으로 검토하게 합니다. AI가 만든 티가 나는 화면을 출시 전에 걸러 주기 때문에, 디자이너 없이 품질을 챙기려는 팀에 좋습니다.",
+      "tags": [
+        "#design-review",
+        "#ui-polish",
+        "#ai-slop"
+      ],
+      "forks": 6601
+    },
+    {
+      "category": "workflow",
+      "name": "Nuwa Skill",
+      "repo": "alchaincyf/nuwa-skill",
+      "author": "alchaincyf",
+      "stars": 38328,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 이름 하나를 넣으면 그 인물의 사고방식과 의사결정 기준, 말투를 조사하고 정리해 다시 쓸 수 있는 스킬로 만들어 줍니다. 잡스나 멍거 같은 인물의 관점으로 검토받을 수 있기 때문에, 판단을 여러 시각으로 점검하려는 리더에게 적합합니다.",
+      "tags": [
+        "#persona",
+        "#mental-models",
+        "#decision"
+      ],
+      "forks": 4898
+    },
+    {
+      "category": "video",
+      "name": "Video Shotcraft",
+      "repo": "Vincentwei1021/video-shotcraft",
+      "author": "Vincentwei1021",
+      "stars": 19812,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 제품 화면을 캡처해 124개 샷 레시피로 스토리보드를 짜고 Remotion으로 홍보 영상을 만들어 줍니다. 비트에 맞춘 편집과 효과음까지 입혀 주기 때문에, 제품 소개 영상을 빠르게 내야 하는 팀에 잘 어울립니다.",
+      "tags": [
+        "#product-promo",
+        "#remotion",
+        "#motion"
+      ],
+      "forks": 1855
     }
   ]
 }
 </script>
-<script src="app.js?v=7"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>

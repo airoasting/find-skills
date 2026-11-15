@@ -71,9 +71,9 @@
   .brand-txt small{font-family:var(--mono);font-size:9.5px;font-weight:500;
     letter-spacing:.2em;color:var(--signal);text-transform:uppercase;margin-top:3px}
   /* site switch : 스킬 라이브러리 ↔ MCP 허브 (두 사이트 공통) */
-  .switch{flex:none;display:inline-flex;gap:3px;padding:3px;background:var(--rack);
+  .switch{flex:none;display:inline-grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;background:var(--rack);
     border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 3px rgba(20,30,60,.07) inset}
-  .switch a{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;
+  .switch a{display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:500;
     color:var(--ink-dim);padding:7px 13px;border-radius:7px;white-space:nowrap;transition:.14s}
   .switch a::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--line);transition:.14s}
   .switch a:hover{color:var(--ink)}
@@ -100,6 +100,7 @@
     font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink-dim);
     border:1px solid var(--line);border-radius:9px;padding:9px 13px;transition:.15s}
   .deck-link:hover{color:var(--ink);border-color:var(--ink-faint);background:var(--panel-hi)}
+  button.deck-link{font-family:var(--sans);font-size:12.5px;background:transparent;cursor:pointer}
 
   /* ---- console (hero) ---- */
   .console{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;margin-top:16px;
@@ -172,9 +173,10 @@
   .chip .cnt{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
   .chip.active{color:#1b1206;background:var(--signal);border-color:var(--signal);font-weight:600}
   .chip.active .cnt{color:rgba(27,18,6,.7)}
+  .chip:disabled{opacity:.42;cursor:default;border-color:var(--line);color:var(--ink-dim)}
 
   /* ---- auth legend ---- */
-  .legend{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:12px;padding:0 4px}
+  .legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:0 4px}
   .legend .llbl{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-faint)}
   .legend .item{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-dim)}
@@ -183,6 +185,31 @@
   .led-login{background:var(--login);box-shadow:0 0 7px var(--login)}
   .led-api{background:var(--api);box-shadow:0 0 7px var(--api)}
   .legend .item b{color:var(--ink);font-weight:600}
+  /* 범례가 곧 필터 버튼이다. 누르면 해당 카드만 남고, 다시 누르면 풀린다 (스킬 라이브러리와 공통) */
+  .legend button.item{cursor:pointer;font-family:var(--sans);background:var(--panel-lo);border:1px solid var(--line);
+    border-radius:999px;padding:6px 13px 6px 11px;text-align:left;transition:.14s}
+  .legend button.item:hover{color:var(--ink);border-color:var(--ink-faint)}
+  .legend button.item.active{color:var(--ink)}
+  .legend button.item[data-auth="none"].active{border-color:var(--live);background:#dff3ea}
+  .legend button.item[data-auth="login"].active{border-color:var(--login);background:#e3eefc}
+  .legend button.item[data-auth="api"].active{border-color:var(--api);background:var(--signal-dim)}
+  .legend button.item[data-lab].active{border-color:var(--ink);background:var(--panel)}
+  .legend .item img{width:16px;height:16px;border-radius:50%;flex:none}
+  /* AI Roasting이 직접 만든 커넥터는 왼쪽 띠 대신 진한 테두리로 구분한다 */
+  .mod.lab,.mod.lab:hover{border-color:var(--ink)}
+  .mod.lab::before{display:none}
+  /* sort (범례 줄 오른쪽, 스킬 라이브러리와 공통) */
+  .sort{margin-left:auto;display:inline-flex;gap:3px;padding:3px;background:var(--rack);
+    border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 3px rgba(20,30,60,.07) inset}
+  .sort button{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--ink-dim);cursor:pointer;white-space:nowrap;
+    background:transparent;border:0;border-radius:7px;padding:5px 11px;transition:.14s}
+  .sort button:hover{color:var(--ink)}
+  .sort button.active{color:var(--ink);font-weight:600;background:var(--panel);
+    box-shadow:0 1px 2px rgba(20,30,60,.12),0 0 0 1px var(--line)}
+  .sec-meta{flex:none;font-size:11px;font-weight:500;color:var(--ink-faint);
+    border:1px solid var(--line);border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .tag-cat{flex:0 1 auto;min-width:0;font-size:11.5px;color:var(--ink-faint);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
   /* ---- results ---- */
   .results{margin-top:20px}
@@ -268,10 +295,43 @@
   .to-top:hover{border-color:var(--signal);color:var(--signal)}
   .to-top svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2}
 
+  /* ---- about (dialog) : dialog 자체에는 display를 주지 않는다. 닫힌 상태가 보이게 된다 ---- */
+  .about{width:min(640px,calc(100% - 28px));max-height:min(86vh,820px);padding:0;color:var(--ink);
+    border:1px solid var(--line);border-radius:18px;background:var(--panel);overflow:hidden;
+    box-shadow:0 40px 80px -30px rgba(30,40,70,.45)}
+  .about::backdrop{background:rgba(27,33,48,.42);backdrop-filter:blur(3px)}
+  .about-in{display:flex;flex-direction:column;max-height:min(86vh,820px)}
+  .about-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:16px 20px;border-bottom:1px solid var(--line-soft);
+    background:linear-gradient(180deg,var(--panel-hi),var(--panel))}
+  .about-head h2{margin:4px 0 0;font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .about-close{flex:none;width:32px;height:32px;border-radius:9px;border:1px solid var(--line);
+    background:var(--panel-lo);color:var(--ink-dim);cursor:pointer;font-size:14px;line-height:1}
+  .about-close:hover{color:var(--ink);border-color:var(--ink-faint)}
+  .about-body{padding:20px 22px 22px;overflow-y:auto}
+  .about-quote{margin:0;font-size:20px;font-weight:600;line-height:1.4;letter-spacing:-.015em}
+  .about-quote + p{margin:6px 0 0;font-size:13px;color:var(--ink-faint)}
+  .about-body p{margin:12px 0 0;font-size:14.5px;line-height:1.7;color:var(--ink-dim)}
+  .about-body p b{color:var(--ink);font-weight:600}
+  .about-sec{margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft)}
+  .about-sec h3{display:flex;align-items:center;gap:10px;margin:0;font-size:15px;font-weight:600}
+  .about-sec h3 span{font-family:var(--mono);font-size:12px;color:var(--signal)}
+  .about-list{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .about-list li{display:flex;gap:10px;font-size:14px;line-height:1.6;color:var(--ink-dim)}
+  .about-list li b{color:var(--ink);font-weight:600}
+  .about-list li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;margin-top:9px;
+    background:var(--signal);box-shadow:0 0 7px var(--signal)}
+  .about-by{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    margin-top:22px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:13px;font-weight:600}
+  .about-by span:last-child{display:flex;gap:8px}
+  .about-by a{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--ink-dim);
+    border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+  .about-by a:hover{color:var(--ink);border-color:var(--ink-faint)}
+
   /* ---- responsive ---- */
   @media (max-width:900px){
     .deck{flex-wrap:wrap}
-    .deck-link{margin-left:auto}
+    .deck-link.first{margin-left:auto}
     .deck-search{order:4;flex-basis:100%}
     .console{grid-template-columns:1fr;gap:24px}
     .quick{padding-top:20px}
@@ -280,14 +340,17 @@
   @media (max-width:640px){
     .rack{padding:14px 14px 30px}
     .deck{flex-wrap:wrap}
-    .brand{order:1}.deck-link{order:2;margin-left:auto}
-    .switch{order:3;flex-basis:100%;display:flex}.switch a{flex:1;justify-content:center}
+    .deck{gap:10px 8px}
+    .brand{order:1}.deck-link{order:2;padding:8px 10px}
+    .brand-txt b{font-size:16px}
+    .switch{order:3;flex-basis:100%;display:grid}
     .deck-search{order:4;flex-basis:100%}
     .console{padding:22px 18px}
     .h1{font-size:31px}
     .grid{grid-template-columns:1fr}
     .mod-desc{-webkit-line-clamp:3;min-height:0}
     .search-kbd{display:none}
+    .sort{margin-left:0}
     .meters{flex:none;height:120px;min-height:0}
   }
 </style>
@@ -298,13 +361,13 @@
 
   <!-- deck : brand + precision search -->
   <header class="deck">
-    <a class="brand" href="../" aria-label="AI ROASTING MCP 허브 홈">
+    <a class="brand" href="../index.html" aria-label="AI ROASTING MCP 허브 홈">
       <img class="brand-mark" src="../asset/favicon-256.png" alt="AI ROASTING 로고">
       <span class="brand-txt"><b>AI ROASTING</b><small>Skill · MCP</small></span>
     </a>
     <nav class="switch" aria-label="사이트 전환">
-      <a href="../">스킬 라이브러리</a>
-      <a href="./" aria-current="page">MCP 허브</a>
+      <a href="../index.html">스킬 라이브러리</a>
+      <a href="index.html" aria-current="page">MCP 허브</a>
     </nav>
     <div class="deck-search" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -312,6 +375,7 @@
       <button class="search-clear" id="clear" hidden aria-label="검색 지우기">✕</button>
       <kbd class="search-kbd" id="kbd-hint">/</kbd>
     </div>
+    <button class="deck-link first" id="about-open" type="button">소개</button>
     <a class="deck-link" href="https://github.com/airoasting/find-skills" target="_blank" rel="noopener">GitHub ↗</a>
   </header>
 
@@ -339,9 +403,11 @@
   <!-- auth legend -->
   <div class="legend" role="note" aria-label="인증 구분">
     <span class="llbl">구분</span>
-    <span class="item"><span class="led led-none"></span><b>바로 사용</b> · 설치하면 즉시 동작</span>
-    <span class="item"><span class="led led-login"></span><b>로그인만 필요</b> · 서비스 계정으로 인증</span>
-    <span class="item"><span class="led led-api"></span><b>API 발급 필요</b> · 무료 키 신청 후 사용</span>
+    <button class="item" type="button" data-auth="none" aria-pressed="false" title="바로 사용 카드만 보기"><span class="led led-none"></span><b>바로 사용</b> · 설치하면 즉시 동작</button>
+    <button class="item" type="button" data-auth="login" aria-pressed="false" title="로그인만 필요한 카드만 보기"><span class="led led-login"></span><b>로그인만 필요</b> · 서비스 계정으로 인증</button>
+    <button class="item" type="button" data-auth="api" aria-pressed="false" title="API 발급이 필요한 카드만 보기"><span class="led led-api"></span><b>API 발급 필요</b> · 무료 키 신청 후 사용</button>
+    <button class="item" type="button" data-lab aria-pressed="false" title="AI Roasting이 만든 커넥터만 보기"><img src="../asset/favicon-256.png" alt=""><b>AI Roasting</b> · 직접 만들어 공개한 커넥터</button>
+    <div class="sort" id="sort" role="group" aria-label="정렬"></div>
   </div>
 
   <!-- results -->
@@ -363,9 +429,72 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
+<!-- about : 스킬 라이브러리와 MCP 허브가 같은 내용을 쓴다. 고치면 index.html과 mcp/index.html을 함께 고친다 -->
+<dialog class="about" id="about" aria-labelledby="about-title">
+  <div class="about-in">
+    <div class="about-head">
+      <div><span class="eyebrow">About</span><h2 id="about-title">스킬 라이브러리와 MCP 허브</h2></div>
+      <button class="about-close" id="about-close" type="button" aria-label="닫기">✕</button>
+    </div>
+    <div class="about-body">
+      <p class="about-quote">"우리에게 필요한 AI 스킬은 무엇인가요?"</p>
+      <p>AI 도입 미팅 때마다 가장 많이 받는 질문입니다.</p>
+      <p>그 답을 한 곳에 모아두려고 이 사이트를 만들었습니다. AI에게 일하는 방법을 가르치는 <b>스킬</b>과, AI를 외부 데이터·서비스에 연결하는 <b>MCP 커넥터</b> 가운데 비즈니스 리더에게 진짜 필요한 것만 엄선했습니다.</p>
+
+      <div class="about-sec">
+        <h3><span>01</span>스킬 라이브러리</h3>
+        <p>스킬은 AI에게 일하는 방법을 가르쳐 주는 설치형 지침 묶음입니다. 개발 전용 스킬은 최소화하고, 비즈니스·마케팅·리서치·투자 중심으로 직접 골랐습니다. 한국 특화 스킬도 별도 카테고리로 분리했습니다.</p>
+        <ul class="about-list">
+          <li>비즈니스 리더가 바로 쓸 수 있을 것</li>
+          <li>실무 검증이 끝났을 것</li>
+          <li>한국 맥락에 맞을 것</li>
+        </ul>
+      </div>
+
+      <div class="about-sec">
+        <h3><span>02</span>MCP 허브</h3>
+        <p>MCP는 AI를 외부 데이터·서비스에 연결하는 표준 규격입니다. 국내 공시·법령부터 미국 SEC 공시까지, 따로 찾지 않으면 알기 어려운 한국·틈새 커넥터를 중심으로 모았습니다.</p>
+        <ul class="about-list">
+          <li>출처를 보자마자 알 수 있을 것</li>
+          <li>개발자 전용이 아니라 비즈니스 리더가 쓸 것</li>
+          <li>클로드가 이미 기본으로 연결한 유명 서비스는 제외</li>
+        </ul>
+      </div>
+
+      <div class="about-sec">
+        <h3><span>03</span>사용법</h3>
+        <ul class="about-list">
+          <li><span><b>스킬 선택.</b> 원하는 스킬의 GitHub 링크를 열어 SKILL.md와 함께 들어 있는 파일을 확인합니다.</span></li>
+          <li><span><b>도구의 스킬 폴더에 복사.</b> 사용하는 AI 도구(Claude Code, Codex, Antigravity 등)의 스킬 폴더에 파일을 넣으면 자동으로 인식됩니다. 도구별 경로는 각 공식 문서를 참고합니다.</span></li>
+          <li><span><b>조합해서 쓰기.</b> 스킬은 여러 개를 함께 써도 됩니다. 하네스로 팀을 짜고 워크플로우 스킬로 진행 방식을 잡으면 시너지가 커집니다.</span></li>
+          <li><span><b>MCP 커넥터 연결.</b> 카드를 눌러 저장소의 설치 안내를 따릅니다. 카드의 구분(바로 사용, 로그인만 필요, API 발급 필요)으로 준비물을 먼저 확인합니다.</span></li>
+        </ul>
+      </div>
+
+      <div class="about-sec">
+        <h3><span>04</span>왜 만들었나요</h3>
+        <p>조직에 AI를 도입할 때 저는 늘 "전용 스킬 라이브러리부터 만드세요"라고 조언드립니다. 표준 스킬이 먼저 깔려야 도입 속도가 달라지기 때문입니다. 이 사이트는 그 레퍼런스입니다.</p>
+      </div>
+
+      <div class="about-sec">
+        <h3><span>05</span>왜 'AI Roasting'인가요</h3>
+        <p>좋은 원두를 고르고 로스팅해야 마실 만한 커피가 되듯, AI 스킬도 가려내고 다듬는 손이 필요합니다. 그 역할을 하겠다는 뜻입니다.</p>
+      </div>
+
+      <div class="about-by">
+        <span>강정구 · Jayden Kang</span>
+        <span>
+          <a href="https://www.linkedin.com/in/jayden-kang" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://www.facebook.com/jayden.kang" target="_blank" rel="noopener">Facebook ↗</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
 <script>
 /* [name, mono, category, badge(데이터 출처), stars, forks, desc, github repo/경로, auth]
-   stars/forks: GitHub API 실측값 (2026-07-16 기준, korean-law-mcp·kordoc·excel-mcp-server는 2026-11-15)
+   stars/forks: GitHub API 실측값 (2026-07-16 기준, korean-law-mcp·kordoc·excel-mcp-server와 airoasting 4건은 2026-11-15)
    auth — api: API 키 발급 필요 · login: 서비스 계정 로그인/토큰만 필요 · none: 바로 사용
    대상 독자: 비즈니스 리더 — 개발자 전용 도구(클라우드 인프라·DB·코딩 에이전트류)는 등재하지 않는다
    분류 원칙(MECE): 업무 도메인 단일 축 10개. 지역 구분은 카테고리가 아니라 출처 배지로 표현한다. */
@@ -374,6 +503,7 @@ const DATA = [
   ["korean-law-mcp","K","법률·특허","법제처",2873,591,"법령·판례·행정규칙 검색·조회·분석","chrisryugj/korean-law-mcp","api"],
   ["iros-registry-automation","I","법률·특허","인터넷등기소",6244,717,"법인·부동산 등기부등본 열람 자동화 스킬","NomaDamas/k-skill/tree/main/iros-registry-automation","login"],
   ["court-payment-order-assistant","C","법률·특허","법원 전자소송",6244,717,"지급명령 신청 정보 정리와 초안 작성 스킬","NomaDamas/k-skill/tree/main/court-payment-order-assistant","login"],
+  ["korean-law","K","법률·특허","법제처",1,0,"AI가 쓴 법률 문서의 조문·판례 인용을 법제처 원문과 대조해 검증하는 스킬+MCP","airoasting/korean-law","api"],
   ["assembly-api-mcp","A","법률·특허","국회",81,30,"국회 의안·회의록·청원 등 276개 API 접근","hollobit/assembly-api-mcp","api"],
   ["korean-patent-mcp","K","법률·특허","특허청",40,9,"특허·실용신안·상표·디자인 검색 7개 도구","chrisryugj/korean-patent-mcp","api"],
   ["us-legal-mcp","U","법률·특허","미국 의회",34,10,"미국 연방 법률·의회 법안 정보 조회","JamesANZ/us-legal-mcp","api"],
@@ -383,7 +513,9 @@ const DATA = [
   ["sec-edgar-mcp","S","금융·투자","SEC EDGAR",333,92,"미국 증권거래위원회 전자공시에서 상장사 공시·재무 조회","stefanoamorelli/sec-edgar-mcp","none"],
   ["korea-stock-mcp","K","금융·투자","금융감독원·한국거래소",157,34,"금융감독원 전자공시와 한국거래소 시세로 한국 주식 분석","jjlabsio/korea-stock-mcp","api"],
   ["korean-dart-mcp","K","금융·투자","금융감독원",83,14,"금융감독원 전자공시·재무제표·지분 정보를 15개 도구로 조회","chrisryugj/korean-dart-mcp","api"],
-  ["dart","D","금융·투자","금융감독원",22,15,"상장사 실적을 애널리스트급 HTML 리포트로 생성하는 스킬","airoasting/dart","api"],
+  ["dart","D","금융·투자","금융감독원",27,17,"상장사 실적 리포트 생성과 공시 숫자 조회를 함께 하는 스킬+MCP","airoasting/dart","api"],
+  ["edgar","E","금융·투자","SEC EDGAR",0,0,"미국 상장사 실적·가이던스·내부자 거래·기관 보유를 한국어로 조회하는 스킬+MCP","airoasting/edgar","none"],
+  ["jpx","J","금융·투자","일본거래소",0,0,"일본 상장사 결산단신 실적과 연간 예상, 진척률을 한국어로 정리하는 스킬+MCP","airoasting/jpx","none"],
   ["korea-finance-mcp","K","금융·투자","한국은행·국토부·금감원 외",54,8,"거시지표·실거래가·공시·시세 통합 조회","emceeKim/korea-finance-mcp","api"],
   ["KIS_MCP_Server","K","금융·투자","한국투자증권",25,17,"국내외 주식 시세 조회와 주문 기능","migusdn/KIS_MCP_Server","api"],
   ["quickbooks-online-mcp","Q","금융·투자","QuickBooks",318,178,"인튜이트 퀵북스 회계장부·인보이스·거래 조회","intuit/quickbooks-online-mcp-server","api"],
@@ -447,7 +579,11 @@ const CATS = ["법률·특허","금융·투자","경제·통계","부동산","�
 const CAT_SHORT = {"법률·특허":"법률","금융·투자":"금융","경제·통계":"경제","부동산":"부동산","지도·교통":"교통","검색·리서치":"검색","생활·여행":"생활","채용·HR":"채용","영업·CRM":"영업","문서·협업":"문서"};
 const QUICK_PICKS = ["공시","법령","부동산","검색","날씨"];
 
-const state = { query: "", category: "전체" }; // 정렬은 스타순 고정
+/* auth — 범례 버튼으로 거르는 인증 구분 (all / none / login / api)
+   sort — cat: 카테고리 섹션으로 묶고 섹션 안은 스타순 · stars / forks: 섹션 없이 한 목록.
+   한 목록일 때 카테고리 칩은 이동이 아니라 필터로 동작한다 */
+const SORTS = { cat: "카테고리순", stars: "스타순", forks: "포크순" };
+const state = { query: "", category: "전체", auth: "all", lab: false, sort: "cat" };
 
 const fmtK = n => n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, "") + "k" : String(n);
 const esc = s => s.replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
@@ -465,9 +601,10 @@ function enrich(row) {
   const owner = repo.split("/")[0];
   return {
     name, mono, category, desc, owner, auth,
+    lab: owner === "airoasting", // AI Roasting이 직접 만든 커넥터
     authLabel: AUTH_LABELS[auth],
     url: "https://github.com/" + repo,
-    avatar: "https://github.com/" + owner + ".png?size=96",
+    avatar: owner === "airoasting" ? "../asset/favicon-256.png" : "https://github.com/" + owner + ".png?size=96",
     badge,
     starStr: fmtK(stars), forkStr: fmtK(forks),
     _stars: stars, _forks: forks,
@@ -494,12 +631,31 @@ function renderMeters() {
 }
 
 /* ---- render ---- */
+const inAuth = items => items.filter(m => (state.auth === "all" || m.auth === state.auth) && (!state.lab || m.lab));
+
 function renderChips() {
+  const pool = inAuth(ALL);
   document.getElementById("chips").innerHTML = ["전체", ...CATS].map(label => {
-    const cnt = label === "전체" ? ALL.length : (CAT_COUNTS[label] || 0);
+    const cnt = label === "전체" ? pool.length : pool.filter(m => m.category === label).length;
     const on = state.category === label;
-    return `<button class="chip${on ? " active" : ""}" data-cat="${esc(label)}" aria-pressed="${on}">${esc(label)}<span class="cnt">${cnt}</span></button>`;
+    return `<button class="chip${on ? " active" : ""}" data-cat="${esc(label)}" aria-pressed="${on}"${cnt ? "" : " disabled"}>${esc(label)}<span class="cnt">${cnt}</span></button>`;
   }).join("");
+}
+
+function renderLegendSort() {
+  document.querySelectorAll(".legend [data-auth]").forEach(b => {
+    const on = state.auth === b.dataset.auth;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-pressed", on);
+  });
+  const labBtn = document.querySelector(".legend [data-lab]");
+  labBtn.classList.toggle("active", state.lab);
+  labBtn.setAttribute("aria-pressed", state.lab);
+  document.querySelectorAll("#sort button").forEach(b => {
+    const on = state.sort === b.dataset.sort;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-pressed", on);
+  });
 }
 
 function renderSearchAffordance() {
@@ -508,9 +664,9 @@ function renderSearchAffordance() {
   document.getElementById("kbd-hint").hidden = hasQuery;
 }
 
-function modHTML(m) {
+function modHTML(m, showCat) {
   return `
-  <a class="mod" href="${m.url}" target="_blank" rel="noopener">
+  <a class="mod${m.lab ? " lab" : ""}" href="${m.url}" target="_blank" rel="noopener">
     <span class="mod-head">
       <span class="jack"><span class="jack-mono">${esc(m.mono)}</span><img src="${m.avatar}" alt="" loading="lazy" onerror="this.remove()"></span>
       <span class="mod-ht">
@@ -524,6 +680,7 @@ function modHTML(m) {
     <span class="mod-desc" title="${esc(m.desc)}">${esc(m.desc)}</span>
     <span class="mod-foot">
       <span class="auth" title="${AUTH_HINTS[m.auth]}"><span class="led led-${m.auth}"></span>${m.authLabel}</span>
+      ${showCat ? `<span class="tag-cat">${esc(m.category)}</span>` : ""}
       <span class="stats">
         <span class="star" title="GitHub 스타">${ICON_STAR}${m.starStr}</span>
         <span class="fork" title="GitHub 포크">${ICON_FORK}${m.forkStr}</span>
@@ -536,23 +693,41 @@ function modHTML(m) {
 function renderResults() {
   const q = state.query.trim().toLowerCase();
 
-  let items = ALL;
+  let items = inAuth(ALL);
   /* 이름·설명뿐 아니라 출처 배지("토스증권")와 제작자("@chrisryugj")로도 찾는다 */
   if (q) items = items.filter(m => (m.name + " " + m.desc + " " + m.badge + " " + m.owner).toLowerCase().includes(q));
-  items = items.slice().sort((a, b) => b._stars - a._stars); // 스타순 고정
+  const flat = state.sort !== "cat";
+  if (flat && state.category !== "전체") items = items.filter(m => m.category === state.category);
+  const key = state.sort === "forks" ? "_forks" : "_stars";
+  items = items.slice().sort((a, b) => b[key] - a[key]);
 
-  const sections = CATS.map(name => ({ name, items: items.filter(m => m.category === name) }))
+  const sections = flat ? (items.length ? [1] : []) : CATS.map(name => ({ name, items: items.filter(m => m.category === name) }))
     .filter(s => s.items.length);
 
   const el = document.getElementById("results");
   if (!sections.length) {
     el.innerHTML = `
       <div class="empty">
-        <div class="msg">“${esc(state.query)}”에 해당하는 커넥터가 없습니다.</div>
+        <div class="msg">${state.query.trim() ? `“${esc(state.query)}”에 해당하는 커넥터가 없습니다.` : "조건에 맞는 커넥터가 없습니다."}</div>
         <div class="sub">다른 검색어를 입력하거나 검색을 초기화하세요.</div>
         <button id="reset">검색 초기화</button>
       </div>`;
-    document.getElementById("reset").addEventListener("click", clearSearch);
+    document.getElementById("reset").addEventListener("click", () => { state.auth = "all"; state.lab = false; state.category = "전체"; render(); clearSearch(); });
+    return;
+  }
+  if (flat) {
+    const c = state.category !== "전체" ? state.category : "";
+    el.innerHTML = `
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-idx">${state.sort === "forks" ? "⑂" : "★"}</span>
+        <h2>${SORTS[state.sort]}</h2>
+        ${c ? `<span class="sec-meta">${esc(c)}</span>` : ""}
+        <span class="sec-rule"></span>
+        <span class="sec-count">${items.length} connectors</span>
+      </div>
+      <div class="grid">${items.map(m => modHTML(m, !c)).join("")}</div>
+    </section>`;
     return;
   }
   el.innerHTML = sections.map(sec => `
@@ -563,11 +738,12 @@ function renderResults() {
         <span class="sec-rule"></span>
         <span class="sec-count">${sec.items.length} connectors</span>
       </div>
-      <div class="grid">${sec.items.map(modHTML).join("")}</div>
+      <div class="grid">${sec.items.map(m => modHTML(m)).join("")}</div>
     </section>`).join("");
 }
 
 function render() {
+  renderLegendSort();
   renderChips();
   renderQuick();
   renderSearchAffordance();
@@ -605,8 +781,9 @@ window.addEventListener("keydown", e => {
 /* 카테고리 칩·스펙트럼 미터: 해당 섹션으로 부드럽게 스크롤 */
 function jumpTo(cat) {
   state.category = cat;
-  renderChips();
-  const target = cat === "전체"
+  const flat = state.sort !== "cat";
+  if (flat) render(); else renderChips();
+  const target = (flat || cat === "전체")
     ? document.getElementById("results")
     : document.getElementById("sec-" + CATS.indexOf(cat));
   if (!target) return;
@@ -619,11 +796,51 @@ function jumpTo(cat) {
 }
 document.getElementById("chips").addEventListener("click", e => {
   const btn = e.target.closest(".chip");
-  if (btn) jumpTo(btn.dataset.cat);
+  if (btn && !btn.disabled) jumpTo(btn.dataset.cat);
 });
 document.getElementById("meters").addEventListener("click", e => {
   const btn = e.target.closest(".meter");
-  if (btn) { if (state.query.trim()) clearSearch(); jumpTo(btn.dataset.cat); }
+  /* 미터 숫자는 전체 기준이므로 검색과 인증 필터를 풀고 이동한다 */
+  if (btn) { if (state.auth !== "all" || state.lab) { state.auth = "all"; state.lab = false; render(); } if (state.query.trim()) clearSearch(); jumpTo(btn.dataset.cat); }
+});
+
+/* 범례 버튼: 누르면 그 인증 구분만 남기고, 다시 누르면 푼다 */
+document.querySelectorAll(".legend [data-auth]").forEach(b => {
+  b.addEventListener("click", () => {
+    state.auth = state.auth === b.dataset.auth ? "all" : b.dataset.auth;
+    state.category = "전체";
+    render();
+  });
+});
+
+document.querySelector(".legend [data-lab]").addEventListener("click", () => {
+  state.lab = !state.lab;
+  state.category = "전체";
+  render();
+});
+
+/* about */
+(() => {
+  const about = document.getElementById("about");
+  document.getElementById("about-open").addEventListener("click", () => about.showModal());
+  document.getElementById("about-close").addEventListener("click", () => about.close());
+  about.addEventListener("click", e => { if (e.target === about) about.close(); }); // 바깥(backdrop) 클릭
+})();
+
+/* 정렬: 카테고리순 / 스타순 / 포크순 */
+Object.entries(SORTS).forEach(([id, label]) => {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.dataset.sort = id;
+  b.textContent = label;
+  b.addEventListener("click", () => {
+    if (state.sort === id) return;
+    state.sort = id;
+    state.category = "전체"; // 스크롤 위치로 켜져 있던 칩이 필터로 넘어가지 않게 한다
+    render();
+    if (document.getElementById("results").getBoundingClientRect().top < 0) jumpTo("전체");
+  });
+  document.getElementById("sort").appendChild(b);
 });
 
 /* quick picks : 누르면 그 키워드로 필터 + 버튼 점등, 다시 누르면 해제 */
@@ -651,7 +868,7 @@ function renderQuick() {
 
 /* ---- scrollspy : 화면에 보이는 섹션과 카테고리 칩을 동기화 ---- */
 function syncChipToScroll() {
-  if (state.query.trim()) return; // 검색 중에는 칩 상태를 건드리지 않는다
+  if (state.query.trim() || state.sort !== "cat") return; // 검색 중이거나 한 목록일 때는 칩 상태를 건드리지 않는다
   const panels = [...document.querySelectorAll("#results .sec")];
   if (!panels.length) return;
   const line = document.getElementById("catalog").offsetHeight + 24; // 스티키 채널바 바로 아래 기준선

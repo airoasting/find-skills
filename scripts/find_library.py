@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""find-skills 3단계: AI Roasting 스킬 라이브러리를 매칭용 압축 목록으로 출력한다.
+"""find-skills 3단계: AI Roasting 스킬 라이브러리와 MCP 허브를 매칭용 압축 목록으로 출력한다.
 
 skills.json(약 100KB)을 통째로 읽지 않고, 매칭에 필요한 필드만 한 줄씩 뽑는다.
 순위는 매기지 않는다. 어떤 카드가 맞는지는 이 출력을 읽은 에이전트가 판단한다.
@@ -10,8 +10,14 @@ skills.json(약 100KB)을 통째로 읽지 않고, 매칭에 필요한 필드만
   python3 scripts/find_library.py --grep "hwp|한글"      # 이름·태그·설명에 이 말이 든 카드만(정규식)
   python3 scripts/find_library.py --pick                # 에디터픽만
   python3 scripts/find_library.py --full                # 설명 두 문장 모두 (기본은 첫 문장만)
+  python3 scripts/find_library.py --mcp                 # MCP 허브 커넥터만
+  python3 scripts/find_library.py --no-mcp              # 스킬 카드만
 
---grep은 순위가 아니라 회수 보조다. 맞는 카테고리가 분명하지 않을 때 150장을 눈으로 훑는 대신 쓴다.
+스킬 카드 아래에 MCP 허브 커넥터(외부 데이터·서비스에 연결하는 MCP 서버)를 함께 낸다.
+--grep은 두 목록에 똑같이 걸린다. --cat, --pick은 스킬 카드에만 있는 구분이라, 이 둘을 쓰면
+MCP 목록은 --grep이 함께 있을 때만 나온다.
+
+--grep은 순위가 아니라 회수 보조다. 맞는 카테고리가 분명하지 않을 때 카드를 눈으로 다 훑는 대신 쓴다.
 걸리지 않은 카드가 맞을 수도 있으니, 걸린 카드의 카테고리는 --cat으로 한 번 더 본다.
 
 출력의 SELF 표시는 AI Roasting이 직접 만든 스킬이다. 큐레이터 자신의 스킬이므로 추천할 때 밝힌다.
@@ -33,6 +39,10 @@ CACHE_TTL = 3600
 # 로컬 사본: 스킬 폴더(scripts/의 부모) 안의 docs/skills.json. 저장소를 통째로 설치하면 함께 들어온다
 _HERE = pathlib.Path(__file__).resolve()
 LOCAL = _HERE.parent.parent / "docs" / "skills.json"
+# MCP 허브: docs/mcp/index.html의 DATA 배열을 scripts/sync-mcp.py가 내보낸 사본
+MCP_URL = "https://skill.airoasting.com/mcp.json"
+MCP_CACHE = pathlib.Path(tempfile.gettempdir()) / "find-skills-mcp.json"
+MCP_LOCAL = _HERE.parent.parent / "docs" / "mcp.json"
 
 
 def load(source=None):
@@ -58,6 +68,46 @@ def load(source=None):
         if LOCAL.exists():
             return json.loads(LOCAL.read_text()), f"{LOCAL} (원격 실패: {e})"
         raise RuntimeError(f"라이브러리를 읽지 못했다: {e}")
+
+
+def load_mcp():
+    """(MCP 허브 데이터, 출처 설명). load()와 같은 순서: 1시간 캐시 → 라이브 → 로컬 사본."""
+    try:
+        if MCP_CACHE.exists() and time.time() - MCP_CACHE.stat().st_mtime < CACHE_TTL:
+            return json.loads(MCP_CACHE.read_text()), f"{MCP_URL} (캐시)"
+    except Exception:
+        pass
+    try:
+        data = json.load(urllib.request.urlopen(MCP_URL, timeout=20))
+        try:
+            MCP_CACHE.write_text(json.dumps(data, ensure_ascii=False))
+        except Exception:
+            pass
+        return data, MCP_URL
+    except Exception as e:
+        if MCP_LOCAL.exists():
+            return json.loads(MCP_LOCAL.read_text()), f"{MCP_LOCAL} (원격 실패: {e})"
+        raise RuntimeError(f"MCP 허브를 읽지 못했다: {e}")
+
+
+def print_mcp(pat):
+    """MCP 허브 커넥터를 한 줄씩. 읽지 못해도 스킬 목록은 이미 나갔으므로 이유만 적고 넘어간다."""
+    try:
+        data, src = load_mcp()
+    except Exception as e:
+        print(f"\n# MCP 허브 읽기 실패: {e}. '검색 범위' 줄에 그렇게 적는다")
+        return
+    rows = data.get("connectors", [])
+    hit = [c for c in rows if not pat or pat.search(" ".join(
+        [c["name"], c["repo"], c.get("source", ""), c.get("category", ""), c.get("desc", "")]))]
+    print(f"\n# mcp source: {src}")
+    print(f"# MCP 허브 전체 {len(rows)}개" + (f", 이 출력 {len(hit)}개 (grep={pat.pattern})" if pat else "")
+          + ". 스킬이 아니라 MCP 서버다. 설치는 npx skills add가 아니라 각 저장소의 연결 안내를 따른다")
+    print(f"# mcp ({len(hit)}): category | name | repo | stars | 출처 | 준비물 | desc | url   (SELF = AI Roasting 자체 제작)")
+    for c in hit:
+        mark = " SELF" if is_self(c["repo"]) else ""
+        print(f"{c.get('category', '')} | {c['name']} | {c['repo']} | ★{c.get('stars', '?')} | {c.get('source', '')}"
+              f" | {c.get('auth_label', c.get('auth', ''))}{mark} | {c.get('desc', '')} | {c.get('url', '')}")
 
 
 def repo_index():
@@ -89,9 +139,15 @@ def main():
     ap.add_argument("--grep", help="이름·저장소·태그·설명에 이 정규식이 든 카드만 (대소문자 무시)")
     ap.add_argument("--pick", action="store_true", help="editors_pick만")
     ap.add_argument("--full", action="store_true", help="설명 두 문장을 모두 출력")
+    ap.add_argument("--mcp", action="store_true", help="MCP 허브 커넥터만 출력")
+    ap.add_argument("--no-mcp", action="store_true", help="MCP 허브 커넥터를 내지 않는다")
     ap.add_argument("--source", help="skills.json 경로나 URL (기본: 라이브 사이트)")
     a = ap.parse_args()
 
+    pat = re.compile(a.grep, re.I) if a.grep else None
+    if a.mcp:
+        print_mcp(pat)
+        return
     try:
         data, src = load(a.source)
     except Exception as e:
@@ -102,8 +158,6 @@ def main():
     bad = wanted - set(cats)
     if bad:
         sys.exit(f"없는 카테고리 id: {', '.join(sorted(bad))}. 가능한 값: {', '.join(cats)}")
-    pat = re.compile(a.grep, re.I) if a.grep else None
-
     total = len(data["skills"])
     skills = [
         s for s in data["skills"]
@@ -130,6 +184,9 @@ def main():
     if pat and skills:
         hit = sorted({s["category"] for s in skills})
         print(f"\n# --grep은 회수 보조다. 걸린 카드의 카테고리({', '.join(hit)})를 --cat으로 한 번 더 훑으면 놓친 카드를 줄인다")
+    # --cat, --pick은 스킬 카드에만 있는 구분이다. 그것만으로 좁혔을 때는 MCP 목록을 붙이지 않는다
+    if not a.no_mcp and (pat or not (wanted or a.pick)):
+        print_mcp(pat)
 
 
 if __name__ == "__main__":

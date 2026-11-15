@@ -32,21 +32,22 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 - **클로드 기본 커넥터 제외** — 이미 연결된 유명 SaaS는 넣지 않음
 - **스타·포크는 GitHub API 실측값만** — 지어내지 않음
 
-## 커넥터 61선 (카테고리별)
+## 커넥터 64선 (카테고리별)
 
 각 카드가 연결되는 오픈소스 저장소입니다. 스타순 정렬. `바로 사용` = 설치 즉시 / `로그인` = 서비스 계정 / `API` = 무료 키 발급.
 
-### 법률·특허 (7)
+### 법률·특허 (8)
 
 - **인터넷등기소** · [iros-registry-automation](https://github.com/NomaDamas/k-skill/tree/main/iros-registry-automation) — 법인·부동산 등기부등본 열람 자동화 스킬 `로그인`
 - **법원 전자소송** · [court-payment-order-assistant](https://github.com/NomaDamas/k-skill/tree/main/court-payment-order-assistant) — 지급명령 신청 정보 정리와 초안 작성 스킬 `로그인`
 - **법제처** · [korean-law-mcp](https://github.com/chrisryugj/korean-law-mcp) — 법령·판례·행정규칙 검색·조회·분석 `API`
+- **법제처** · [korean-law](https://github.com/airoasting/korean-law) — AI가 쓴 법률 문서의 조문·판례 인용을 법제처 원문과 대조해 검증하는 스킬+MCP `API`
 - **국회** · [assembly-api-mcp](https://github.com/hollobit/assembly-api-mcp) — 국회 의안·회의록·청원 등 276개 API 접근 `API`
 - **특허청** · [korean-patent-mcp](https://github.com/chrisryugj/korean-patent-mcp) — 특허·실용신안·상표·디자인 검색 7개 도구 `API`
 - **미국 의회** · [us-legal-mcp](https://github.com/JamesANZ/us-legal-mcp) — 미국 연방 법률·의회 법안 정보 조회 `API`
 - **식약처·복지부** · [koregx](https://github.com/DrMoony/koregx) — 헬스케어 법령·행정해석·건강보험심사평가원 결정 통합 조회 `API`
 
-### 금융·투자 (11)
+### 금융·투자 (13)
 
 - **토스증권** · [toss-securities](https://github.com/NomaDamas/k-skill/tree/main/toss-securities) — 계좌·주식 정보 조회 공식 Open API 스킬 `로그인`
 - **팝빌** · [popbill](https://github.com/NomaDamas/k-skill/tree/main/popbill) — 전자세금계산서·현금영수증 등 업무 API 스킬 `API`
@@ -58,7 +59,9 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 - **한국은행·국토부·금감원 외** · [korea-finance-mcp](https://github.com/emceeKim/korea-finance-mcp) — 거시지표·실거래가·공시·시세 통합 조회 `API`
 - **포트원** · [portone-mcp-server](https://github.com/portone-io/mcp-server) — 결제·거래 내역 조회 공식 MCP 서버 `API`
 - **한국투자증권** · [KIS_MCP_Server](https://github.com/migusdn/KIS_MCP_Server) — 국내외 주식 시세 조회와 주문 기능 `API`
-- **금융감독원** · [dart](https://github.com/airoasting/dart) — 상장사 실적을 애널리스트급 HTML 리포트로 생성하는 스킬 `API`
+- **금융감독원** · [dart](https://github.com/airoasting/dart) — 상장사 실적 리포트 생성과 공시 숫자 조회를 함께 하는 스킬+MCP `API`
+- **SEC EDGAR** · [edgar](https://github.com/airoasting/edgar) — 미국 상장사 실적·가이던스·내부자 거래·기관 보유를 한국어로 조회하는 스킬+MCP `바로 사용`
+- **일본거래소** · [jpx](https://github.com/airoasting/jpx) — 일본 상장사 결산단신 실적과 연간 예상, 진척률을 한국어로 정리하는 스킬+MCP `바로 사용`
 
 ### 경제·통계 (5)
 
@@ -152,6 +155,8 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 
 ### v1.2 — 2026-11-15
 
+- AI Roasting이 만든 커넥터 3건(edgar, jpx, korean-law) 추가(64건). 범례에 AI Roasting 버튼, 인증 구분 필터 버튼, 카테고리순·스타순·포크순 정렬 버튼, 소개 창을 넣었습니다.
+- find-skills가 이 카탈로그도 함께 찾습니다(`docs/mcp.json`).
 - 스킬 라이브러리 저장소로 이전. 주소는 `skill.airoasting.com/mcp/`이고, 상단 메뉴는 같은 사이트 안에서 오갑니다.
 
 ### v1.1 — 2026-11-15

@@ -2,7 +2,7 @@
 
 # find-skills
 
-**v1.2.1** · MIT · Claude Code, Codex
+**v1.3.0** · MIT · Claude Code, Codex
 
 "회의록 정리하는 스킬 있어?" 하고 물으면 쓸 만한 스킬을 찾아 직접 열어 본 뒤 추천하고, 원하면 설치까지 해 주는 에이전트 스킬입니다.
 
@@ -10,7 +10,7 @@
 
 ## 이렇게 찾습니다
 
-먼저 이미 깔려 있는 스킬부터 봅니다. 거기서 해결되면 새로 깔 이유가 없습니다. 없으면 비즈니스 리더용으로 골라 둔 [AI Roasting 스킬 라이브러리](https://skill.airoasting.com/)를 보고, 그래도 없으면 오픈 생태계인 [skills.sh](https://skills.sh/)까지 넓혀 찾습니다.
+먼저 이미 깔려 있는 스킬부터 봅니다. 거기서 해결되면 새로 깔 이유가 없습니다. 없으면 비즈니스 리더용으로 골라 둔 [AI Roasting 스킬 라이브러리](https://skill.airoasting.com/)와 [MCP 허브](https://skill.airoasting.com/mcp/)를 보고, 그래도 없으면 오픈 생태계인 [skills.sh](https://skills.sh/)까지 넓혀 찾습니다.
 
 후보가 나와도 바로 권하지 않습니다. 저장소를 열어 SKILL.md 본문과 스크립트를 읽고, 복사본은 아닌지, 설치하고 나서 따로 챙길 준비물(API 키나 별도 프로그램 같은)은 없는지, 위험한 코드는 없는지, 설치 명령이 실제로 통하는지를 확인합니다. 무엇을 보고 그렇게 판단했는지는 파일의 몇 번째 줄인지까지 함께 보여 줍니다.
 
@@ -109,7 +109,7 @@ scripts/                         # 표준 라이브러리만 쓰는 Python
 ├── find_search.py               # 4단계: skills.sh 병렬 검색, 요청 한도 구분, 동명 복사본 묶음
 ├── find_inspect.py              # 5단계: 설치 방법, 준비물, 신뢰·위험 신호, 본문 (--show로 근거 줄 열기)
 ├── check_release.py             # 스킬을 고쳤는데 버전을 안 올렸으면 커밋을 막음
-└── sync-inline.py, sync-stars.py  # 카탈로그 운영용
+└── sync-inline.py, sync-stars.py, sync-mcp.py  # 카탈로그 운영용 (sync-mcp는 MCP 허브 카드를 docs/mcp.json으로 내보냄)
 evals/
 ├── evals.json                   # 테스트 질의 6개와 채점 기준
 └── test_inspect_patterns.py     # 스크립트 판정 회귀 검사 (네트워크 없이)
@@ -132,6 +132,7 @@ python3 evals/test_inspect_patterns.py
 
 ## 변경 내역
 
+- **1.3.0** (2026-11-15) 3단계에서 AI Roasting MCP 허브 커넥터도 함께 찾습니다. `find_library.py`가 스킬 카드 아래에 커넥터 목록을 내고(`--mcp`, `--no-mcp`), 외부 데이터나 서비스에 닿아야 하는 작업에는 MCP 서버를 스킬과 구분해 추천합니다. 이 판은 스크립트 동작만 확인했고, 커넥터 추천을 포함한 질의 채점은 아직 돌리지 않았습니다.
 - **1.2.1** (2026-10-09) SKILL.md를 저장소 맨 위로 옮겨 AI Roasting의 다른 스킬 저장소와 구조를 맞췄습니다. 라이선스는 MIT로 정했습니다.
 - **1.2.0** (2026-10-09) 실사용 테스트를 네 번 돌리면서 다듬은 판입니다. 설치된 스킬 확인, 검색 결과의 설명과 정렬, 근거를 보여 주는 준비물 판정, 복사본·스텁·이전 판정, `--show`, Codex 지원이 이때 들어갔습니다.
 - **1.1.0** (2026-10-08) 스킬을 하위 폴더로 옮겨 설치 크기를 줄였고, 버전을 올리지 않으면 커밋을 막는 릴리스 점검을 넣었습니다.
@@ -154,13 +155,20 @@ python3 evals/test_inspect_patterns.py
 
 ## 데이터 소스: AI Roasting 스킬 라이브러리
 
-find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 13개 카테고리로 나눠 담았고, 그중 29개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽)을 붙이면 그 목록으로 바로 갑니다.
+find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 13개 카테고리로 나눠 담았고, 그중 30개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽), `?sort=stars`(스타순 한 목록)를 붙이면 그 화면으로 바로 갑니다.
 
-카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 2026-11-15에는 스킬이 아니라 MCP 서버인 카드 2장(Korean Law MCP, Excel MCP Server)을 [MCP 허브](https://skill.airoasting.com/mcp/)로 옮기고, 커리어 카테고리(Career Ops, Offer Toolkit)를 없앴습니다. 빈 네 자리는 데스크톱과 브라우저를 조작하는 Vercel Labs의 Agent Desktop과 Agent Browser, 구글 워크스페이스를 다루는 Google Workspace CLI, 오피스 문서를 다루는 OfficeCLI로 채워 150장을 유지합니다. 그 전 교체는 2026-11-06입니다. 미국·일본 상장사 공시를 한국어로 조회하는 EDGAR와 JPX, Anthropic 공식 스킬 저장소와 법무 플러그인(둘 다 에디터픽), 편집 가능한 PPT를 만드는 PPT Master, 법제처 법령을 조회하는 Korean Law MCP 등 14장을 새로 넣고 같은 수를 뺐습니다.
+카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 가장 최근 교체는 2026-11-15입니다. MCP 서버를 함께 제공하는 카드 7장(Korean Law MCP, Excel MCP Server, Kordoc, 그리고 AI Roasting의 DART, EDGAR, JPX, Korean Law)을 MCP 허브로 옮기고 커리어 카테고리 2장(Career Ops, Offer Toolkit)을 뺐습니다. 빈 아홉 자리는 Agent Desktop(에디터픽), Agent Browser, Google Workspace CLI, OfficeCLI, PM Skills Marketplace, Archify, Impeccable, Nuwa Skill, Video Shotcraft로 채웠습니다.
 
-MCP 허브도 이 저장소에서 함께 관리합니다. 사이트는 `docs/mcp/index.html`(주소 `/mcp/`), 운영 문서는 `mcp-hub/`에 있고, 상단 메뉴로 스킬 라이브러리와 MCP 허브를 오갑니다. 두 페이지는 같은 디자인(Patchbay)을 쓰므로 색·글꼴 토큰과 공통 컴포넌트를 고칠 때는 `docs/index.html`과 `docs/mcp/index.html`을 함께 고칩니다. 화면 동작은 `docs/app.js`에 있고, 카드 수와 카테고리별 합계는 `skills.json`에서 계산하므로 손으로 고칠 숫자가 없습니다.
+## 데이터 소스: AI Roasting MCP 허브
 
-카드 데이터의 원본은 `docs/skills.json` 하나입니다. `docs/index.html` 안에 든 인라인 사본은 커밋할 때 pre-commit 훅이 `scripts/sync-inline.py`로 맞춰 줍니다. 사이트를 로컬에서 띄워 보려면 `python3 -m http.server 8000 --directory docs`를 실행하면 됩니다.
+MCP 허브는 AI를 외부 데이터·서비스에 연결하는 MCP 서버 카탈로그입니다(<https://skill.airoasting.com/mcp/>, 현재 64건). 이 저장소에서 스킬 라이브러리와 함께 관리하고, 같은 디자인(Patchbay)과 상단 메뉴를 씁니다.
+
+- 사이트는 `docs/mcp/index.html`이고, 카드의 정본은 그 파일 안의 `DATA` 배열입니다. 운영 규칙과 카드 선정 기준은 `mcp-hub/`에 있습니다.
+- `scripts/sync-mcp.py`가 `DATA` 배열을 `docs/mcp.json`으로 내보냅니다. find-skills는 이 파일로 커넥터를 찾습니다. `mcp.json`은 손으로 고치지 않습니다.
+- 스킬 카드와 MCP 카드는 겹치지 않게 둡니다. MCP 서버를 제공하는 저장소는 MCP 허브에만 싣습니다.
+- 두 페이지는 색·글꼴 토큰과 공통 컴포넌트(헤더, 전환 메뉴, 카드, 범례 버튼, 정렬 버튼, 소개 창)를 공유합니다. 한쪽을 고치면 `docs/index.html`과 `docs/mcp/index.html`을 함께 고칩니다. 스킬 라이브러리의 화면 동작은 `docs/app.js`에 있고, 카드 수와 카테고리별 합계는 데이터에서 계산하므로 손으로 고칠 숫자가 없습니다.
+
+카드 데이터의 원본은 `docs/skills.json` 하나입니다. `docs/index.html` 안에 든 인라인 사본과 `docs/mcp.json`은 커밋할 때 pre-commit 훅이 `scripts/sync-inline.py`, `scripts/sync-mcp.py`로 맞춰 줍니다. 사이트를 로컬에서 띄워 보려면 `python3 -m http.server 8000 --directory docs`를 실행하면 됩니다.
 
 추천하고 싶은 스킬이 있으면 [Issue](https://github.com/airoasting/find-skills/issues/new)에 GitHub 주소와 카테고리 후보, 추천하는 이유 한 줄을 남겨 주세요.
 

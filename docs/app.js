@@ -117,7 +117,7 @@ function renderQuick() {
     b.classList.toggle("active", on);
     b.setAttribute("aria-pressed", on);
   });
-  document.querySelectorAll("#filters button").forEach(b => {
+  document.querySelectorAll("#filters button, .legend [data-filter]").forEach(b => {
     const on = state.filter === b.dataset.filter;
     b.classList.toggle("active", on);
     b.setAttribute("aria-pressed", on);
@@ -348,6 +348,11 @@ function wire() {
     b.innerHTML = `${esc(f.label)}<span class="cnt">${ALL.filter(f.test).length}</span>`;
     b.addEventListener("click", () => setFilter(state.filter === id ? "all" : id));
     filtersEl.appendChild(b);
+  });
+
+  /* 범례의 Editor's Pick, AI Roasting 버튼도 같은 필터를 켜고 끈다 */
+  document.querySelectorAll(".legend [data-filter]").forEach(b => {
+    b.addEventListener("click", () => setFilter(state.filter === b.dataset.filter ? "all" : b.dataset.filter));
   });
 
   /* 자주 찾는: 누르면 그 키워드로 검색 + 점등, 다시 누르면 해제 */
