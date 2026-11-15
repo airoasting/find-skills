@@ -36,12 +36,11 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 
 각 카드가 연결되는 오픈소스 저장소입니다. 스타순 정렬. `바로 사용` = 설치 즉시 / `로그인` = 서비스 계정 / `API` = 무료 키 발급.
 
-### 법률·특허 (9)
+### 법률·특허 (8)
 
 - **국세청** · [korean-taxlaw-mcp](https://github.com/zisu17/korean-taxlaw-mcp) — 국세청 세법해석례·예규·심판례·판례와 지방세 원문 검색 `바로 사용`
 - **인터넷등기소** · [iros-registry-automation](https://github.com/NomaDamas/k-skill/tree/main/iros-registry-automation) — 법인·부동산 등기부등본 열람 자동화 스킬 `로그인`
 - **법원 전자소송** · [court-payment-order-assistant](https://github.com/NomaDamas/k-skill/tree/main/court-payment-order-assistant) — 지급명령 신청 정보 정리와 초안 작성 스킬 `로그인`
-- **법제처** · [korean-law-mcp](https://github.com/chrisryugj/korean-law-mcp) — 법령·판례·행정규칙 검색·조회·분석 `API`
 - **법제처** · [korean-law](https://github.com/airoasting/korean-law) — AI가 쓴 법률 문서의 조문·판례 인용을 법제처 원문과 대조해 검증하는 스킬+MCP `API`
 - **국회** · [assembly-api-mcp](https://github.com/hollobit/assembly-api-mcp) — 국회 의안·회의록·청원 등 276개 API 접근 `API`
 - **특허청** · [korean-patent-mcp](https://github.com/chrisryugj/korean-patent-mcp) — 특허·실용신안·상표·디자인 검색 7개 도구 `API`
@@ -129,8 +128,9 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 - **Shopify** · [shopify-mcp](https://github.com/GeLi2001/shopify-mcp) — 쇼피파이 주문·상품·고객 데이터 조회 `API`
 - **나라장터** · [narajangteo-searcher](https://github.com/yonghwan86/narajangteo-searcher) — 조달청 나라장터 IT 입찰공고 검색과 개찰결과 분석 `API`
 
-### 문서·협업 (9)
+### 문서·협업 (10)
 
+- **Apple 메모** · [apple-notes-mcp](https://github.com/sweetrb/apple-notes-mcp) — 맥의 메모 앱에서 메모 검색·작성·정리·내보내기 `바로 사용`
 - **Telegram** · [telegram-mcp](https://github.com/chigwell/telegram-mcp) — 텔레그램 대화 읽기와 메시지·그룹·연락처 관리 `API`
 - **WhatsApp** · [whatsapp-mcp](https://github.com/lharries/whatsapp-mcp) — 왓츠앱 대화 검색과 메시지 전송 `로그인`
 - **LINE** · [line-bot-mcp-server](https://github.com/line/line-bot-mcp-server) — 라인 공식 계정으로 메시지를 보내는 라인 공식 서버 `API`

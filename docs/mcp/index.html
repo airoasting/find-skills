@@ -549,7 +549,6 @@
 const DATA = [
   // 법률·특허 — 법령·판례·의회·규제·지식재산
   ["korean-taxlaw-mcp","K","법률·특허","국세청",3,2,"국세청 세법해석례·예규·심판례·판례와 지방세 원문 검색","zisu17/korean-taxlaw-mcp","none"],
-  ["korean-law-mcp","K","법률·특허","법제처",2873,591,"법령·판례·행정규칙 검색·조회·분석","chrisryugj/korean-law-mcp","api"],
   ["iros-registry-automation","I","법률·특허","인터넷등기소",8422,1008,"법인·부동산 등기부등본 열람 자동화","NomaDamas/k-skill/tree/main/iros-registry-automation","login"],
   ["court-payment-order-assistant","C","법률·특허","법원 전자소송",8422,1008,"지급명령 신청 정보 정리와 초안 작성","NomaDamas/k-skill/tree/main/court-payment-order-assistant","login"],
   ["korean-law","K","법률·특허","법제처",1,0,"AI가 쓴 법률 문서의 조문·판례 인용을 법제처 원문과 대조해 검증","airoasting/korean-law","api"],
@@ -623,6 +622,7 @@ const DATA = [
   ["shopify-mcp","S","영업·CRM","Shopify",228,109,"쇼피파이 주문·상품·고객 데이터 조회","GeLi2001/shopify-mcp","api"],
   ["meta-ads-mcp","M","영업·CRM","Meta Ads",1085,253,"페이스북·인스타그램 광고 캠페인·성과 조회","pipeboard-co/meta-ads-mcp","api"],
   // 문서·협업 — 문서 처리·언어·협업 도구
+  ["apple-notes-mcp","A","문서·협업","Apple 메모",193,34,"맥의 메모 앱에서 메모 검색·작성·정리·내보내기","sweetrb/apple-notes-mcp","none"],
   ["telegram-mcp","T","문서·협업","Telegram",2047,514,"텔레그램 대화 읽기와 메시지·그룹·연락처 관리","chigwell/telegram-mcp","api"],
   ["whatsapp-mcp","W","문서·협업","WhatsApp",6890,1502,"왓츠앱 대화 검색과 메시지 전송","lharries/whatsapp-mcp","login"],
   ["line-bot-mcp-server","L","문서·협업","LINE",806,159,"라인 공식 계정으로 메시지를 보내는 라인 공식 서버","line/line-bot-mcp-server","api"],
@@ -635,7 +635,7 @@ const DATA = [
 ];
 
 const CATS = ["법률·특허","금융·투자","경제·통계","부동산","지도·교통","검색·리서치","생활·여행","채용·HR","영업·CRM","문서·협업"];
-const QUICK_PICKS = ["공시","법령","부동산","검색","날씨"];
+const QUICK_PICKS = ["공시","판례","부동산","검색","통계"]; // 결과가 1건뿐인 검색어는 두지 않는다
 
 /* auth — 범례 버튼으로 거르는 인증 구분 (all / none / login / api)
    sort — cat: 카테고리 섹션으로 묶고 섹션 안은 스타순 · stars / forks: 섹션 없이 한 목록.

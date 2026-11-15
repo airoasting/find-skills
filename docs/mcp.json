@@ -26,18 +26,6 @@
       "auth_label": "바로 사용"
     },
     {
-      "name": "korean-law-mcp",
-      "category": "법률·특허",
-      "source": "법제처",
-      "repo": "chrisryugj/korean-law-mcp",
-      "url": "https://github.com/chrisryugj/korean-law-mcp",
-      "stars": 2873,
-      "forks": 591,
-      "desc": "법령·판례·행정규칙 검색·조회·분석",
-      "auth": "api",
-      "auth_label": "API 발급 필요"
-    },
-    {
       "name": "iros-registry-automation",
       "category": "법률·특허",
       "source": "인터넷등기소",
@@ -804,6 +792,18 @@
       "desc": "페이스북·인스타그램 광고 캠페인·성과 조회",
       "auth": "api",
       "auth_label": "API 발급 필요"
+    },
+    {
+      "name": "apple-notes-mcp",
+      "category": "문서·협업",
+      "source": "Apple 메모",
+      "repo": "sweetrb/apple-notes-mcp",
+      "url": "https://github.com/sweetrb/apple-notes-mcp",
+      "stars": 193,
+      "forks": 34,
+      "desc": "맥의 메모 앱에서 메모 검색·작성·정리·내보내기",
+      "auth": "none",
+      "auth_label": "바로 사용"
     },
     {
       "name": "telegram-mcp",
