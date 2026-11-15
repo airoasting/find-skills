@@ -1,4 +1,4 @@
-/* 스킬 라이브러리 — MCP 허브와 같은 Patchbay 디자인.
+/* 스킬 — MCP와 같은 Patchbay 디자인.
    데이터 원본은 skills.json 하나. index.html 안의 #skills-data 는 file:// 로 열 때 쓰는 사본이다.
    카드 수, 카테고리 수, 에디터픽 수는 전부 데이터에서 계산한다. 손으로 세지 않는다.
    주소: ?cat=pick · ?cat=lab 은 모아 보기 필터, ?cat=<카테고리 id> 는 그 섹션으로 이동. */
@@ -71,40 +71,37 @@ function countByCat(items) {
   return m;
 }
 
-/* ---- signature: skill spectrum ---- */
+/* ---- signature: 카테고리 목록 (두 줄 격자. 이름, 개수, 비중 막대) ---- */
 function renderMeters() {
   const counts = countByCat(ALL);
   const max = Math.max(...CATS.map(c => counts[c.id] || 0));
-  const groups = METAS.length ? METAS : [{ id: null, name: "" }];
-  $("meters").innerHTML = groups.map(m => {
-    const cats = CATS.filter(c => m.id === null || c.meta === m.id);
-    if (!cats.length) return "";
-    return `<div class="mgroup" style="flex:${cats.length}">
-      <div class="mbars">${cats.map(c => {
-        const n = counts[c.id] || 0;
-        return `<button class="meter" data-cat="${esc(c.id)}" title="${esc(c.name)} ${n}개" aria-label="${esc(c.name)} ${n}개 보기">
-          <span class="mval">${n}</span>
-          <span class="bar" style="height:100%"><span class="fill" data-h="${Math.round((n / max) * 100)}"></span></span>
-          <span class="mlbl">${esc(c.short || c.name)}</span>
-        </button>`;
-      }).join("")}</div>
-      ${m.name ? `<div class="mcap" title="${esc(m.name)}">${esc(m.name)}</div>` : ""}
-    </div>`;
+  $("meters").innerHTML = CATS.map(c => {
+    const n = counts[c.id] || 0;
+    return `<button class="meter" type="button" data-cat="${esc(c.id)}" title="${esc(c.desc || c.name)}" aria-label="${esc(c.name)} ${n}개 보기">
+      <span class="mlbl mlbl-l">${esc(c.name)}</span><span class="mlbl mlbl-s">${esc(c.short || c.name)}</span>
+      <span class="mval">${n}</span>
+      <span class="bar"><span class="fill" data-h="${Math.round((n / max) * 100)}"></span></span>
+    </button>`;
   }).join("");
 }
 
 /* ---- render ---- */
 function renderChips() {
-  const pool = inFilter(ALL);
+  /* 칩의 개수는 지금 보이는 목록(모아 보기 + 검색어) 기준이다. 0건인 칩은 눌리지 않게 한다 */
+  const q = state.query.trim().toLowerCase();
+  const pool = inFilter(ALL).filter(m => !q || m.hay.includes(q));
+  const focused = $("catalog").contains(document.activeElement) ? document.activeElement.dataset.cat : null;
   const counts = countByCat(pool);
-  const chips = [{ id: "all", name: "전체", n: pool.length }]
+  const chips = [{ id: "all", name: "스킬 전체", n: pool.length }]
     .concat(CATS.map(c => ({ id: c.id, name: c.short || c.name, full: c.name, n: counts[c.id] || 0 })));
   $("chips").innerHTML = chips.map(c => {
     const on = state.category === c.id;
     return `<button class="chip${on ? " active" : ""}" data-cat="${esc(c.id)}" aria-pressed="${on}"${c.full ? ` title="${esc(c.full)}"` : ""}${c.n ? "" : " disabled"}>${esc(c.name)}<span class="cnt">${c.n}</span></button>`;
   }).join("");
-  /* 좁은 화면의 가로 스크롤 칩 바에서 켜진 칩이 보이게 한다 (바 안에서만 움직인다) */
+  /* 다시 그려도 키보드 포커스가 사라지지 않게 하고, 가로 스크롤 바에서는 켜진 칩이 보이게 한다 */
   const bar = $("catalog"), active = bar.querySelector(".chip.active");
+  if (focused) [...bar.querySelectorAll(".chip")].find(b => b.dataset.cat === focused)?.focus({ preventScroll: true });
+  bar.classList.toggle("more", bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 1);
   if (active && bar.scrollWidth > bar.clientWidth) {
     const left = active.offsetLeft - (bar.clientWidth - active.offsetWidth) / 2;
     bar.scrollTo({ left: Math.max(0, left), behavior: reduceMotion() ? "auto" : "smooth" });
@@ -203,9 +200,9 @@ function renderResults() {
         <h2>${SORTS[state.sort]}</h2>
         ${c ? `<span class="sec-meta">${esc(c.name)}</span>` : ""}
         <span class="sec-rule"></span>
-        <span class="sec-count">${items.length} skills</span>
+        <span class="sec-count">${items.length}개</span>
       </div>
-      <p class="sec-desc">${c ? esc(c.desc || "") : "카테고리 구분 없이 전체를 한 목록으로 봅니다. 위의 카테고리를 누르면 그 분야만 남습니다."}</p>
+      <p class="sec-desc">${c ? esc(c.desc || "") : "카테고리 구분 없이 전체를 한 목록으로 봅니다. 위의 카테고리를 누르면 그 카테고리만 남습니다."}</p>
       <div class="grid">${items.map(m => modHTML(m, !c)).join("")}</div>
     </section>`;
     return;
@@ -218,7 +215,7 @@ function renderResults() {
         <h2>${esc(c.name)}</h2>
         ${metaName(c.meta) ? `<span class="sec-meta">${esc(metaName(c.meta))}</span>` : ""}
         <span class="sec-rule"></span>
-        <span class="sec-count">${items.length} skills</span>
+        <span class="sec-count">${items.length}개</span>
       </div>
       <p class="sec-desc">${esc(c.desc || "")}</p>
       <div class="grid">${items.map(m => modHTML(m)).join("")}</div>
@@ -255,9 +252,19 @@ function syncUrl() {
 /* ---- interactions ---- */
 const searchInput = $("search");
 
+/* 히어로의 버튼을 눌렀을 때 결과가 화면 아래에 있으면 목록으로 내려간다 */
+function toResults() {
+  const bar = $("catalog");
+  if (bar.getBoundingClientRect().top > window.innerHeight * 0.45) {
+    window.scrollTo({ top: bar.getBoundingClientRect().top + window.scrollY - 10, behavior: reduceMotion() ? "auto" : "smooth" });
+  }
+}
+
 function clearSearch() {
+  document.body.classList.remove("searching");
   state.query = "";
   searchInput.value = "";
+  renderChips();
   renderQuick();
   renderSearchAffordance();
   renderResults();
@@ -271,6 +278,19 @@ function setFilter(f) {
   render();
 }
 
+/* 칩이나 카테고리를 눌러 이동한 직후에는 누른 칩이 켜진 채로 있어야 한다.
+   마지막 쪽의 짧은 섹션은 화면 끝에 걸려 기준선까지 올라오지 못해서, 스크롤 위치만 보면 앞 섹션이 켜진다.
+   그래서 이동이 끝난 자리에서 사용자가 직접 스크롤해 벗어나기 전까지는 스크롤 감지를 쉬게 한다 */
+let jumpLock = null;
+function jumpLocked() {
+  if (!jumpLock) return false;
+  if (Date.now() < jumpLock.until) return true;            // 이동 애니메이션 중
+  if (jumpLock.y === null) { jumpLock.y = window.scrollY; return true; } // 멈춘 자리를 기억
+  if (Math.abs(window.scrollY - jumpLock.y) < 60) return true;
+  jumpLock = null;
+  return false;
+}
+
 /* 카테고리 칩·스펙트럼 미터: 카테고리순이면 해당 섹션으로 스크롤, 한 목록이면 그 카테고리만 남긴다 */
 function jumpTo(cat, instant) {
   state.category = cat;
@@ -281,12 +301,17 @@ function jumpTo(cat, instant) {
   /* 스티키 칩 바에 섹션 제목이 가리지 않도록 바의 실제 높이만큼 위로 보정한다 */
   const barH = $("catalog").offsetHeight;
   const y = target.getBoundingClientRect().top + window.scrollY - barH - 12;
+  jumpLock = (!flat && cat !== "all") ? { until: Date.now() + (instant || reduceMotion() ? 150 : 1400), y: null } : null;
   window.scrollTo({ top: Math.max(0, y), behavior: instant ? "instant" : reduceMotion() ? "auto" : "smooth" });
 }
 
 function wire() {
   searchInput.addEventListener("input", e => {
     state.query = e.target.value;
+    state.category = "all";
+    /* 치는 동안에는 히어로를 접는다. 결과가 검색창 바로 아래로 올라온다 */
+    document.body.classList.toggle("searching", state.query.trim().length > 0);
+    renderChips();
     renderQuick();
     renderSearchAffordance();
     renderResults();
@@ -346,7 +371,7 @@ function wire() {
     b.type = "button";
     b.dataset.filter = id;
     b.innerHTML = `${esc(f.label)}<span class="cnt">${ALL.filter(f.test).length}</span>`;
-    b.addEventListener("click", () => setFilter(state.filter === id ? "all" : id));
+    b.addEventListener("click", () => { setFilter(state.filter === id ? "all" : id); if (state.filter !== "all") toResults(); });
     filtersEl.appendChild(b);
   });
 
@@ -366,10 +391,18 @@ function wire() {
       state.query = state.query === name ? "" : name;
       state.category = "all";
       searchInput.value = state.query;
+      document.body.classList.remove("searching"); // 자주 찾는 버튼은 히어로 안에 있으므로 접지 않고 목록으로 내려간다
       render();
+      if (state.query) toResults();
     });
     quickEl.appendChild(b);
   });
+
+  /* 칩 바의 오른쪽 흐림은 더 밀 내용이 남아 있을 때만 켠다 */
+  const bar = $("catalog");
+  const updateMore = () => bar.classList.toggle("more", bar.scrollLeft + bar.clientWidth < bar.scrollWidth - 1);
+  bar.addEventListener("scroll", updateMore, { passive: true });
+  window.addEventListener("resize", updateMore);
 
   /* about */
   const about = $("about");
@@ -398,6 +431,7 @@ function wire() {
 /* ---- scrollspy : 화면에 보이는 섹션과 카테고리 칩을 동기화 ---- */
 function syncChipToScroll() {
   if (state.query.trim() || state.sort !== "cat") return; // 검색 중이거나 한 목록일 때는 칩 상태를 건드리지 않는다
+  if (jumpLocked()) return;
   const panels = [...document.querySelectorAll("#results .sec")];
   if (!panels.length) return;
   const line = $("catalog").offsetHeight + 24; // 스티키 칩 바 바로 아래 기준선
@@ -440,6 +474,9 @@ function animateCount(el, to, ms) {
   if (SORTS[params.get("sort")]) state.sort = params.get("sort");
 
   $("stat-cats").textContent = CATS.length;
+  /* 첫 화면의 스킬 개수와 분야 줄은 데이터에서 채운다. MCP 쪽 숫자는 sync-mcp.py가 HTML에 써 둔다 */
+  document.querySelectorAll('[data-count="skills"]').forEach(el => { el.textContent = ALL.length; });
+  document.querySelectorAll('[data-cats="skills"]').forEach(el => { el.textContent = CATS.map(c => c.short || c.name).join(" · "); });
   $("stat-picks").textContent = ALL.filter(s => s.editors_pick).length;
   renderMeters();
   wire();
@@ -450,7 +487,7 @@ function animateCount(el, to, ms) {
   /* 로드 연출: 카운트업 + 미터 상승 한 번 */
   animateCount($("stat-count"), ALL.length, 900);
   document.querySelectorAll("#meters .fill").forEach((f, i) => {
-    const scale = "scaleY(" + (f.dataset.h / 100) + ")";
+    const scale = "scaleX(" + (f.dataset.h / 100) + ")";
     if (reduceMotion()) { f.style.transform = scale; return; }
     setTimeout(() => { f.style.transform = scale; }, 90 + i * 45);
   });

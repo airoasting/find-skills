@@ -2,11 +2,11 @@
   "authors": {},
   "meta_categories": [
     {
-      "id": "build",
-      "name": "AI 에이전트팀 구축",
-      "emoji": "🏗",
-      "en": "Build AI Agent Team",
-      "desc": "AI 팀·시스템·파이프라인을 직접 설계하고 운영하는 기반 레이어입니다."
+      "id": "execution",
+      "name": "실행력 제고",
+      "emoji": "🎯",
+      "en": "Execution Excellence",
+      "desc": "업무 속도와 산출물 품질을 끌어올리는 실무 레버리지 스킬입니다."
     },
     {
       "id": "growth",
@@ -16,86 +16,14 @@
       "desc": "매출·고객·자산을 키우는 top-line 임팩트에 직결되는 스킬입니다."
     },
     {
-      "id": "execution",
-      "name": "실행력 제고",
-      "emoji": "🎯",
-      "en": "Execution Excellence",
-      "desc": "업무 속도와 산출물 품질을 끌어올리는 실무 레버리지 스킬입니다."
+      "id": "build",
+      "name": "AI 에이전트팀 구축",
+      "emoji": "🏗",
+      "en": "Build AI Agent Team",
+      "desc": "AI 팀·시스템·파이프라인을 직접 설계하고 운영하는 기반 레이어입니다."
     }
   ],
   "categories": [
-    {
-      "id": "harness",
-      "meta": "build",
-      "name": "하네스 · 에이전트 설계",
-      "short": "하네스",
-      "emoji": "🛠",
-      "en": "Harness & Agent Design",
-      "desc": "에이전트 팀과 런타임 구조를 직접 조립해 나만의 AI 팀을 설계하는 플랫폼 레이어 스킬입니다."
-    },
-    {
-      "id": "workflow",
-      "meta": "build",
-      "name": "AI와 일 잘하는 법",
-      "short": "협업",
-      "emoji": "🚀",
-      "en": "Working with AI",
-      "desc": "브레인스토밍·계획·기억·체크리스트까지, 내가 AI와 더 효율적으로 일하기 위한 협업 방식과 습관을 잡아주는 스킬입니다."
-    },
-    {
-      "id": "token",
-      "meta": "build",
-      "name": "토큰 절약",
-      "short": "토큰",
-      "emoji": "⚡",
-      "en": "Token Efficiency",
-      "desc": "컨텍스트와 토큰 사용량을 줄여서 비용은 아끼고 응답 속도는 끌어올리는 효율화 스킬들입니다."
-    },
-    {
-      "id": "automation",
-      "meta": "build",
-      "name": "외부 연동 · 자동화",
-      "short": "연동",
-      "emoji": "🤖",
-      "en": "External Integration & MCP",
-      "desc": "브라우저·메신저·이슈 트래커 같은 외부 시스템과 Claude를 이어, 바깥 세계와 닿게 해주는 스킬입니다."
-    },
-    {
-      "id": "korea",
-      "meta": "build",
-      "name": "한국 특화 스킬",
-      "short": "한국",
-      "emoji": "🇰🇷",
-      "en": "Korea Skills · MCP",
-      "desc": "한글 문서부터 카카오, 토스, 네이버 같은 국내 서비스까지, 한국 환경에 딱 맞춘 스킬 모음입니다."
-    },
-    {
-      "id": "business",
-      "meta": "growth",
-      "name": "그로스 · 마케팅",
-      "short": "그로스",
-      "emoji": "💼",
-      "en": "Growth · Marketing",
-      "desc": "CRO, 카피, SEO, 멀티채널 캠페인까지 매출·고객 그로스 실험을 빠르게 돌릴 수 있게 돕는 스킬들입니다."
-    },
-    {
-      "id": "finance",
-      "meta": "growth",
-      "name": "투자 · 금융",
-      "short": "금융",
-      "emoji": "💹",
-      "en": "Investment · Finance",
-      "desc": "트레이딩부터 포트폴리오 관리, 리서치까지 투자와 금융 업무에 특화된 스킬들입니다."
-    },
-    {
-      "id": "geo",
-      "meta": "growth",
-      "name": "GEO · AEO",
-      "short": "GEO",
-      "emoji": "🔎",
-      "en": "GEO · AEO (AI Search)",
-      "desc": "ChatGPT·Perplexity·Claude 같은 생성형 AI 검색에서 내 브랜드·콘텐츠가 인용되도록 최적화하는 GEO(Generative Engine Optimization)·AEO(Answer Engine Optimization) 스킬입니다."
-    },
     {
       "id": "research",
       "meta": "execution",
@@ -108,8 +36,8 @@
     {
       "id": "design",
       "meta": "execution",
-      "name": "디자인",
-      "short": "디자인",
+      "name": "PPT·디자인",
+      "short": "PPT·디자인",
       "emoji": "🎨",
       "en": "Design",
       "desc": "UI·슬라이드·디자인 시스템 같은 시각 결과물을 만들 때 쓰기 좋은 스킬들입니다."
@@ -149,6 +77,78 @@
       "emoji": "🧭",
       "en": "Career · Job Search",
       "desc": "이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 커리어 전환을 체계적으로 준비하게 돕는 스킬들입니다."
+    },
+    {
+      "id": "business",
+      "meta": "growth",
+      "name": "마케팅 · 그로스",
+      "short": "마케팅",
+      "emoji": "💼",
+      "en": "Growth · Marketing",
+      "desc": "CRO, 카피, SEO, 멀티채널 캠페인까지 매출·고객 그로스 실험을 빠르게 돌릴 수 있게 돕는 스킬들입니다."
+    },
+    {
+      "id": "finance",
+      "meta": "growth",
+      "name": "투자 · 금융",
+      "short": "금융",
+      "emoji": "💹",
+      "en": "Investment · Finance",
+      "desc": "트레이딩부터 포트폴리오 관리, 리서치까지 투자와 금융 업무에 특화된 스킬들입니다."
+    },
+    {
+      "id": "geo",
+      "meta": "growth",
+      "name": "AI 검색 노출 · GEO",
+      "short": "AI 검색",
+      "emoji": "🔎",
+      "en": "GEO · AEO (AI Search)",
+      "desc": "ChatGPT·Perplexity·Claude 같은 생성형 AI 검색에서 내 브랜드·콘텐츠가 인용되도록 최적화하는 GEO(Generative Engine Optimization)·AEO(Answer Engine Optimization) 스킬입니다."
+    },
+    {
+      "id": "harness",
+      "meta": "build",
+      "name": "AI 팀 설계 · 하네스",
+      "short": "AI 팀 설계",
+      "emoji": "🛠",
+      "en": "Harness & Agent Design",
+      "desc": "에이전트 팀과 런타임 구조를 직접 조립해 나만의 AI 팀을 설계하는 플랫폼 레이어 스킬입니다."
+    },
+    {
+      "id": "workflow",
+      "meta": "build",
+      "name": "AI와 일 잘하는 법",
+      "short": "일 잘하는 법",
+      "emoji": "🚀",
+      "en": "Working with AI",
+      "desc": "브레인스토밍·계획·기억·체크리스트까지, 내가 AI와 더 효율적으로 일하기 위한 협업 방식과 습관을 잡아주는 스킬입니다."
+    },
+    {
+      "id": "token",
+      "meta": "build",
+      "name": "AI 비용 절약 · 토큰",
+      "short": "AI 비용 절약",
+      "emoji": "⚡",
+      "en": "Token Efficiency",
+      "desc": "컨텍스트와 토큰 사용량을 줄여서 비용은 아끼고 응답 속도는 끌어올리는 효율화 스킬들입니다."
+    },
+    {
+      "id": "automation",
+      "meta": "build",
+      "name": "외부 연동 · 자동화",
+      "short": "자동화",
+      "emoji": "🤖",
+      "en": "External Integration & MCP",
+      "desc": "브라우저·메신저·이슈 트래커 같은 외부 시스템과 Claude를 이어, 바깥 세계와 닿게 해주는 스킬입니다."
+    },
+    {
+      "id": "korea",
+      "meta": "build",
+      "name": "한국 특화 스킬",
+      "short": "한국",
+      "emoji": "🇰🇷",
+      "en": "Korea Skills · MCP",
+      "desc": "한글 문서부터 카카오, 토스, 네이버 같은 국내 서비스까지, 한국 환경에 딱 맞춘 스킬 모음입니다."
     }
   ],
   "skills": [
@@ -505,8 +505,7 @@
         "#python"
       ],
       "lang": "Python",
-      "added_at": "2026-01-07",
-      "editors_pick": true
+      "added_at": "2026-01-07"
     },
     {
       "category": "research",
@@ -673,23 +672,6 @@
     },
     {
       "category": "korea",
-      "name": "K-Skill",
-      "repo": "NomaDamas/k-skill",
-      "author": "NomaDamas",
-      "stars": 8422,
-      "forks": 1008,
-      "desc": "이 스킬은 SRT 좌석 예약, 카카오톡 메시지 전송, KBO 야구 스코어, 미세먼지 조회를 자연어 명령으로 실행하는 한국 생활 특화 도구입니다. '다음 주 서울→부산 KTX 2매 예매해줘' 같은 요청에도 실제 예약 링크까지 안내해주기 때문에, 일상 반복 작업을 Claude에 맡기고 싶은 한국 사용자에게 잘 어울립니다.",
-      "tags": [
-        "#korea",
-        "#srt",
-        "#kakao"
-      ],
-      "lang": "JavaScript",
-      "added_at": "2026-04-19",
-      "editors_pick": true
-    },
-    {
-      "category": "korea",
       "name": "Legalize KR",
       "repo": "legalize-kr/legalize-kr",
       "author": "legalize-kr",
@@ -733,22 +715,6 @@
         "#aeo",
         "#geo",
         "#gtm"
-      ]
-    },
-    {
-      "category": "geo",
-      "name": "eGEOagents",
-      "repo": "mverab/eGEOagents",
-      "author": "mverab",
-      "stars": 218,
-      "forks": 60,
-      "lang": "Python",
-      "added_at": "2026-04-20",
-      "desc": "이 스킬 모음은 ChatGPT, Perplexity, Claude, Gemini 등 주요 생성형 검색엔진 각각에 맞춰 콘텐츠를 최적화해주는 GEO 에이전트 세트입니다. 엔진별 크롤링·인용 특성이 다르기 때문에, 여러 AI 검색을 동시에 타겟팅하고 싶을 때 채널별 최적화를 한 번에 돌릴 수 있습니다.",
-      "tags": [
-        "#agents",
-        "#multi-engine",
-        "#geo"
       ]
     },
     {
@@ -2340,38 +2306,6 @@
       "added_at": "2026-11-15"
     },
     {
-      "category": "career",
-      "name": "Hiring Panel",
-      "repo": "alexyc9381/hiring-panel-skill",
-      "author": "Alex Chen",
-      "stars": 304,
-      "forks": 30,
-      "lang": "Python",
-      "desc": "이 스킬은 자동 서류 심사, 채용 매니저, CEO, 리크루터, 동료 등 7명의 Claude가 각자 이력서를 떨어뜨릴 이유를 찾은 뒤, 지적된 문제를 모두 고친 이력서를 다시 만들어 줍니다. 사실은 바꾸지 않고 고치기 전후 심사 결과를 비교해 보여 주기 때문에 임원급 이직이나 채용 담당자 시선 점검에 유용합니다.",
-      "tags": [
-        "#resume",
-        "#hiring",
-        "#career"
-      ],
-      "added_at": "2026-11-15"
-    },
-    {
-      "category": "career",
-      "name": "AI Job Search KR",
-      "repo": "wing0828/ai-job-search-kr",
-      "author": "wing0828",
-      "stars": 80,
-      "forks": 5,
-      "lang": "Python",
-      "desc": "이 스킬은 사람인·잡코리아·잡알리오 공고 검색부터 적합도 평가, 이력서·경력기술서·문항형 자기소개서 작성, 마감 관리, 면접 준비, 연봉 실수령액 비교까지 한국 채용 관행에 맞춰 이어 줍니다. 병역, 어학 점수, 자격증 같은 국내 지원 요건을 먼저 걸러 주기 때문에 한국에서 이직을 준비하는 사람에게 잘 맞습니다.",
-      "tags": [
-        "#job-search",
-        "#korea",
-        "#resume"
-      ],
-      "added_at": "2026-11-15"
-    },
-    {
       "category": "automation",
       "name": "Agent Desktop",
       "repo": "vercel-labs/agent-desktop",
@@ -2477,7 +2411,8 @@
         "#ui-polish",
         "#ai-slop"
       ],
-      "forks": 6601
+      "forks": 6601,
+      "editors_pick": true
     },
     {
       "category": "workflow",
@@ -2508,6 +2443,68 @@
         "#motion"
       ],
       "forks": 1855
+    },
+    {
+      "category": "workflow",
+      "name": "Book to Skill",
+      "repo": "virgiliojr94/book-to-skill",
+      "author": "virgiliojr94",
+      "stars": 37942,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 책 PDF를 넣으면 핵심 프레임워크와 판단 기준, 장별 내용을 뽑아 에이전트가 필요할 때 꺼내 쓰는 스킬로 만들어 줍니다. 읽고 잊어버린 책 내용을 원문에 근거해 다시 물을 수 있기 때문에, 전문서를 업무에 바로 적용하려는 리더에게 좋습니다.",
+      "tags": [
+        "#book",
+        "#knowledge",
+        "#pdf"
+      ],
+      "forks": 4035
+    },
+    {
+      "category": "career",
+      "name": "AI Job Search",
+      "repo": "ai-job-search-dev/ai-job-search",
+      "author": "ai-job-search-dev",
+      "stars": 71820,
+      "added_at": "2026-11-15",
+      "desc": "이 프레임워크는 내 프로필을 채워 두면 Claude가 채용 공고를 평가하고 이력서를 공고에 맞게 고치며 자기소개서와 면접 준비까지 돕는 구직 지원 도구입니다. 저장소를 복사해 내 방식대로 고쳐 쓸 수 있기 때문에, 이직을 체계적으로 준비하려는 사람에게 적합합니다.",
+      "tags": [
+        "#job-search",
+        "#resume",
+        "#cover-letter",
+        "#interview"
+      ],
+      "forks": 23150
+    },
+    {
+      "category": "career",
+      "name": "Reactive Resume",
+      "repo": "reactive-resume/reactive-resume",
+      "author": "reactive-resume",
+      "stars": 45772,
+      "added_at": "2026-11-15",
+      "desc": "이 도구는 무료 오픈소스 이력서 빌더로, 함께 든 스킬로 성과 정리와 학술 이력서 작성 같은 작업을 에이전트에게 맡길 수 있습니다. 양식과 내보내기를 직접 다룰 수 있기 때문에, 이력서를 자주 손보는 사람에게 잘 어울립니다.",
+      "tags": [
+        "#resume-builder",
+        "#cv",
+        "#open-source"
+      ],
+      "forks": 4958
+    },
+    {
+      "category": "design",
+      "name": "Astryx",
+      "repo": "facebook/astryx",
+      "author": "Meta",
+      "stars": 28480,
+      "added_at": "2026-11-15",
+      "desc": "이 디자인 시스템은 Meta가 사내 13,000여 개 앱에 써 온 React 컴포넌트와 테마를 공개한 것으로, AI 에이전트가 같은 문서와 CLI로 화면을 만들도록 설계됐습니다. 검증된 부품으로 일관된 화면을 빠르게 만들 수 있어, 제품 화면을 AI로 만들려는 팀에 좋습니다.",
+      "tags": [
+        "#design-system",
+        "#react",
+        "#meta"
+      ],
+      "forks": 2223,
+      "editors_pick": true
     }
   ]
 }

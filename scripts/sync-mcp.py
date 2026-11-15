@@ -17,6 +17,25 @@ HTML = ROOT / "docs" / "mcp" / "index.html"
 OUT = ROOT / "docs" / "mcp.json"
 AUTH = {"none": "바로 사용", "login": "로그인만 필요", "api": "API 발급 필요"}
 ROW = re.compile(r'^\s*(\[".*\]),\s*$')  # DATA 배열의 한 줄. 줄 자체가 JSON 배열이다
+SKILL_HTML = ROOT / "docs" / "index.html"
+
+
+def bake(path, key, count, cats):
+    """다른 페이지의 첫 화면에 보이는 개수(data-count)와 분야 줄(data-cats)을 HTML에 써 넣는다.
+    각 페이지는 자기 숫자만 실행 중에 계산하므로, 상대편 숫자는 여기서 맞춘다."""
+    if not path.exists():
+        return False
+    old = path.read_text(encoding="utf-8")
+    new = re.sub(r'(<[a-z]+[^<>]*data-count="%s"[^<>]*>)[^<]*(<)' % key, lambda m: m.group(1) + str(count) + m.group(2), old)
+    new = re.sub(r'(<[a-z]+[^<>]*data-cats="%s"[^<>]*>)[^<]*(<)' % key, lambda m: m.group(1) + cats + m.group(2), new)
+    if new == old:
+        return False
+    path.write_text(new, encoding="utf-8")
+    try:
+        subprocess.run(["git", "add", str(path)], cwd=ROOT, check=False)
+    except Exception:
+        pass
+    return True
 
 
 def main() -> int:
@@ -47,6 +66,10 @@ def main() -> int:
         return 1
     data = {"site": "https://skill.airoasting.com/mcp/", "categories": cats, "connectors": rows}
     new = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+    # 스킬 라이브러리 첫 화면에 보이는 MCP 개수와 분야 줄
+    if bake(SKILL_HTML, "mcp", len(rows), " · ".join(cats)):
+        print("sync-mcp: index.html 의 MCP 개수·분야 갱신")
+    bake(HTML, "mcp", len(rows), " · ".join(cats))
     if OUT.exists() and OUT.read_text(encoding="utf-8") == new:
         return 0
     OUT.write_text(new, encoding="utf-8")

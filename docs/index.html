@@ -6,7 +6,7 @@
 <title>스킬 라이브러리 | AI ROASTING</title>
 <link rel="icon" type="image/png" sizes="256x256" href="asset/favicon-256.png">
 <link rel="apple-touch-icon" sizes="180x180" href="asset/favicon-180.png">
-<meta name="description" content="비즈니스 리더를 위해 엄선한 AI 스킬 라이브러리. 검증된 실무 스킬만 선별합니다.">
+<meta name="description" content="비즈니스 리더를 위해 엄선한 AI 스킬. 검증된 실무 스킬만 선별합니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://skill.airoasting.com/">
 <meta property="og:title" content="비즈니스 리더를 위해 엄선한 AI 스킬">
@@ -24,8 +24,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ============ The Patchbay — MCP 허브와 같은 디자인 시스템 ============
-     스킬 라이브러리(index.html)와 MCP 허브(mcp/index.html)는 토큰과 컴포넌트를 공유한다.
+  /* ============ The Patchbay — MCP와 같은 디자인 시스템 ============
+     스킬(index.html)와 MCP(mcp/index.html)는 토큰과 컴포넌트를 공유한다.
      토큰이나 공통 컴포넌트(.deck, .switch, .console, .channels, .mod, .foot)를 고치면
      mcp/index.html도 같이 고친다.
      signal(amber) #e8720c — 유일한 브랜드 액센트 · status LED: pick = signal, lab = live */
@@ -33,9 +33,9 @@
     --rack:#e9ebf1; --rack-2:#e3e6ed;
     --panel:#ffffff; --panel-hi:#f6f7fb; --panel-lo:#eef1f7;
     --line:#d5dae6; --line-soft:#e4e8f0;
-    --ink:#1b2130; --ink-dim:#525a72; --ink-faint:#7b839a;
-    --signal:#e8720c; --signal-hi:#ff9a45; --signal-dim:#fbe7d5;
-    --live:#12a05f; --login:#2f7fe0; --api:#dd8410;
+    --ink:#1b2130; --ink-dim:#525a72; --ink-faint:#626a82;
+    --signal:#e8720c; --signal-hi:#ff9a45; --signal-dim:#fbe7d5; --signal-ink:#b85400; /* 작은 글씨용. 흰 배경 대비 4.5:1 이상 */
+    --live:#12a05f; --login:#2f7fe0; --api:#dd8410; --pick:#2f7fe0;
     --sans:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
     --mono:'IBM Plex Mono','SFMono-Regular',ui-monospace,monospace;
   }
@@ -55,8 +55,7 @@
   [hidden]{display:none !important}
 
   .mono{font-family:var(--mono);font-feature-settings:"tnum" 1}
-  .eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.22em;
-    text-transform:uppercase;color:var(--ink-faint)}
+  .eyebrow{font-size:11.5px;font-weight:600;letter-spacing:.06em;color:var(--ink-faint)}
 
   /* ---- rack shell ---- */
   .rack{max-width:1200px;margin:0 auto;padding:20px 22px 40px}
@@ -70,10 +69,12 @@
   .brand-mark{width:38px;height:38px;border-radius:50%;flex:none;object-fit:cover;
     border:1px solid var(--line);background:var(--rack)}
   .brand-txt{display:flex;flex-direction:column;line-height:1.05}
+  /* AI Roasting 로고 뒤에는 같은 크기의 흰 원을 둔다 (헤더, 푸터, 자체 제작 카드, 범례) */
+  .brand-mark,.foot-brand img,.mod.lab .jack,.legend .item img{background:#fff;border-radius:50%}
   .brand-txt b{font-size:17px;font-weight:600;letter-spacing:-.01em}
-  .brand-txt small{font-family:var(--mono);font-size:9.5px;font-weight:500;
-    letter-spacing:.2em;color:var(--signal);text-transform:uppercase;margin-top:3px}
-  /* site switch : 스킬 라이브러리 ↔ MCP 허브 (두 사이트 공통) */
+  .brand-txt small{font-family:var(--mono);font-size:10.5px;font-weight:600;
+    letter-spacing:.16em;color:var(--signal-ink);text-transform:uppercase;margin-top:3px}
+  /* site switch : 스킬 ↔ MCP (두 사이트 공통) */
   .switch{flex:none;display:inline-grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;background:var(--rack);
     border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 3px rgba(20,30,60,.07) inset}
   .switch a{display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:500;
@@ -106,7 +107,7 @@
   button.deck-link{font-family:var(--sans);font-size:12.5px}
 
   /* ---- console (hero) ---- */
-  .console{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:16px;
+  .console{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;margin-top:16px;
     background:
       radial-gradient(120% 140% at 100% 0,rgba(232,114,12,.07),transparent 52%),
       linear-gradient(180deg,var(--panel),var(--panel-lo));
@@ -117,28 +118,28 @@
   .h1 .amp{color:var(--signal)}
   .lede{margin:16px 0 0;font-size:16px;color:var(--ink-dim);max-width:44ch}
   .lede b{color:var(--ink);font-weight:600}
-  .lede-more{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:0;border:0;
-    background:none;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--signal)}
+  .lede-more{display:inline-flex;align-items:center;gap:4px;margin:0 0 0 2px;padding:0;border:0;vertical-align:baseline;
+    background:none;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--signal-ink)}
   .lede-more:hover{text-decoration:underline;text-underline-offset:3px}
   .lede-more svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4}
 
   /* quick picks — 모아 보기(필터) + 자주 찾는(키워드) */
   .quicks{display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:24px}
   .quick{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .quick .qlabel{flex:none;width:58px;font-size:11.5px;font-weight:600;color:var(--ink-faint)}
+  .quick .qlabel{flex:none;width:92px;font-size:11.5px;font-weight:600;color:var(--ink-faint)}
   .quick button{font-size:13px;font-weight:500;color:var(--ink-dim);
     background:var(--panel-lo);border:1px solid var(--line);border-radius:999px;
     padding:7px 14px;cursor:pointer;transition:.14s;display:inline-flex;align-items:center;gap:7px}
   .quick button::before{content:"";width:6px;height:6px;border-radius:50%;
     background:var(--line);box-shadow:none;transition:.14s}
+  .quick button[data-filter="pick"].active{border-color:var(--pick);background:#e3eefc}
+  .quick button[data-filter="pick"].active::before{background:var(--pick);box-shadow:0 0 8px var(--pick)}
   .quick button .cnt{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
   .quick button:hover{color:var(--ink);border-color:var(--ink-faint)}
   .quick button.active{color:var(--ink);border-color:var(--signal);background:var(--signal-dim)}
   .quick button.active::before{background:var(--signal);box-shadow:0 0 8px var(--signal)}
-  .quick button[data-filter="lab"].active{border-color:var(--live);background:#dff3ea}
-  .quick button[data-filter="lab"].active::before{background:var(--live);box-shadow:0 0 8px var(--live)}
 
-  /* ---- signature: skill spectrum (메타 그룹 3개로 묶은 세그먼트 미터) ---- */
+  /* ---- signature: 카테고리 스펙트럼. 이름이 다 보이는 가로 막대 목록 (두 페이지 공통) ---- */
   .spectrum{background:var(--panel);border:1px solid var(--line);border-radius:14px;
     padding:16px 18px 14px;display:flex;flex-direction:column;min-width:0;
     box-shadow:0 1px 3px rgba(20,30,60,.05) inset}
@@ -146,67 +147,82 @@
     padding-bottom:12px;border-bottom:1px solid var(--line-soft)}
   .spec-count{font-family:var(--mono);font-weight:600;font-size:44px;line-height:.9;
     color:var(--signal);letter-spacing:.01em}
-  .spec-count small{font-size:13px;color:var(--ink-dim);margin-left:8px}
-  .spec-cap{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-faint);text-align:right;line-height:1.6}
-  .meters{display:flex;gap:12px;flex:1;min-height:210px;padding-top:16px}
-  .mgroup{display:flex;flex-direction:column;gap:9px;min-width:0}
-  .mbars{flex:1;display:flex;align-items:flex-end;gap:4px;min-height:0}
-  .mcap{font-size:10.5px;font-weight:500;color:var(--ink-faint);text-align:center;line-height:1;
-    border-top:1px solid var(--line);padding-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .meter{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;
-    background:none;border:0;padding:0;cursor:pointer;color:inherit;height:100%;justify-content:flex-end}
-  .meter .bar{width:100%;max-width:20px;flex:1;min-height:0;border-radius:3px;position:relative;
-    background:var(--panel-lo);box-shadow:0 0 0 1px var(--line-soft) inset;overflow:hidden}
-  .meter .fill{position:absolute;top:0;right:0;bottom:0;left:0;border-radius:3px;transform-origin:bottom;transform:scaleY(0);
-    background:
-      repeating-linear-gradient(0deg,rgba(0,0,0,.55) 0 1px,transparent 1px 6px),
-      linear-gradient(180deg,var(--signal-hi),var(--signal));
-    box-shadow:0 0 12px rgba(255,138,61,.35);
+  .spec-count small{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink-dim);margin-left:6px}
+  .spec-cap{font-size:11.5px;color:var(--ink-faint);text-align:right;line-height:1.6}
+  .spec-cap b{font-family:var(--mono);font-weight:600;color:var(--ink-dim)}
+  /* 카테고리 목록: 두 줄 격자로 짧게 둔다. 이름과 개수가 바로 읽히고, 아래 가는 막대가 비중을 보여 준다 */
+  .spec-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:14px 0 8px}
+  .spec-head b{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+  .spec-hint{margin:0;font-size:12px;color:var(--ink-faint)}
+  .meters{display:grid;grid-template-columns:1fr 1fr;gap:7px 8px}
+  .meter{position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;
+    padding:8px 11px 10px;border:1px solid var(--line);border-radius:9px;background:var(--panel-lo);overflow:hidden;
+    cursor:pointer;color:inherit;text-align:left;font-family:var(--sans);transition:.14s}
+  .meter .mlbl{min-width:0;font-size:13.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .meter .mlbl-s{display:none}
+  .meter .mval{flex:none;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--ink-dim)}
+  .meter .bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--line-soft)}
+  .meter .fill{position:absolute;top:0;right:0;bottom:0;left:0;transform-origin:left;transform:scaleX(0);
+    background:linear-gradient(90deg,var(--signal),var(--signal-hi));
     transition:transform .7s cubic-bezier(.2,.9,.3,1)}
-  .meter .mval{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-dim)}
-  /* 미터가 14개라 라벨은 세로쓰기로 둔다. 가로로 두면 3글자 라벨이 옆 미터와 겹친다 */
-  .meter .mlbl{font-size:10.5px;color:var(--ink-faint);white-space:nowrap;line-height:1;
-    writing-mode:vertical-rl;height:50px;letter-spacing:.02em;text-align:start;
-    text-orientation:upright} /* upright: GEO 같은 영문도 눕지 않고 한 글자씩 세운다 */
-  .meter:hover .fill{filter:brightness(1.12)}
-  .meter:hover .mval,.meter:hover .mlbl{color:var(--ink)}
-  .meter:hover .bar{box-shadow:0 0 0 1px var(--signal) inset}
+  .meter:hover{border-color:var(--signal);background:var(--signal-dim)}
+  .meter:hover .mval{color:var(--ink)}
+  /* 검색어를 치는 동안에는 히어로를 접어 결과가 검색창 바로 아래에 보이게 한다 */
+  .searching .console{display:none}
   @media (prefers-reduced-motion:reduce){.meter .fill{transition:none}}
+
+  /* ---- duo : 첫 화면에서 스킬과 MCP가 무엇인지, 각각 몇 개인지 나란히 보여 준다 (두 페이지 공통) ---- */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+  .cc{display:flex;flex-direction:column;gap:7px;min-width:0;padding:13px 14px 12px;
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;transition:.15s}
+  .cc:hover{border-color:var(--ink-faint);box-shadow:0 14px 26px -22px rgba(30,40,70,.3)}
+  .cc[aria-current="page"]{border-color:var(--signal);background:linear-gradient(180deg,#fff,var(--signal-dim))}
+  .cc-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .cc-name{font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+  .cc-n{font-family:var(--mono);font-size:22px;font-weight:600;line-height:1;color:var(--signal);white-space:nowrap}
+  .cc-n::after{content:"개";font-family:var(--sans);font-size:12px;font-weight:600;margin-left:2px;color:var(--ink-dim)}
+  .cc-desc{font-size:13px;line-height:1.5;color:var(--ink-dim)}
+  .cc-desc b{color:var(--ink);font-weight:600}
+  .cc-cats{font-size:12px;line-height:1.55;color:var(--ink-dim)}
+  .cc-go{margin-top:auto;padding-top:4px;font-size:12px;font-weight:600;color:var(--ink-faint)}
+  .cc:not([aria-current]) .cc-go{color:var(--signal-ink)}
+  .cc[aria-current="page"]{pointer-events:none} /* 지금 보는 페이지 카드는 눌리지 않는다 */
+  .switch a .n{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--ink-faint)}
+  .switch a .n::after{content:"개";font-family:var(--sans)}
 
   /* ---- channels (category selector, sticky) ----
      조상에 filter/transform 없음 → 뷰포트 기준 sticky 정상 동작 */
   .channels{position:sticky;top:0;z-index:40;margin-top:16px;
-    display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:9px 10px;
+    display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:9px 9px;
     background:rgba(255,255,255,.82);backdrop-filter:blur(10px);
     border:1px solid var(--line);border-radius:12px;
     box-shadow:0 14px 30px -22px rgba(30,40,70,.28)}
-  /* 칩 15개가 1200px 폭에서 한 줄에 들어가도록 MCP 허브보다 좌우 여백을 조금 줄였다 */
-  .chip{display:inline-flex;align-items:center;gap:6px;cursor:pointer;flex:none;
+  /* 칩 15개가 1200px 폭에서 한 줄에 들어가도록 MCP보다 좌우 여백을 조금 줄였다 */
+  .chip{display:inline-flex;align-items:center;gap:5px;cursor:pointer;flex:none;
     font-size:13px;font-weight:500;color:var(--ink-dim);
     background:var(--panel-lo);border:1px solid var(--line);border-radius:9px;
-    padding:8px 9px;transition:.14s;white-space:nowrap}
+    padding:8px 7px;transition:.14s;white-space:nowrap}
   .chip:hover{color:var(--ink);border-color:var(--ink-faint)}
   .chip .cnt{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint)}
-  .chip.active{color:#1b1206;background:var(--signal);border-color:var(--signal);font-weight:600}
-  .chip.active .cnt{color:rgba(27,18,6,.7)}
+  .chip.active{color:#fff;background:var(--signal);border-color:var(--signal);font-weight:600}
+  .chip.active .cnt{color:rgba(255,255,255,.85)}
   .chip:disabled{opacity:.42;cursor:default;border-color:var(--line);color:var(--ink-dim)}
 
   /* ---- legend ---- */
   .legend{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:0 4px}
-  .legend .llbl{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--ink-faint)}
+  .legend .llbl{font-size:11.5px;font-weight:600;color:var(--ink-faint)}
   .legend .item{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-dim)}
   .led{width:8px;height:8px;border-radius:50%;flex:none}
-  .led-pick{background:var(--signal);box-shadow:0 0 7px var(--signal)}
-  .led-lab{background:var(--live);box-shadow:0 0 7px var(--live)}
+  .led-pick{background:var(--pick);box-shadow:0 0 7px var(--pick)}
+  .led-lab{background:var(--signal);box-shadow:0 0 7px var(--signal)} /* AI Roasting도 카드 테두리와 같은 주황 */
   .legend .item b{color:var(--ink);font-weight:600}
   /* 범례가 곧 필터 버튼이다. 누르면 해당 카드만 남고, 다시 누르면 풀린다 */
   .legend button.item{cursor:pointer;background:var(--panel-lo);border:1px solid var(--line);
     border-radius:999px;padding:6px 13px 6px 11px;text-align:left;transition:.14s}
   .legend button.item:hover{color:var(--ink);border-color:var(--ink-faint)}
   .legend button.item.active{color:var(--ink);border-color:var(--signal);background:var(--signal-dim)}
-  .legend button.item[data-filter="lab"].active{border-color:var(--live);background:#dff3ea}
+  .legend button.item[data-filter="pick"].active{border-color:var(--pick);background:#e3eefc}
+
 
   /* ---- sort (범례 줄 오른쪽) ---- */
   .sort{margin-left:auto;display:inline-flex;gap:3px;padding:3px;background:var(--rack);
@@ -219,8 +235,8 @@
 
   /* ---- filter notice (모아 보기가 켜졌을 때) ---- */
   .notice{display:flex;align-items:flex-start;gap:14px;margin-top:14px;padding:14px 16px;
-    background:var(--panel);border:1px solid var(--signal);border-radius:12px} /* 왼쪽 띠 없이 테두리 색으로만 구분 */
-  .notice.lab{border-color:var(--live)}
+    background:var(--panel);border:1px solid var(--pick);border-radius:12px} /* 왼쪽 띠 없이 테두리 색으로만 구분 */
+  .notice.lab{border-color:var(--signal)}
   .notice p{margin:0;flex:1;min-width:0;font-size:13.5px;line-height:1.65;color:var(--ink-dim)}
   .notice p b{color:var(--ink);font-weight:600}
   .notice button{flex:none;font-size:12.5px;font-weight:600;color:var(--ink-dim);cursor:pointer;
@@ -251,8 +267,13 @@
     box-shadow:0 18px 34px -24px rgba(30,40,70,.22)}
   .mod:hover::before{background:var(--signal);box-shadow:0 0 10px var(--signal)}
   /* Editor's Pick, AI Roasting 카드는 왼쪽 띠 대신 테두리 색으로 구분한다 */
-  .mod.pick,.mod.pick:hover{border-color:var(--signal)}
-  .mod.lab,.mod.lab:hover{border-color:var(--live)}
+  /* Editor's Pick은 파랑, AI Roasting은 주황. 테두리와 옅은 배경으로 구분한다 */
+  .mod.pick,.mod.pick:hover{border:2px solid var(--pick);padding:15px 15px 13px;background:linear-gradient(180deg,#f8fbff,#e7f0fd)}
+  .mod.lab,.mod.lab:hover{border:2px solid var(--signal);padding:15px 15px 13px;background:linear-gradient(180deg,#fffaf5,#fdeedf)}
+  .mod.lab .mod-foot{border-top-color:#f3d6bb}
+  .mod.pick .mod-foot{border-top-color:#c9dcf6}
+  .mod.pick:hover .mod-name{color:var(--pick)}
+  .mod.pick .src,.mod.lab .src,.mod.pick .patch,.mod.lab .patch{background:#fff}
   .mod.pick::before,.mod.lab::before{display:none}
   @media (prefers-reduced-motion:reduce){.mod{transition:border-color .16s}.mod:hover{transform:none}}
   .mod-head{display:flex;align-items:center;gap:12px;min-width:0}
@@ -357,6 +378,17 @@
   .about-by a:hover{color:var(--ink);border-color:var(--ink-faint)}
 
   /* ---- responsive ---- */
+  /* 히어로가 두 칸인 좁은 폭에서는 카테고리 타일에 짧은 이름을 쓴다 */
+  @media (min-width:901px) and (max-width:1040px){
+    .meter .mlbl-l{display:none}
+    .meter .mlbl-s{display:block}
+  }
+  /* 고정 칩 바는 항상 한 줄이다. 넘치면 가로로 밀고(.more), 오른쪽 끝을 흐리게 해 더 있다는 것을 알린다 */
+  .channels{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .channels::-webkit-scrollbar{display:none}
+  .channels.more{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent)}
+  .chip{flex:none}
+
   @media (max-width:1080px){
     .deck{flex-wrap:wrap}
     .brand{order:1}.switch{order:2}
@@ -380,12 +412,12 @@
     .grid{grid-template-columns:1fr}
     .mod-desc{-webkit-line-clamp:8;min-height:0}
     .search-kbd{display:none}
-    .meters{flex:none;height:210px;min-height:0;gap:9px}
-    .mbars{gap:3px}
+    .duo{grid-template-columns:1fr}
+    .meter{padding:7px 9px 9px}
+    .meter .mlbl-l{display:none}
+    .meter .mlbl-s{display:block}
+    .cc[aria-current="page"] .cc-cats{display:none} /* 바로 아래 카테고리 목록과 겹친다 */
     .quick .qlabel{width:100%}
-    /* 칩이 15개라 좁은 화면에서는 한 줄 가로 스크롤로 바꾼다 */
-    .channels{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-    .channels::-webkit-scrollbar{display:none}
     .sec-meta{display:none}
     .notice{flex-direction:column;gap:10px}
     .legend{gap:8px 16px}
@@ -401,11 +433,11 @@
   <header class="deck">
     <a class="brand" href="index.html" aria-label="AI ROASTING 스킬 라이브러리 홈">
       <img class="brand-mark" src="asset/favicon-256.png" alt="AI ROASTING 로고">
-      <span class="brand-txt"><b>AI ROASTING</b><small>Skill · MCP</small></span>
+      <span class="brand-txt"><b>스킬 라이브러리</b><small>AI ROASTING</small></span>
     </a>
     <nav class="switch" aria-label="사이트 전환">
-      <a href="index.html" aria-current="page">스킬 라이브러리</a>
-      <a href="mcp/index.html">MCP 허브</a>
+      <a href="index.html" aria-current="page">스킬<span class="n" data-count="skills">150</span></a>
+      <a href="mcp/index.html">MCP<span class="n" data-count="mcp">75</span></a>
     </nav>
     <div class="deck-search" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -420,21 +452,35 @@
   <!-- console : hero instrument panel -->
   <section class="console">
     <div class="console-l">
-      <span class="eyebrow">Curated skills for AI · Skill catalog</span>
+      <span class="eyebrow">비즈니스 리더를 위한 AI 카탈로그 · 스킬</span>
       <h1 class="h1">비즈니스 리더를 위해<br>엄선한 <span class="amp">AI 스킬</span>.</h1>
-      <p class="lede">스킬은 AI에게 일하는 방법을 가르쳐 주는 설치형 지침 묶음입니다. 개발 전용은 줄이고 비즈니스·마케팅·리서치·투자 중심으로, <b>리더가 바로 쓸 수 있는 것</b>만 골랐습니다.</p>
-      <div><button class="lede-more" id="about-open-2" type="button">스킬 라이브러리란?<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button></div>
+      <p class="lede">AI를 일에 쓰려면 두 가지가 필요합니다. 일하는 방법을 가르치는 <b>스킬</b>과, 바깥 자료와 서비스에 연결하는 <b>MCP</b>입니다. 리더가 바로 쓸 수 있는 것만 골랐습니다. <button class="lede-more" id="about-open-2" type="button">자세히<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button></p>
+      <div class="duo">
+        <a class="cc" href="index.html" aria-current="page" tabindex="-1">
+          <span class="cc-top"><span class="cc-name">스킬</span><span class="cc-n" data-count="skills">150</span></span>
+          <span class="cc-desc">AI에게 <b>일하는 방법</b>을 가르칩니다. 예: PPT 만들기, 계약서 검토, 리서치.</span>
+          <span class="cc-cats" data-cats="skills">리서치 · PPT·디자인 · 영상 · 글쓰기 · 법무 · 커리어 · 마케팅 · 금융 · AI 검색 · AI 팀 설계 · 일 잘하는 법 · AI 비용 절약 · 자동화 · 한국</span>
+          <span class="cc-go">지금 보는 중</span>
+        </a>
+        <a class="cc" href="mcp/index.html">
+          <span class="cc-top"><span class="cc-name">MCP</span><span class="cc-n" data-count="mcp">75</span></span>
+          <span class="cc-desc">AI를 <b>바깥 자료와 서비스</b>에 연결하는 표준 규격입니다. 예: 법제처 법령, 금융감독원 공시, 특허청 특허.</span>
+          <span class="cc-cats" data-cats="mcp">법률·특허 · 금융·투자 · 경제·통계 · 부동산 · 지도·교통 · 검색·리서치 · 생활·여행 · 채용·HR · 영업·CRM · 문서·협업</span>
+          <span class="cc-go">보러 가기 →</span>
+        </a>
+      </div>
       <div class="quicks">
         <div class="quick" id="filters"><span class="qlabel">모아 보기</span></div>
-        <div class="quick" id="quick"><span class="qlabel">자주 찾는</span></div>
+        <div class="quick" id="quick"><span class="qlabel">자주 찾는 검색어</span></div>
       </div>
     </div>
 
     <div class="spectrum" aria-label="카테고리별 스킬 분포">
       <div class="spec-top">
-        <div class="spec-count"><span id="stat-count">0</span><small>skills</small></div>
-        <div class="spec-cap"><span id="stat-cats">0</span> categories<br><span id="stat-picks">0</span> editor's picks</div>
+        <div class="spec-count"><span id="stat-count">0</span><small>개 스킬</small></div>
+        <div class="spec-cap">카테고리 <b id="stat-cats">0</b>개<br>Editor's Pick <b id="stat-picks">0</b>개</div>
       </div>
+      <div class="spec-head"><b>카테고리</b><p class="spec-hint">누르면 그 카테고리를 봅니다</p></div>
       <div class="meters" id="meters"></div>
     </div>
   </section>
@@ -445,7 +491,7 @@
   <!-- legend -->
   <div class="legend" role="note" aria-label="배지 구분">
     <span class="llbl">구분</span>
-    <button class="item" type="button" data-filter="pick" aria-pressed="false" title="Editor's Pick 카드만 보기"><span class="led led-pick"></span><b>Editor's Pick</b> · 효용성·대표성·신뢰성 평균 4점 이상</button>
+    <button class="item" type="button" data-filter="pick" aria-pressed="false" title="Editor's Pick 카드만 보기"><span class="led led-pick"></span><b>Editor's Pick</b> · 효용성·대표성·신뢰성 평균 4점 초과</button>
     <button class="item" type="button" data-filter="lab" aria-pressed="false" title="AI Roasting 카드만 보기"><span class="led led-lab"></span><b>AI Roasting</b> · 직접 만들어 공개한 스킬</button>
     <div class="sort" id="sort" role="group" aria-label="정렬"></div>
   </div>
@@ -471,20 +517,20 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 
-<!-- about : 스킬 라이브러리와 MCP 허브가 같은 내용을 쓴다. 고치면 index.html과 mcp/index.html을 함께 고친다 -->
+<!-- about : 스킬과 MCP가 같은 내용을 쓴다. 고치면 index.html과 mcp/index.html을 함께 고친다 -->
 <dialog class="about" id="about" aria-labelledby="about-title">
   <div class="about-in">
     <div class="about-head">
-      <div><span class="eyebrow">About</span><h2 id="about-title">스킬 라이브러리와 MCP 허브</h2></div>
+      <div><span class="eyebrow">소개</span><h2 id="about-title">스킬 라이브러리 소개</h2></div>
       <button class="about-close" id="about-close" type="button" aria-label="닫기">✕</button>
     </div>
     <div class="about-body">
       <p class="about-quote">"우리에게 필요한 AI 스킬은 무엇인가요?"</p>
       <p>AI 도입 미팅 때마다 가장 많이 받는 질문입니다.</p>
-      <p>그 답을 한 곳에 모아두려고 이 사이트를 만들었습니다. AI에게 일하는 방법을 가르치는 <b>스킬</b>과, AI를 외부 데이터·서비스에 연결하는 <b>MCP 커넥터</b> 가운데 비즈니스 리더에게 진짜 필요한 것만 엄선했습니다.</p>
+      <p>그 답을 한 곳에 모아두려고 이 사이트를 만들었습니다. AI에게 일하는 방법을 가르치는 <b>스킬</b>과, AI를 바깥 자료와 서비스에 연결하는 <b>MCP</b> 가운데 비즈니스 리더에게 진짜 필요한 것만 엄선했습니다.</p>
 
       <div class="about-sec">
-        <h3><span>01</span>스킬 라이브러리</h3>
+        <h3><span>01</span>스킬</h3>
         <p>스킬은 AI에게 일하는 방법을 가르쳐 주는 설치형 지침 묶음입니다. 개발 전용 스킬은 최소화하고, 비즈니스·마케팅·리서치·투자 중심으로 직접 골랐습니다. 한국 특화 스킬도 별도 카테고리로 분리했습니다.</p>
         <ul class="about-list">
           <li>비즈니스 리더가 바로 쓸 수 있을 것</li>
@@ -494,8 +540,8 @@
       </div>
 
       <div class="about-sec">
-        <h3><span>02</span>MCP 허브</h3>
-        <p>MCP는 AI를 외부 데이터·서비스에 연결하는 표준 규격입니다. 국내 공시·법령부터 미국 SEC 공시까지, 따로 찾지 않으면 알기 어려운 한국·틈새 커넥터를 중심으로 모았습니다.</p>
+        <h3><span>02</span>MCP</h3>
+        <p>MCP는 AI를 바깥 자료와 서비스에 연결하는 표준 규격입니다. 국내 공시·법령부터 미국 SEC 공시까지, 따로 찾지 않으면 알기 어려운 한국·틈새 MCP를 중심으로 모았습니다.</p>
         <ul class="about-list">
           <li>출처를 보자마자 알 수 있을 것</li>
           <li>개발자 전용이 아니라 비즈니스 리더가 쓸 것</li>
@@ -509,13 +555,13 @@
           <li><span><b>스킬 선택.</b> 원하는 스킬의 GitHub 링크를 열어 SKILL.md와 함께 들어 있는 파일을 확인합니다.</span></li>
           <li><span><b>도구의 스킬 폴더에 복사.</b> 사용하는 AI 도구(Claude Code, Codex, Antigravity 등)의 스킬 폴더에 파일을 넣으면 자동으로 인식됩니다. 도구별 경로는 각 공식 문서를 참고합니다.</span></li>
           <li><span><b>조합해서 쓰기.</b> 스킬은 여러 개를 함께 써도 됩니다. 하네스로 팀을 짜고 워크플로우 스킬로 진행 방식을 잡으면 시너지가 커집니다.</span></li>
-          <li><span><b>MCP 커넥터 연결.</b> 카드를 눌러 저장소의 설치 안내를 따릅니다. 카드의 구분(바로 사용, 로그인만 필요, API 발급 필요)으로 준비물을 먼저 확인합니다.</span></li>
+          <li><span><b>MCP 연결.</b> 카드를 눌러 저장소의 설치 안내를 따릅니다. 카드의 구분(바로 사용, 로그인만 필요, API 발급 필요)으로 준비물을 먼저 확인합니다.</span></li>
         </ul>
       </div>
 
       <div class="about-sec">
         <h3><span>04</span>왜 만들었나요</h3>
-        <p>조직에 AI를 도입할 때 저는 늘 "전용 스킬 라이브러리부터 만드세요"라고 조언드립니다. 표준 스킬이 먼저 깔려야 도입 속도가 달라지기 때문입니다. 이 사이트는 그 레퍼런스입니다.</p>
+        <p>조직에 AI를 도입할 때 저는 늘 "전용 스킬부터 만드세요"라고 조언드립니다. 표준 스킬이 먼저 깔려야 도입 속도가 달라지기 때문입니다. 이 사이트는 그 레퍼런스입니다.</p>
       </div>
 
       <div class="about-sec">
@@ -540,11 +586,11 @@
   "authors": {},
   "meta_categories": [
     {
-      "id": "build",
-      "name": "AI 에이전트팀 구축",
-      "emoji": "🏗",
-      "en": "Build AI Agent Team",
-      "desc": "AI 팀·시스템·파이프라인을 직접 설계하고 운영하는 기반 레이어입니다."
+      "id": "execution",
+      "name": "실행력 제고",
+      "emoji": "🎯",
+      "en": "Execution Excellence",
+      "desc": "업무 속도와 산출물 품질을 끌어올리는 실무 레버리지 스킬입니다."
     },
     {
       "id": "growth",
@@ -554,86 +600,14 @@
       "desc": "매출·고객·자산을 키우는 top-line 임팩트에 직결되는 스킬입니다."
     },
     {
-      "id": "execution",
-      "name": "실행력 제고",
-      "emoji": "🎯",
-      "en": "Execution Excellence",
-      "desc": "업무 속도와 산출물 품질을 끌어올리는 실무 레버리지 스킬입니다."
+      "id": "build",
+      "name": "AI 에이전트팀 구축",
+      "emoji": "🏗",
+      "en": "Build AI Agent Team",
+      "desc": "AI 팀·시스템·파이프라인을 직접 설계하고 운영하는 기반 레이어입니다."
     }
   ],
   "categories": [
-    {
-      "id": "harness",
-      "meta": "build",
-      "name": "하네스 · 에이전트 설계",
-      "short": "하네스",
-      "emoji": "🛠",
-      "en": "Harness & Agent Design",
-      "desc": "에이전트 팀과 런타임 구조를 직접 조립해 나만의 AI 팀을 설계하는 플랫폼 레이어 스킬입니다."
-    },
-    {
-      "id": "workflow",
-      "meta": "build",
-      "name": "AI와 일 잘하는 법",
-      "short": "협업",
-      "emoji": "🚀",
-      "en": "Working with AI",
-      "desc": "브레인스토밍·계획·기억·체크리스트까지, 내가 AI와 더 효율적으로 일하기 위한 협업 방식과 습관을 잡아주는 스킬입니다."
-    },
-    {
-      "id": "token",
-      "meta": "build",
-      "name": "토큰 절약",
-      "short": "토큰",
-      "emoji": "⚡",
-      "en": "Token Efficiency",
-      "desc": "컨텍스트와 토큰 사용량을 줄여서 비용은 아끼고 응답 속도는 끌어올리는 효율화 스킬들입니다."
-    },
-    {
-      "id": "automation",
-      "meta": "build",
-      "name": "외부 연동 · 자동화",
-      "short": "연동",
-      "emoji": "🤖",
-      "en": "External Integration & MCP",
-      "desc": "브라우저·메신저·이슈 트래커 같은 외부 시스템과 Claude를 이어, 바깥 세계와 닿게 해주는 스킬입니다."
-    },
-    {
-      "id": "korea",
-      "meta": "build",
-      "name": "한국 특화 스킬",
-      "short": "한국",
-      "emoji": "🇰🇷",
-      "en": "Korea Skills · MCP",
-      "desc": "한글 문서부터 카카오, 토스, 네이버 같은 국내 서비스까지, 한국 환경에 딱 맞춘 스킬 모음입니다."
-    },
-    {
-      "id": "business",
-      "meta": "growth",
-      "name": "그로스 · 마케팅",
-      "short": "그로스",
-      "emoji": "💼",
-      "en": "Growth · Marketing",
-      "desc": "CRO, 카피, SEO, 멀티채널 캠페인까지 매출·고객 그로스 실험을 빠르게 돌릴 수 있게 돕는 스킬들입니다."
-    },
-    {
-      "id": "finance",
-      "meta": "growth",
-      "name": "투자 · 금융",
-      "short": "금융",
-      "emoji": "💹",
-      "en": "Investment · Finance",
-      "desc": "트레이딩부터 포트폴리오 관리, 리서치까지 투자와 금융 업무에 특화된 스킬들입니다."
-    },
-    {
-      "id": "geo",
-      "meta": "growth",
-      "name": "GEO · AEO",
-      "short": "GEO",
-      "emoji": "🔎",
-      "en": "GEO · AEO (AI Search)",
-      "desc": "ChatGPT·Perplexity·Claude 같은 생성형 AI 검색에서 내 브랜드·콘텐츠가 인용되도록 최적화하는 GEO(Generative Engine Optimization)·AEO(Answer Engine Optimization) 스킬입니다."
-    },
     {
       "id": "research",
       "meta": "execution",
@@ -646,8 +620,8 @@
     {
       "id": "design",
       "meta": "execution",
-      "name": "디자인",
-      "short": "디자인",
+      "name": "PPT·디자인",
+      "short": "PPT·디자인",
       "emoji": "🎨",
       "en": "Design",
       "desc": "UI·슬라이드·디자인 시스템 같은 시각 결과물을 만들 때 쓰기 좋은 스킬들입니다."
@@ -687,6 +661,78 @@
       "emoji": "🧭",
       "en": "Career · Job Search",
       "desc": "이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 커리어 전환을 체계적으로 준비하게 돕는 스킬들입니다."
+    },
+    {
+      "id": "business",
+      "meta": "growth",
+      "name": "마케팅 · 그로스",
+      "short": "마케팅",
+      "emoji": "💼",
+      "en": "Growth · Marketing",
+      "desc": "CRO, 카피, SEO, 멀티채널 캠페인까지 매출·고객 그로스 실험을 빠르게 돌릴 수 있게 돕는 스킬들입니다."
+    },
+    {
+      "id": "finance",
+      "meta": "growth",
+      "name": "투자 · 금융",
+      "short": "금융",
+      "emoji": "💹",
+      "en": "Investment · Finance",
+      "desc": "트레이딩부터 포트폴리오 관리, 리서치까지 투자와 금융 업무에 특화된 스킬들입니다."
+    },
+    {
+      "id": "geo",
+      "meta": "growth",
+      "name": "AI 검색 노출 · GEO",
+      "short": "AI 검색",
+      "emoji": "🔎",
+      "en": "GEO · AEO (AI Search)",
+      "desc": "ChatGPT·Perplexity·Claude 같은 생성형 AI 검색에서 내 브랜드·콘텐츠가 인용되도록 최적화하는 GEO(Generative Engine Optimization)·AEO(Answer Engine Optimization) 스킬입니다."
+    },
+    {
+      "id": "harness",
+      "meta": "build",
+      "name": "AI 팀 설계 · 하네스",
+      "short": "AI 팀 설계",
+      "emoji": "🛠",
+      "en": "Harness & Agent Design",
+      "desc": "에이전트 팀과 런타임 구조를 직접 조립해 나만의 AI 팀을 설계하는 플랫폼 레이어 스킬입니다."
+    },
+    {
+      "id": "workflow",
+      "meta": "build",
+      "name": "AI와 일 잘하는 법",
+      "short": "일 잘하는 법",
+      "emoji": "🚀",
+      "en": "Working with AI",
+      "desc": "브레인스토밍·계획·기억·체크리스트까지, 내가 AI와 더 효율적으로 일하기 위한 협업 방식과 습관을 잡아주는 스킬입니다."
+    },
+    {
+      "id": "token",
+      "meta": "build",
+      "name": "AI 비용 절약 · 토큰",
+      "short": "AI 비용 절약",
+      "emoji": "⚡",
+      "en": "Token Efficiency",
+      "desc": "컨텍스트와 토큰 사용량을 줄여서 비용은 아끼고 응답 속도는 끌어올리는 효율화 스킬들입니다."
+    },
+    {
+      "id": "automation",
+      "meta": "build",
+      "name": "외부 연동 · 자동화",
+      "short": "자동화",
+      "emoji": "🤖",
+      "en": "External Integration & MCP",
+      "desc": "브라우저·메신저·이슈 트래커 같은 외부 시스템과 Claude를 이어, 바깥 세계와 닿게 해주는 스킬입니다."
+    },
+    {
+      "id": "korea",
+      "meta": "build",
+      "name": "한국 특화 스킬",
+      "short": "한국",
+      "emoji": "🇰🇷",
+      "en": "Korea Skills · MCP",
+      "desc": "한글 문서부터 카카오, 토스, 네이버 같은 국내 서비스까지, 한국 환경에 딱 맞춘 스킬 모음입니다."
     }
   ],
   "skills": [
@@ -1043,8 +1089,7 @@
         "#python"
       ],
       "lang": "Python",
-      "added_at": "2026-01-07",
-      "editors_pick": true
+      "added_at": "2026-01-07"
     },
     {
       "category": "research",
@@ -1211,23 +1256,6 @@
     },
     {
       "category": "korea",
-      "name": "K-Skill",
-      "repo": "NomaDamas/k-skill",
-      "author": "NomaDamas",
-      "stars": 8422,
-      "forks": 1008,
-      "desc": "이 스킬은 SRT 좌석 예약, 카카오톡 메시지 전송, KBO 야구 스코어, 미세먼지 조회를 자연어 명령으로 실행하는 한국 생활 특화 도구입니다. '다음 주 서울→부산 KTX 2매 예매해줘' 같은 요청에도 실제 예약 링크까지 안내해주기 때문에, 일상 반복 작업을 Claude에 맡기고 싶은 한국 사용자에게 잘 어울립니다.",
-      "tags": [
-        "#korea",
-        "#srt",
-        "#kakao"
-      ],
-      "lang": "JavaScript",
-      "added_at": "2026-04-19",
-      "editors_pick": true
-    },
-    {
-      "category": "korea",
       "name": "Legalize KR",
       "repo": "legalize-kr/legalize-kr",
       "author": "legalize-kr",
@@ -1271,22 +1299,6 @@
         "#aeo",
         "#geo",
         "#gtm"
-      ]
-    },
-    {
-      "category": "geo",
-      "name": "eGEOagents",
-      "repo": "mverab/eGEOagents",
-      "author": "mverab",
-      "stars": 218,
-      "forks": 60,
-      "lang": "Python",
-      "added_at": "2026-04-20",
-      "desc": "이 스킬 모음은 ChatGPT, Perplexity, Claude, Gemini 등 주요 생성형 검색엔진 각각에 맞춰 콘텐츠를 최적화해주는 GEO 에이전트 세트입니다. 엔진별 크롤링·인용 특성이 다르기 때문에, 여러 AI 검색을 동시에 타겟팅하고 싶을 때 채널별 최적화를 한 번에 돌릴 수 있습니다.",
-      "tags": [
-        "#agents",
-        "#multi-engine",
-        "#geo"
       ]
     },
     {
@@ -2878,38 +2890,6 @@
       "added_at": "2026-11-15"
     },
     {
-      "category": "career",
-      "name": "Hiring Panel",
-      "repo": "alexyc9381/hiring-panel-skill",
-      "author": "Alex Chen",
-      "stars": 304,
-      "forks": 30,
-      "lang": "Python",
-      "desc": "이 스킬은 자동 서류 심사, 채용 매니저, CEO, 리크루터, 동료 등 7명의 Claude가 각자 이력서를 떨어뜨릴 이유를 찾은 뒤, 지적된 문제를 모두 고친 이력서를 다시 만들어 줍니다. 사실은 바꾸지 않고 고치기 전후 심사 결과를 비교해 보여 주기 때문에 임원급 이직이나 채용 담당자 시선 점검에 유용합니다.",
-      "tags": [
-        "#resume",
-        "#hiring",
-        "#career"
-      ],
-      "added_at": "2026-11-15"
-    },
-    {
-      "category": "career",
-      "name": "AI Job Search KR",
-      "repo": "wing0828/ai-job-search-kr",
-      "author": "wing0828",
-      "stars": 80,
-      "forks": 5,
-      "lang": "Python",
-      "desc": "이 스킬은 사람인·잡코리아·잡알리오 공고 검색부터 적합도 평가, 이력서·경력기술서·문항형 자기소개서 작성, 마감 관리, 면접 준비, 연봉 실수령액 비교까지 한국 채용 관행에 맞춰 이어 줍니다. 병역, 어학 점수, 자격증 같은 국내 지원 요건을 먼저 걸러 주기 때문에 한국에서 이직을 준비하는 사람에게 잘 맞습니다.",
-      "tags": [
-        "#job-search",
-        "#korea",
-        "#resume"
-      ],
-      "added_at": "2026-11-15"
-    },
-    {
       "category": "automation",
       "name": "Agent Desktop",
       "repo": "vercel-labs/agent-desktop",
@@ -3015,7 +2995,8 @@
         "#ui-polish",
         "#ai-slop"
       ],
-      "forks": 6601
+      "forks": 6601,
+      "editors_pick": true
     },
     {
       "category": "workflow",
@@ -3046,10 +3027,72 @@
         "#motion"
       ],
       "forks": 1855
+    },
+    {
+      "category": "workflow",
+      "name": "Book to Skill",
+      "repo": "virgiliojr94/book-to-skill",
+      "author": "virgiliojr94",
+      "stars": 37942,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 책 PDF를 넣으면 핵심 프레임워크와 판단 기준, 장별 내용을 뽑아 에이전트가 필요할 때 꺼내 쓰는 스킬로 만들어 줍니다. 읽고 잊어버린 책 내용을 원문에 근거해 다시 물을 수 있기 때문에, 전문서를 업무에 바로 적용하려는 리더에게 좋습니다.",
+      "tags": [
+        "#book",
+        "#knowledge",
+        "#pdf"
+      ],
+      "forks": 4035
+    },
+    {
+      "category": "career",
+      "name": "AI Job Search",
+      "repo": "ai-job-search-dev/ai-job-search",
+      "author": "ai-job-search-dev",
+      "stars": 71820,
+      "added_at": "2026-11-15",
+      "desc": "이 프레임워크는 내 프로필을 채워 두면 Claude가 채용 공고를 평가하고 이력서를 공고에 맞게 고치며 자기소개서와 면접 준비까지 돕는 구직 지원 도구입니다. 저장소를 복사해 내 방식대로 고쳐 쓸 수 있기 때문에, 이직을 체계적으로 준비하려는 사람에게 적합합니다.",
+      "tags": [
+        "#job-search",
+        "#resume",
+        "#cover-letter",
+        "#interview"
+      ],
+      "forks": 23150
+    },
+    {
+      "category": "career",
+      "name": "Reactive Resume",
+      "repo": "reactive-resume/reactive-resume",
+      "author": "reactive-resume",
+      "stars": 45772,
+      "added_at": "2026-11-15",
+      "desc": "이 도구는 무료 오픈소스 이력서 빌더로, 함께 든 스킬로 성과 정리와 학술 이력서 작성 같은 작업을 에이전트에게 맡길 수 있습니다. 양식과 내보내기를 직접 다룰 수 있기 때문에, 이력서를 자주 손보는 사람에게 잘 어울립니다.",
+      "tags": [
+        "#resume-builder",
+        "#cv",
+        "#open-source"
+      ],
+      "forks": 4958
+    },
+    {
+      "category": "design",
+      "name": "Astryx",
+      "repo": "facebook/astryx",
+      "author": "Meta",
+      "stars": 28480,
+      "added_at": "2026-11-15",
+      "desc": "이 디자인 시스템은 Meta가 사내 13,000여 개 앱에 써 온 React 컴포넌트와 테마를 공개한 것으로, AI 에이전트가 같은 문서와 CLI로 화면을 만들도록 설계됐습니다. 검증된 부품으로 일관된 화면을 빠르게 만들 수 있어, 제품 화면을 AI로 만들려는 팀에 좋습니다.",
+      "tags": [
+        "#design-system",
+        "#react",
+        "#meta"
+      ],
+      "forks": 2223,
+      "editors_pick": true
     }
   ]
 }
 </script>
-<script src="app.js?v=8"></script>
+<script src="app.js?v=15"></script>
 </body>
 </html>
