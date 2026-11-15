@@ -155,9 +155,9 @@ python3 evals/test_inspect_patterns.py
 
 ## 데이터 소스: AI Roasting 스킬 라이브러리
 
-find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 13개 카테고리로 나눠 담았고, 그중 30개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽), `?sort=stars`(스타순 한 목록)를 붙이면 그 화면으로 바로 갑니다.
+find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 14개 카테고리로 나눠 담았고, 그중 30개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽), `?sort=stars`(스타순 한 목록)를 붙이면 그 화면으로 바로 갑니다.
 
-카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 가장 최근 교체는 2026-11-15입니다. MCP 서버를 함께 제공하는 카드 7장(Korean Law MCP, Excel MCP Server, Kordoc, 그리고 AI Roasting의 DART, EDGAR, JPX, Korean Law)을 MCP 허브로 옮기고 커리어 카테고리 2장(Career Ops, Offer Toolkit)을 뺐습니다. 빈 아홉 자리는 Agent Desktop(에디터픽), Agent Browser, Google Workspace CLI, OfficeCLI, PM Skills Marketplace, Archify, Impeccable, Nuwa Skill, Video Shotcraft로 채웠습니다.
+카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 가장 최근 교체는 2026-11-15이고 두 번 있었습니다. 먼저 최근 한 달 GitHub에서 빠르게 떠오른 저장소 가운데 개발 도구는 빼고 비즈니스 리더가 바로 쓸 만한 16장을 넣었습니다. 사업성을 미리 검증하는 Founder Skill(에디터픽), 아웃바운드 영업 에이전트 Franco, 회의록 앱 Yogurt와 동시통역 회의록 Cicada, 낯선 분야를 익히는 Jane Street의 Socratic Tutor와 오디오 강의를 만드는 Claudemy, AI 시장 신호를 매일 모으는 New Term Radar, 나라별·날짜별 법령을 추적하는 Global Law, 결정 페이지를 만드는 No Slop, 편집 가능한 PPT를 만드는 Image2EditablePPT·Luobo PPT, 한국 채용용 AI Job Search KR 등입니다. 같은 수만큼 뺀 카드는 저장소 이름이 바뀌어 다른 카드와 겹친 2장(Claude Scientific Skills, Loop Library), 몇 달째 갱신이 없는 카드, 코드 리뷰·이슈 관리·사용량 모니터 같은 개발 전용 도구입니다. 이름이 바뀐 저장소 8곳의 주소와 전체 카드의 별·포크 수도 이때 맞췄습니다. 이어서 MCP 서버를 함께 제공하는 카드 7장(Korean Law MCP, Excel MCP Server, Kordoc, 그리고 AI Roasting의 DART, EDGAR, JPX, Korean Law)을 MCP 허브로 옮기고 커리어 카테고리의 Career Ops와 Offer Toolkit을 뺐습니다. 빈 아홉 자리는 Agent Desktop(에디터픽), Agent Browser, Google Workspace CLI, OfficeCLI, PM Skills Marketplace, Archify, Impeccable, Nuwa Skill, Video Shotcraft로 채웠습니다.
 
 ## 데이터 소스: AI Roasting MCP 허브
 
