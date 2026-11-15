@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>스킬 라이브러리 | AI ROASTING</title>
+<title>스킬·MCP 라이브러리 | AI ROASTING</title>
 <link rel="icon" type="image/png" sizes="256x256" href="asset/favicon-256.png">
 <link rel="apple-touch-icon" sizes="180x180" href="asset/favicon-180.png">
 <meta name="description" content="비즈니스 리더를 위해 엄선한 AI 스킬. 검증된 실무 스킬만 선별합니다.">
@@ -272,7 +272,7 @@
   .mod.lab,.mod.lab:hover{border:2px solid var(--signal);padding:15px 15px 13px;background:linear-gradient(180deg,#fffaf5,#fdeedf)}
   .mod.lab .mod-foot{border-top-color:#f3d6bb}
   .mod.pick .mod-foot{border-top-color:#c9dcf6}
-  .mod.pick:hover .mod-name{color:var(--pick)}
+  .mod.pick:hover .mod-name{color:#1f63b8}
   .mod.pick .src,.mod.lab .src,.mod.pick .patch,.mod.lab .patch{background:#fff}
   .mod.pick::before,.mod.lab::before{display:none}
   @media (prefers-reduced-motion:reduce){.mod{transition:border-color .16s}.mod:hover{transform:none}}
@@ -285,7 +285,7 @@
   .mod-ht{flex:1;min-width:0}
   .mod-name{display:block;font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}
-  .mod:hover .mod-name{color:var(--signal)}
+  .mod:hover .mod-name{color:var(--signal-ink)}
   .mod-meta{display:flex;align-items:center;gap:8px;margin-top:6px;min-width:0}
   .src{flex:0 1 auto;min-width:0;font-size:11.5px;font-weight:600;color:var(--ink);
     border:1px solid var(--line);border-radius:6px;background:var(--rack);padding:3px 8px;
@@ -404,7 +404,9 @@
     .rack{padding:14px 14px 30px}
     .deck{gap:10px 8px}
     .brand{order:1}.deck-link{order:2;padding:8px 10px}
-    .brand-txt b{font-size:16px}
+    .brand{gap:9px}
+    .brand-mark{width:32px;height:32px}
+    .brand-txt b{font-size:14.5px}
     .switch{order:3;flex-basis:100%;display:grid}
     .deck-search{order:4}
     .console{padding:22px 18px}
@@ -431,9 +433,9 @@
 
   <!-- deck : brand + site switch + search -->
   <header class="deck">
-    <a class="brand" href="index.html" aria-label="AI ROASTING 스킬 라이브러리 홈">
+    <a class="brand" href="index.html" aria-label="AI ROASTING 스킬·MCP 라이브러리 홈">
       <img class="brand-mark" src="asset/favicon-256.png" alt="AI ROASTING 로고">
-      <span class="brand-txt"><b>스킬 라이브러리</b><small>AI ROASTING</small></span>
+      <span class="brand-txt"><b>스킬·MCP 라이브러리</b><small>AI ROASTING</small></span>
     </a>
     <nav class="switch" aria-label="사이트 전환">
       <a href="index.html" aria-current="page">스킬<span class="n" data-count="skills">150</span></a>
@@ -475,7 +477,7 @@
       </div>
     </div>
 
-    <div class="spectrum" aria-label="카테고리별 스킬 분포">
+    <div class="spectrum" role="navigation" aria-label="카테고리별 스킬 분포">
       <div class="spec-top">
         <div class="spec-count"><span id="stat-count">0</span><small>개 스킬</small></div>
         <div class="spec-cap">카테고리 <b id="stat-cats">0</b>개<br>Editor's Pick <b id="stat-picks">0</b>개</div>
@@ -489,7 +491,7 @@
   <nav class="channels" id="catalog" aria-label="카테고리"><div class="chip-wrap" id="chips" style="display:contents"></div></nav>
 
   <!-- legend -->
-  <div class="legend" role="note" aria-label="배지 구분">
+  <div class="legend" role="group" aria-label="배지 구분과 정렬">
     <span class="llbl">구분</span>
     <button class="item" type="button" data-filter="pick" aria-pressed="false" title="Editor's Pick 카드만 보기"><span class="led led-pick"></span><b>Editor's Pick</b> · 효용성·대표성·신뢰성 평균 4점 초과</button>
     <button class="item" type="button" data-filter="lab" aria-pressed="false" title="AI Roasting 카드만 보기"><span class="led led-lab"></span><b>AI Roasting</b> · 직접 만들어 공개한 스킬</button>
@@ -505,7 +507,7 @@
   <footer class="foot">
     <div class="foot-brand">
       <img src="asset/logo1-transparent.png" alt="">
-      <b>AI ROASTING · 스킬 라이브러리</b>
+      <b>AI ROASTING · 스킬·MCP 라이브러리</b>
     </div>
     <span class="foot-note">최종 업데이트 2026-11-15 · 스타·포크는 GitHub 실측값 · 모든 카드는 원 저장소로 연결됩니다 · <a href="https://github.com/airoasting/find-skills/issues/new" target="_blank" rel="noopener">스킬 추천하기</a></span>
     <span class="foot-tag">OPEN SOURCE</span>
@@ -521,7 +523,7 @@
 <dialog class="about" id="about" aria-labelledby="about-title">
   <div class="about-in">
     <div class="about-head">
-      <div><span class="eyebrow">소개</span><h2 id="about-title">스킬 라이브러리 소개</h2></div>
+      <div><span class="eyebrow">소개</span><h2 id="about-title">스킬·MCP 라이브러리 소개</h2></div>
       <button class="about-close" id="about-close" type="button" aria-label="닫기">✕</button>
     </div>
     <div class="about-body">
