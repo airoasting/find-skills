@@ -140,15 +140,6 @@
       "emoji": "⚖️",
       "en": "Legal · Compliance",
       "desc": "계약서 검토, NDA 초안, 컴플라이언스 체크처럼 법무 리스크를 빠르게 1차 스크리닝할 때 쓰는 스킬들입니다."
-    },
-    {
-      "id": "career",
-      "meta": "execution",
-      "name": "커리어 · 이직",
-      "short": "커리어",
-      "emoji": "🧭",
-      "en": "Career · Job Search",
-      "desc": "이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 커리어 전환을 체계적으로 준비하게 돕는 스킬들입니다."
     }
   ],
   "skills": [
@@ -376,23 +367,6 @@
       ],
       "lang": "TypeScript",
       "added_at": "2026-03-11",
-      "editors_pick": true
-    },
-    {
-      "category": "career",
-      "name": "Career Ops",
-      "repo": "career-ops-hq/career-ops",
-      "author": "santifer",
-      "stars": 75401,
-      "forks": 14056,
-      "desc": "이 스킬은 이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 14가지 커리어 모드를 한 곳에서 돌려줍니다. 지원하는 직군이나 회사에 맞춰 서류를 자동으로 커스터마이징해주기 때문에 이직을 준비하는 직장인이 서류 전형 통과율을 끌어올리기에 좋습니다.",
-      "tags": [
-        "#career",
-        "#hr",
-        "#resume"
-      ],
-      "lang": "JavaScript",
-      "added_at": "2026-04-04",
       "editors_pick": true
     },
     {
@@ -2434,21 +2408,6 @@
       "forks": 260
     },
     {
-      "category": "career",
-      "name": "Offer Toolkit",
-      "repo": "yanliudesign/offer-toolkit-skill",
-      "author": "yanliudesign",
-      "stars": 559,
-      "added_at": "2026-11-06",
-      "desc": "이 스킬 묶음은 공고 수집, 채용공고 해석, 이력서 작성, 행동면접 준비, 오퍼 비교, 연봉 협상까지 구직 6단계를 각각의 스킬로 제공합니다. 필요한 단계만 골라 쓸 수 있고 오퍼 비교와 협상까지 다루기 때문에, 이직을 준비하는 리더에게 잘 맞습니다.",
-      "tags": [
-        "#job-search",
-        "#resume",
-        "#salary-negotiation"
-      ],
-      "forks": 60
-    },
-    {
       "category": "geo",
       "name": "Fire Your SEO Agency",
       "repo": "leopard627/fire-your-seo-agency",
@@ -2477,6 +2436,68 @@
         "#ghostwriting"
       ],
       "forks": 921
+    },
+    {
+      "category": "automation",
+      "name": "Agent Desktop",
+      "repo": "vercel-labs/agent-desktop",
+      "author": "vercel-labs",
+      "stars": 23988,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 스크린샷 없이 접근성 정보를 읽어 AI 에이전트가 macOS·Windows·Linux 데스크톱 앱을 직접 조작하게 해 주는 Vercel Labs의 CLI입니다. 설치형 업무 프로그램까지 자동화할 수 있기 때문에, 반복되는 PC 작업을 맡기려는 리더에게 잘 어울립니다.",
+      "tags": [
+        "#computer-use",
+        "#desktop-automation",
+        "#cli"
+      ],
+      "forks": 1787
+    },
+    {
+      "category": "automation",
+      "name": "Agent Browser",
+      "repo": "vercel-labs/agent-browser",
+      "author": "vercel-labs",
+      "stars": 51382,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 AI 에이전트가 명령 한 줄씩으로 웹 브라우저를 열고 읽고 조작하게 해 주는 Vercel Labs의 브라우저 자동화 CLI입니다. 페이지를 간결한 텍스트로 바꿔 넘겨주기 때문에, 웹 조사나 반복 입력을 에이전트에게 맡기려는 리더에게 적합합니다.",
+      "tags": [
+        "#browser-automation",
+        "#cli",
+        "#web"
+      ],
+      "forks": 3590
+    },
+    {
+      "category": "automation",
+      "name": "Google Workspace CLI",
+      "repo": "googleworkspace/cli",
+      "author": "googleworkspace",
+      "stars": 32321,
+      "added_at": "2026-11-15",
+      "desc": "이 CLI는 드라이브, 지메일, 캘린더, 시트, 문서 등 구글 워크스페이스 전체를 명령 하나로 다루며 에이전트 스킬 40여 개를 함께 제공합니다. 메일 정리와 일정 등록, 시트 작업을 말로 시킬 수 있기 때문에, 구글 워크스페이스로 일하는 리더에게 잘 어울립니다.",
+      "tags": [
+        "#google-workspace",
+        "#gmail",
+        "#calendar",
+        "#cli"
+      ],
+      "forks": 1996
+    },
+    {
+      "category": "writing",
+      "name": "OfficeCLI",
+      "repo": "iOfficeAI/OfficeCLI",
+      "author": "iOfficeAI",
+      "stars": 33303,
+      "added_at": "2026-11-15",
+      "desc": "이 도구는 오피스를 설치하지 않고도 AI 에이전트가 Word, Excel, PowerPoint 파일을 읽고 고치고 새로 만들게 해 주는 단일 실행 파일입니다. 문서를 화면처럼 렌더링해 결과를 확인하며 다듬기 때문에, 보고서와 발표 자료를 자주 만드는 리더에게 좋습니다.",
+      "tags": [
+        "#word",
+        "#excel",
+        "#powerpoint",
+        "#cli"
+      ],
+      "forks": 2276
     }
   ]
 }

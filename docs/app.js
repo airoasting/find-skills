@@ -17,7 +17,10 @@ const FILTERS = {
   },
 };
 
-const state = { query: "", category: "all", filter: "all" }; // 정렬은 스타순 고정
+/* sort — cat: 카테고리 섹션으로 묶고 섹션 안은 스타순 · stars / forks: 섹션 없이 한 목록.
+   한 목록일 때 카테고리 칩은 이동이 아니라 필터로 동작한다 */
+const SORTS = { cat: "카테고리순", stars: "스타순", forks: "포크순" };
+const state = { query: "", category: "all", filter: "all", sort: "cat" };
 let CATS = [], METAS = [], ALL = [], CAT_BY_ID = {};
 
 const $ = id => document.getElementById(id);
@@ -136,9 +139,11 @@ function renderNotice() {
   $("notice-off").addEventListener("click", () => setFilter("all"));
 }
 
-function modHTML(m) {
+function modHTML(m, showCat) {
+  const cat = CAT_BY_ID[m.category];
   const flag = m.editors_pick ? `<span class="flag"><span class="led led-pick"></span>Editor's Pick</span>`
     : m.airoasting_lab ? `<span class="flag"><span class="led led-lab"></span>AI Roasting</span>`
+    : (showCat && cat) ? `<span class="tag tag-cat">${esc(cat.name)}</span>`
     : (m.tags && m.tags[0]) ? `<span class="tag">${esc(m.tags[0])}</span>` : "";
   const cls = m.editors_pick ? " pick" : m.airoasting_lab ? " lab" : "";
   return `
@@ -169,9 +174,12 @@ function renderResults() {
   const q = state.query.trim().toLowerCase();
   let items = inFilter(ALL);
   if (q) items = items.filter(m => m.hay.includes(q));
-  items = items.slice().sort((a, b) => (b.stars || 0) - (a.stars || 0)); // 스타순 고정
+  const flat = state.sort !== "cat";
+  if (flat && state.category !== "all") items = items.filter(m => m.category === state.category);
+  const key = state.sort === "forks" ? "forks" : "stars";
+  items = items.slice().sort((a, b) => (b[key] || 0) - (a[key] || 0));
 
-  const sections = CATS.map((c, i) => ({ c, i, items: items.filter(m => m.category === c.id) }))
+  const sections = flat ? (items.length ? [1] : []) : CATS.map((c, i) => ({ c, i, items: items.filter(m => m.category === c.id) }))
     .filter(s => s.items.length);
 
   const el = $("results");
@@ -186,6 +194,22 @@ function renderResults() {
     $("reset").addEventListener("click", () => { state.filter = "all"; syncUrl(); clearSearch(); renderNotice(); renderChips(); });
     return;
   }
+  if (flat) {
+    const c = CAT_BY_ID[state.category];
+    el.innerHTML = `
+    <section class="sec">
+      <div class="sec-head">
+        <span class="sec-idx">${state.sort === "forks" ? "⑂" : "★"}</span>
+        <h2>${SORTS[state.sort]}</h2>
+        ${c ? `<span class="sec-meta">${esc(c.name)}</span>` : ""}
+        <span class="sec-rule"></span>
+        <span class="sec-count">${items.length} skills</span>
+      </div>
+      <p class="sec-desc">${c ? esc(c.desc || "") : "카테고리 구분 없이 전체를 한 목록으로 봅니다. 위의 카테고리를 누르면 그 분야만 남습니다."}</p>
+      <div class="grid">${items.map(m => modHTML(m, !c)).join("")}</div>
+    </section>`;
+    return;
+  }
   const metaName = id => (METAS.find(m => m.id === id) || {}).name || "";
   el.innerHTML = sections.map(({ c, i, items }) => `
     <section class="sec" id="sec-${esc(c.id)}" data-cat="${esc(c.id)}">
@@ -197,11 +221,20 @@ function renderResults() {
         <span class="sec-count">${items.length} skills</span>
       </div>
       <p class="sec-desc">${esc(c.desc || "")}</p>
-      <div class="grid">${items.map(modHTML).join("")}</div>
+      <div class="grid">${items.map(m => modHTML(m)).join("")}</div>
     </section>`).join("");
 }
 
+function renderSort() {
+  document.querySelectorAll("#sort button").forEach(b => {
+    const on = state.sort === b.dataset.sort;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-pressed", on);
+  });
+}
+
 function render() {
+  renderSort();
   renderChips();
   renderQuick();
   renderSearchAffordance();
@@ -214,6 +247,7 @@ function syncUrl() {
   const p = new URLSearchParams(location.search);
   const v = state.filter !== "all" ? state.filter : state.category !== "all" ? state.category : null;
   if (v) p.set("cat", v); else p.delete("cat");
+  if (state.sort !== "cat") p.set("sort", state.sort); else p.delete("sort");
   const qs = p.toString();
   history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
 }
@@ -237,11 +271,12 @@ function setFilter(f) {
   render();
 }
 
-/* 카테고리 칩·스펙트럼 미터: 해당 섹션으로 스크롤 */
+/* 카테고리 칩·스펙트럼 미터: 카테고리순이면 해당 섹션으로 스크롤, 한 목록이면 그 카테고리만 남긴다 */
 function jumpTo(cat, instant) {
   state.category = cat;
-  renderChips();
-  const target = cat === "all" ? $("results") : $("sec-" + cat);
+  const flat = state.sort !== "cat";
+  if (flat) render(); else renderChips();
+  const target = (flat || cat === "all") ? $("results") : $("sec-" + cat);
   if (!target) return;
   /* 스티키 칩 바에 섹션 제목이 가리지 않도록 바의 실제 높이만큼 위로 보정한다 */
   const barH = $("catalog").offsetHeight;
@@ -283,6 +318,25 @@ function wire() {
     }
     jumpTo(btn.dataset.cat);
     syncUrl();
+  });
+
+  /* 정렬: 카테고리순 / 스타순 / 포크순 */
+  const sortEl = $("sort");
+  Object.entries(SORTS).forEach(([id, label]) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.sort = id;
+    b.textContent = label;
+    b.addEventListener("click", () => {
+      if (state.sort === id) return;
+      state.sort = id;
+      state.category = "all"; // 스크롤 위치로 켜져 있던 칩이 필터로 넘어가지 않게 한다
+      syncUrl();
+      render();
+      /* 이미 목록 중간까지 내려와 있으면 새 목록의 처음으로 올린다 */
+      if ($("results").getBoundingClientRect().top < 0) jumpTo("all");
+    });
+    sortEl.appendChild(b);
   });
 
   /* 모아 보기: 누르면 필터 + 점등, 다시 누르면 해제 */
@@ -338,7 +392,7 @@ function wire() {
 
 /* ---- scrollspy : 화면에 보이는 섹션과 카테고리 칩을 동기화 ---- */
 function syncChipToScroll() {
-  if (state.query.trim()) return; // 검색 중에는 칩 상태를 건드리지 않는다
+  if (state.query.trim() || state.sort !== "cat") return; // 검색 중이거나 한 목록일 때는 칩 상태를 건드리지 않는다
   const panels = [...document.querySelectorAll("#results .sec")];
   if (!panels.length) return;
   const line = $("catalog").offsetHeight + 24; // 스티키 칩 바 바로 아래 기준선
@@ -375,8 +429,10 @@ function animateCount(el, to, ms) {
   ALL = (data.skills || []).map(enrich);
 
   /* 주소의 ?cat= 읽기 */
-  const want = new URLSearchParams(location.search).get("cat");
+  const params = new URLSearchParams(location.search);
+  const want = params.get("cat");
   if (FILTERS[want]) state.filter = want;
+  if (SORTS[params.get("sort")]) state.sort = params.get("sort");
 
   $("stat-cats").textContent = CATS.length;
   $("stat-picks").textContent = ALL.filter(s => s.editors_pick).length;

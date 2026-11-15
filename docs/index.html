@@ -25,9 +25,9 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   /* ============ The Patchbay — MCP 허브와 같은 디자인 시스템 ============
-     두 사이트(skill.airoasting.com, mcp.airoasting.com)는 토큰과 컴포넌트를 공유한다.
+     스킬 라이브러리(index.html)와 MCP 허브(mcp/index.html)는 토큰과 컴포넌트를 공유한다.
      토큰이나 공통 컴포넌트(.deck, .switch, .console, .channels, .mod, .foot)를 고치면
-     MCP 허브의 docs/index.html도 같이 고친다.
+     mcp/index.html도 같이 고친다.
      signal(amber) #e8720c — 유일한 브랜드 액센트 · status LED: pick = signal, lab = live */
   :root{
     --rack:#e9ebf1; --rack-2:#e3e6ed;
@@ -167,7 +167,8 @@
   .meter .mval{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink-dim)}
   /* 미터가 14개라 라벨은 세로쓰기로 둔다. 가로로 두면 3글자 라벨이 옆 미터와 겹친다 */
   .meter .mlbl{font-size:10.5px;color:var(--ink-faint);white-space:nowrap;line-height:1;
-    writing-mode:vertical-rl;height:40px;letter-spacing:.02em}
+    writing-mode:vertical-rl;height:50px;letter-spacing:.02em;text-align:start;
+    text-orientation:upright} /* upright: GEO 같은 영문도 눕지 않고 한 글자씩 세운다 */
   .meter:hover .fill{filter:brightness(1.12)}
   .meter:hover .mval,.meter:hover .mlbl{color:var(--ink)}
   .meter:hover .bar{box-shadow:0 0 0 1px var(--signal) inset}
@@ -201,6 +202,15 @@
   .led-lab{background:var(--live);box-shadow:0 0 7px var(--live)}
   .legend .item b{color:var(--ink);font-weight:600}
 
+  /* ---- sort (범례 줄 오른쪽) ---- */
+  .sort{margin-left:auto;display:inline-flex;gap:3px;padding:3px;background:var(--rack);
+    border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 3px rgba(20,30,60,.07) inset}
+  .sort button{font-size:12.5px;font-weight:500;color:var(--ink-dim);cursor:pointer;white-space:nowrap;
+    background:transparent;border:0;border-radius:7px;padding:5px 11px;transition:.14s}
+  .sort button:hover{color:var(--ink)}
+  .sort button.active{color:var(--ink);font-weight:600;background:var(--panel);
+    box-shadow:0 1px 2px rgba(20,30,60,.12),0 0 0 1px var(--line)}
+
   /* ---- filter notice (모아 보기가 켜졌을 때) ---- */
   .notice{display:flex;align-items:flex-start;gap:14px;margin-top:14px;padding:14px 16px;
     background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:12px}
@@ -231,11 +241,13 @@
     transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
   .mod::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:2px;
     background:var(--line);transition:.16s}
-  .mod.pick::before{background:var(--signal)}
-  .mod.lab::before{background:var(--live)}
   .mod:hover{transform:translateY(-3px);border-color:var(--ink-faint);
     box-shadow:0 18px 34px -24px rgba(30,40,70,.22)}
   .mod:hover::before{background:var(--signal);box-shadow:0 0 10px var(--signal)}
+  /* Editor's Pick, AI Roasting 카드는 왼쪽 띠 대신 테두리 색으로 구분한다 */
+  .mod.pick,.mod.pick:hover{border-color:var(--signal)}
+  .mod.lab,.mod.lab:hover{border-color:var(--live)}
+  .mod.pick::before,.mod.lab::before{display:none}
   @media (prefers-reduced-motion:reduce){.mod{transition:border-color .16s}.mod:hover{transform:none}}
   .mod-head{display:flex;align-items:center;gap:12px;min-width:0}
   .jack{position:relative;width:46px;height:46px;flex:none;border-radius:50%;overflow:hidden;
@@ -261,6 +273,7 @@
     font-size:11.5px;font-weight:600;color:var(--ink)}
   .tag{flex:0 1 auto;min-width:0;font-family:var(--mono);font-size:11px;color:var(--ink-faint);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tag-cat{font-family:var(--sans);font-size:11.5px}
   .stats{flex:none;display:flex;align-items:center;gap:13px;margin-left:auto;
     font-family:var(--mono);font-size:11px;color:var(--ink-dim)}
   .stats span{display:inline-flex;align-items:center;gap:4px}
@@ -369,6 +382,7 @@
     .sec-meta{display:none}
     .notice{flex-direction:column;gap:10px}
     .legend{gap:8px 16px}
+    .sort{margin-left:0}
   }
 </style>
 </head>
@@ -383,8 +397,8 @@
       <span class="brand-txt"><b>AI ROASTING</b><small>Skill · MCP</small></span>
     </a>
     <nav class="switch" aria-label="사이트 전환">
-      <a href="https://skill.airoasting.com/" aria-current="page">스킬 라이브러리</a>
-      <a href="https://mcp.airoasting.com/">MCP 허브</a>
+      <a href="./" aria-current="page">스킬 라이브러리</a>
+      <a href="mcp/">MCP 허브</a>
     </nav>
     <div class="deck-search" role="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -426,6 +440,7 @@
     <span class="llbl">구분</span>
     <span class="item"><span class="led led-pick"></span><b>Editor's Pick</b> · 효용성·대표성·신뢰성 평균 4점 이상</span>
     <span class="item"><span class="led led-lab"></span><b>AI Roasting</b> · 직접 만들어 공개한 스킬</span>
+    <div class="sort" id="sort" role="group" aria-label="정렬"></div>
   </div>
 
   <div id="notice" class="notice" hidden></div>
@@ -460,7 +475,7 @@
       <p class="about-quote">"우리에게 필요한 AI 스킬은 무엇인가요?"</p>
       <p>AI 도입 미팅 때마다 가장 많이 받는 질문입니다.</p>
       <p>그 답을 한 곳에 모아두려고 이 페이지를 만들었습니다. AI 서비스에서 바로 쓸 수 있는 스킬 중 비즈니스 리더에게 진짜 필요한 것만 엄선했습니다.</p>
-      <p>개발 전용 스킬은 최소화하고, 비즈니스·마케팅·리서치·투자 중심으로 직접 골랐습니다. 한국 특화 K-스킬도 별도 카테고리로 분리했습니다. 외부 데이터와 서비스에 연결하는 MCP 서버는 <a href="https://mcp.airoasting.com/" style="color:var(--signal);font-weight:600">MCP 허브</a>에 따로 모았습니다.</p>
+      <p>개발 전용 스킬은 최소화하고, 비즈니스·마케팅·리서치·투자 중심으로 직접 골랐습니다. 한국 특화 K-스킬도 별도 카테고리로 분리했습니다. 외부 데이터와 서비스에 연결하는 MCP 서버는 <a href="mcp/" style="color:var(--signal);font-weight:600">MCP 허브</a>에 따로 모았습니다.</p>
 
       <div class="about-sec">
         <h3><span>01</span>선정 기준</h3>
@@ -645,15 +660,6 @@
       "emoji": "⚖️",
       "en": "Legal · Compliance",
       "desc": "계약서 검토, NDA 초안, 컴플라이언스 체크처럼 법무 리스크를 빠르게 1차 스크리닝할 때 쓰는 스킬들입니다."
-    },
-    {
-      "id": "career",
-      "meta": "execution",
-      "name": "커리어 · 이직",
-      "short": "커리어",
-      "emoji": "🧭",
-      "en": "Career · Job Search",
-      "desc": "이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 커리어 전환을 체계적으로 준비하게 돕는 스킬들입니다."
     }
   ],
   "skills": [
@@ -881,23 +887,6 @@
       ],
       "lang": "TypeScript",
       "added_at": "2026-03-11",
-      "editors_pick": true
-    },
-    {
-      "category": "career",
-      "name": "Career Ops",
-      "repo": "career-ops-hq/career-ops",
-      "author": "santifer",
-      "stars": 75401,
-      "forks": 14056,
-      "desc": "이 스킬은 이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 14가지 커리어 모드를 한 곳에서 돌려줍니다. 지원하는 직군이나 회사에 맞춰 서류를 자동으로 커스터마이징해주기 때문에 이직을 준비하는 직장인이 서류 전형 통과율을 끌어올리기에 좋습니다.",
-      "tags": [
-        "#career",
-        "#hr",
-        "#resume"
-      ],
-      "lang": "JavaScript",
-      "added_at": "2026-04-04",
       "editors_pick": true
     },
     {
@@ -2939,21 +2928,6 @@
       "forks": 260
     },
     {
-      "category": "career",
-      "name": "Offer Toolkit",
-      "repo": "yanliudesign/offer-toolkit-skill",
-      "author": "yanliudesign",
-      "stars": 559,
-      "added_at": "2026-11-06",
-      "desc": "이 스킬 묶음은 공고 수집, 채용공고 해석, 이력서 작성, 행동면접 준비, 오퍼 비교, 연봉 협상까지 구직 6단계를 각각의 스킬로 제공합니다. 필요한 단계만 골라 쓸 수 있고 오퍼 비교와 협상까지 다루기 때문에, 이직을 준비하는 리더에게 잘 맞습니다.",
-      "tags": [
-        "#job-search",
-        "#resume",
-        "#salary-negotiation"
-      ],
-      "forks": 60
-    },
-    {
       "category": "geo",
       "name": "Fire Your SEO Agency",
       "repo": "leopard627/fire-your-seo-agency",
@@ -2982,10 +2956,72 @@
         "#ghostwriting"
       ],
       "forks": 921
+    },
+    {
+      "category": "automation",
+      "name": "Agent Desktop",
+      "repo": "vercel-labs/agent-desktop",
+      "author": "vercel-labs",
+      "stars": 23988,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 스크린샷 없이 접근성 정보를 읽어 AI 에이전트가 macOS·Windows·Linux 데스크톱 앱을 직접 조작하게 해 주는 Vercel Labs의 CLI입니다. 설치형 업무 프로그램까지 자동화할 수 있기 때문에, 반복되는 PC 작업을 맡기려는 리더에게 잘 어울립니다.",
+      "tags": [
+        "#computer-use",
+        "#desktop-automation",
+        "#cli"
+      ],
+      "forks": 1787
+    },
+    {
+      "category": "automation",
+      "name": "Agent Browser",
+      "repo": "vercel-labs/agent-browser",
+      "author": "vercel-labs",
+      "stars": 51382,
+      "added_at": "2026-11-15",
+      "desc": "이 스킬은 AI 에이전트가 명령 한 줄씩으로 웹 브라우저를 열고 읽고 조작하게 해 주는 Vercel Labs의 브라우저 자동화 CLI입니다. 페이지를 간결한 텍스트로 바꿔 넘겨주기 때문에, 웹 조사나 반복 입력을 에이전트에게 맡기려는 리더에게 적합합니다.",
+      "tags": [
+        "#browser-automation",
+        "#cli",
+        "#web"
+      ],
+      "forks": 3590
+    },
+    {
+      "category": "automation",
+      "name": "Google Workspace CLI",
+      "repo": "googleworkspace/cli",
+      "author": "googleworkspace",
+      "stars": 32321,
+      "added_at": "2026-11-15",
+      "desc": "이 CLI는 드라이브, 지메일, 캘린더, 시트, 문서 등 구글 워크스페이스 전체를 명령 하나로 다루며 에이전트 스킬 40여 개를 함께 제공합니다. 메일 정리와 일정 등록, 시트 작업을 말로 시킬 수 있기 때문에, 구글 워크스페이스로 일하는 리더에게 잘 어울립니다.",
+      "tags": [
+        "#google-workspace",
+        "#gmail",
+        "#calendar",
+        "#cli"
+      ],
+      "forks": 1996
+    },
+    {
+      "category": "writing",
+      "name": "OfficeCLI",
+      "repo": "iOfficeAI/OfficeCLI",
+      "author": "iOfficeAI",
+      "stars": 33303,
+      "added_at": "2026-11-15",
+      "desc": "이 도구는 오피스를 설치하지 않고도 AI 에이전트가 Word, Excel, PowerPoint 파일을 읽고 고치고 새로 만들게 해 주는 단일 실행 파일입니다. 문서를 화면처럼 렌더링해 결과를 확인하며 다듬기 때문에, 보고서와 발표 자료를 자주 만드는 리더에게 좋습니다.",
+      "tags": [
+        "#word",
+        "#excel",
+        "#powerpoint",
+        "#cli"
+      ],
+      "forks": 2276
     }
   ]
 }
 </script>
-<script src="app.js?v=6"></script>
+<script src="app.js?v=7"></script>
 </body>
 </html>

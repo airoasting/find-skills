@@ -114,6 +114,8 @@ evals/
 ├── evals.json                   # 테스트 질의 6개와 채점 기준
 └── test_inspect_patterns.py     # 스크립트 판정 회귀 검사 (네트워크 없이)
 docs/                            # AI Roasting 스킬 라이브러리 웹 사이트 (3단계의 데이터 소스, 로컬 사본)
+├── mcp/index.html               # MCP 허브 카탈로그 (/mcp/)
+mcp-hub/                         # MCP 허브 운영 문서
 ```
 
 설치하면 저장소가 통째로 들어옵니다. 약 17MB인데 대부분 `docs/`에 든 사이트 이미지입니다. 스킬이 실제로 쓰는 파일은 그중 `SKILL.md`, `scripts/find_*.py`, `docs/skills.json` 정도입니다.
@@ -152,11 +154,11 @@ python3 evals/test_inspect_patterns.py
 
 ## 데이터 소스: AI Roasting 스킬 라이브러리
 
-find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 148개를 14개 카테고리로 나눠 담았고, 그중 30개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽)을 붙이면 그 목록으로 바로 갑니다.
+find-skills가 3단계에서 가장 먼저 들여다보는 카탈로그입니다. 개발자가 아닌 비즈니스 리더를 염두에 두고 고른 Claude 스킬·플러그인 150개를 13개 카테고리로 나눠 담았고, 그중 29개가 에디터픽입니다. 사람이 직접 둘러보려면 <https://skill.airoasting.com/>에 들어가면 됩니다. 주소 뒤에 `?cat=korea`(한국 특화)나 `?cat=pick`(에디터픽)을 붙이면 그 목록으로 바로 갑니다.
 
-카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 2026-11-15에는 스킬이 아니라 MCP 서버인 카드 2장(Korean Law MCP, Excel MCP Server)을 [MCP 허브](https://mcp.airoasting.com/)로 옮겨 지금은 148장이고, 빈 두 자리는 다음 교체 때 채웁니다. 그 전 교체는 2026-11-06입니다. 미국·일본 상장사 공시를 한국어로 조회하는 EDGAR와 JPX, Anthropic 공식 스킬 저장소와 법무 플러그인(둘 다 에디터픽), 편집 가능한 PPT를 만드는 PPT Master, 법제처 법령을 조회하는 Korean Law MCP 등 14장을 새로 넣고 같은 수를 뺐습니다.
+카드 수는 150개로 고정합니다. 새 카드를 넣을 때는 같은 수만큼 빼는데, 저장소가 보관 처리됐거나 오래 갱신되지 않은 카드, 다른 카드와 하는 일이 겹치는 카드부터 뺍니다. 2026-11-15에는 스킬이 아니라 MCP 서버인 카드 2장(Korean Law MCP, Excel MCP Server)을 [MCP 허브](https://skill.airoasting.com/mcp/)로 옮기고, 커리어 카테고리(Career Ops, Offer Toolkit)를 없앴습니다. 빈 네 자리는 데스크톱과 브라우저를 조작하는 Vercel Labs의 Agent Desktop과 Agent Browser, 구글 워크스페이스를 다루는 Google Workspace CLI, 오피스 문서를 다루는 OfficeCLI로 채워 150장을 유지합니다. 그 전 교체는 2026-11-06입니다. 미국·일본 상장사 공시를 한국어로 조회하는 EDGAR와 JPX, Anthropic 공식 스킬 저장소와 법무 플러그인(둘 다 에디터픽), 편집 가능한 PPT를 만드는 PPT Master, 법제처 법령을 조회하는 Korean Law MCP 등 14장을 새로 넣고 같은 수를 뺐습니다.
 
-사이트는 MCP 허브와 같은 디자인(Patchbay)을 쓰고, 상단 메뉴로 두 사이트를 오갑니다. 색·글꼴 토큰과 공통 컴포넌트를 고칠 때는 MCP 허브 저장소의 `docs/index.html`도 함께 고칩니다. 화면 동작은 `docs/app.js`에 있고, 카드 수와 카테고리별 합계는 `skills.json`에서 계산하므로 손으로 고칠 숫자가 없습니다.
+MCP 허브도 이 저장소에서 함께 관리합니다. 사이트는 `docs/mcp/index.html`(주소 `/mcp/`), 운영 문서는 `mcp-hub/`에 있고, 상단 메뉴로 스킬 라이브러리와 MCP 허브를 오갑니다. 두 페이지는 같은 디자인(Patchbay)을 쓰므로 색·글꼴 토큰과 공통 컴포넌트를 고칠 때는 `docs/index.html`과 `docs/mcp/index.html`을 함께 고칩니다. 화면 동작은 `docs/app.js`에 있고, 카드 수와 카테고리별 합계는 `skills.json`에서 계산하므로 손으로 고칠 숫자가 없습니다.
 
 카드 데이터의 원본은 `docs/skills.json` 하나입니다. `docs/index.html` 안에 든 인라인 사본은 커밋할 때 pre-commit 훅이 `scripts/sync-inline.py`로 맞춰 줍니다. 사이트를 로컬에서 띄워 보려면 `python3 -m http.server 8000 --directory docs`를 실행하면 됩니다.
 
