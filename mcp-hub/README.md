@@ -55,9 +55,9 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 - **QuickBooks** · [quickbooks-online-mcp](https://github.com/intuit/quickbooks-online-mcp-server) — 인튜이트 퀵북스 회계장부·인보이스·거래 조회 `API`
 - **금융감독원·한국거래소** · [korea-stock-mcp](https://github.com/jjlabsio/korea-stock-mcp) — 금융감독원 전자공시와 한국거래소 시세로 한국 주식 분석 `API`
 - **한국은행·국토부·금감원 외** · [korea-finance-mcp](https://github.com/emceeKim/korea-finance-mcp) — 거시지표·실거래가·공시·시세 통합 조회 `API`
-- **금융감독원** · [dart](https://github.com/airoasting/dart) — 상장사 실적 리포트 생성과 공시 숫자 조회 `API`
-- **포트원** · [portone-mcp-server](https://github.com/portone-io/mcp-server) — 결제·거래 내역 조회 공식 MCP 서버 `API`
 - **한국투자증권** · [KIS_MCP_Server](https://github.com/migusdn/KIS_MCP_Server) — 국내외 주식 시세 조회와 주문 기능 `API`
+- **포트원** · [portone-mcp-server](https://github.com/portone-io/mcp-server) — 결제·거래 내역 조회 공식 MCP 서버 `API`
+- **금융감독원** · [dart](https://github.com/airoasting/dart) — 상장사 실적 리포트 생성과 공시 숫자 조회 `API`
 - **SEC EDGAR** · [edgar](https://github.com/airoasting/edgar) — 미국 상장사 실적·가이던스·내부자 거래·기관 보유를 한국어로 조회 `바로 사용`
 - **일본거래소** · [jpx](https://github.com/airoasting/jpx) — 일본 상장사 결산단신 실적과 연간 예상, 진척률을 한국어로 정리 `바로 사용`
 
@@ -109,8 +109,8 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 - **기상청** · [korea_weather](https://github.com/ohhan777/korea_weather) — 기상청 단기예보 API로 날씨 정보 제공 `API`
 - **다나와·컴퓨존** · [kr-pc-deals-mcp](https://github.com/edward-kim-dev/kr-pc-deals-mcp) — PC 부품 최저가 비교와 호환성 체크 `바로 사용`
 - **한국관광공사** · [mcp-korea-tourism-api](https://github.com/harimkang/mcp-korea-tourism-api) — 관광지·행사·숙박·맛집 정보 검색 `API`
-- **도서관정보나루** · [data4library-mcp](https://github.com/isnow890/data4library-mcp) — 공공도서관 검색·대출 현황·독서 통계 `API`
 - **식약처** · [k-mfds-fooddb-mcp](https://github.com/slicequeue/k-mfds-fooddb-mcp-server) — 식품영양성분 DB 검색·조회 `API`
+- **도서관정보나루** · [data4library-mcp](https://github.com/isnow890/data4library-mcp) — 공공도서관 검색·대출 현황·독서 통계 `API`
 - **관세청** · [korea-unipass-mcp](https://github.com/NotNull92/korea-unipass-mcp) — 관세청 해외직구 실시간 통관 정보 조회 `API`
 
 ### 채용·HR (3)
@@ -123,8 +123,8 @@ MCP(Model Context Protocol)는 AI를 외부 데이터·서비스에 연결하는
 
 - **국세청** · [nts-business-registration](https://github.com/NomaDamas/k-skill/tree/main/nts-business-registration) — 사업자등록번호 상태 조회와 사업자등록정보 진위 확인 `바로 사용`
 - **Google Analytics** · [google-analytics-mcp](https://github.com/googleanalytics/google-analytics-mcp) — 구글 애널리틱스 방문·전환 데이터를 조회하는 구글 공식 서버 `로그인`
-- **Google Ads** · [google-ads-mcp](https://github.com/googleads/google-ads-mcp) — 구글 광고 캠페인·성과를 조회하는 구글 공식 서버 `로그인`
 - **Meta Ads** · [meta-ads-mcp](https://github.com/pipeboard-co/meta-ads-mcp) — 페이스북·인스타그램 광고 캠페인·성과 조회 `API`
+- **Google Ads** · [google-ads-mcp](https://github.com/googleads/google-ads-mcp) — 구글 광고 캠페인·성과를 조회하는 구글 공식 서버 `로그인`
 - **Shopify** · [shopify-mcp](https://github.com/GeLi2001/shopify-mcp) — 쇼피파이 주문·상품·고객 데이터 조회 `API`
 - **나라장터** · [narajangteo-searcher](https://github.com/yonghwan86/narajangteo-searcher) — 조달청 나라장터 IT 입찰공고 검색과 개찰결과 분석 `API`
 
