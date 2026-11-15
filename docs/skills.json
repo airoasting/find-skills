@@ -6,21 +6,21 @@
       "name": "AI 에이전트팀 구축",
       "emoji": "🏗",
       "en": "Build AI Agent Team",
-      "desc": "AI 팀·시스템·파이프라인을 직접 설계하고 운영하는 기반 레이어예요."
+      "desc": "AI 팀·시스템·파이프라인을 직접 설계하고 운영하는 기반 레이어입니다."
     },
     {
       "id": "growth",
       "name": "비즈니스 성장",
       "emoji": "📈",
       "en": "Business Growth",
-      "desc": "매출·고객·자산을 키우는 top-line 임팩트에 직결되는 스킬이에요."
+      "desc": "매출·고객·자산을 키우는 top-line 임팩트에 직결되는 스킬입니다."
     },
     {
       "id": "execution",
       "name": "실행력 제고",
       "emoji": "🎯",
       "en": "Execution Excellence",
-      "desc": "업무 속도와 산출물 품질을 끌어올리는 실무 레버리지 스킬이에요."
+      "desc": "업무 속도와 산출물 품질을 끌어올리는 실무 레버리지 스킬입니다."
     }
   ],
   "categories": [
@@ -28,113 +28,127 @@
       "id": "harness",
       "meta": "build",
       "name": "하네스 · 에이전트 설계",
+      "short": "하네스",
       "emoji": "🛠",
       "en": "Harness & Agent Design",
-      "desc": "에이전트 팀과 런타임 구조를 직접 조립해 나만의 AI 팀을 설계하는 플랫폼 레이어 스킬이에요."
+      "desc": "에이전트 팀과 런타임 구조를 직접 조립해 나만의 AI 팀을 설계하는 플랫폼 레이어 스킬입니다."
     },
     {
       "id": "workflow",
       "meta": "build",
       "name": "AI와 일 잘하는 법",
+      "short": "협업",
       "emoji": "🚀",
       "en": "Working with AI",
-      "desc": "브레인스토밍·계획·기억·체크리스트까지, 내가 AI와 더 효율적으로 일하기 위한 협업 방식과 습관을 잡아주는 스킬이에요."
+      "desc": "브레인스토밍·계획·기억·체크리스트까지, 내가 AI와 더 효율적으로 일하기 위한 협업 방식과 습관을 잡아주는 스킬입니다."
     },
     {
       "id": "token",
       "meta": "build",
       "name": "토큰 절약",
+      "short": "토큰",
       "emoji": "⚡",
       "en": "Token Efficiency",
-      "desc": "컨텍스트와 토큰 사용량을 줄여서 비용은 아끼고 응답 속도는 끌어올리는 효율화 스킬들이에요."
+      "desc": "컨텍스트와 토큰 사용량을 줄여서 비용은 아끼고 응답 속도는 끌어올리는 효율화 스킬들입니다."
     },
     {
       "id": "automation",
       "meta": "build",
       "name": "외부 연동 · 자동화",
+      "short": "연동",
       "emoji": "🤖",
       "en": "External Integration & MCP",
-      "desc": "브라우저·메신저·이슈 트래커 같은 외부 시스템과 Claude를 이어, 바깥 세계와 닿게 해주는 스킬이에요."
+      "desc": "브라우저·메신저·이슈 트래커 같은 외부 시스템과 Claude를 이어, 바깥 세계와 닿게 해주는 스킬입니다."
     },
     {
       "id": "korea",
       "meta": "build",
       "name": "한국 특화 스킬",
+      "short": "한국",
       "emoji": "🇰🇷",
       "en": "Korea Skills · MCP",
-      "desc": "한글 문서부터 카카오, 토스, 네이버 같은 국내 서비스까지, 한국 환경에 딱 맞춘 스킬 모음이에요."
+      "desc": "한글 문서부터 카카오, 토스, 네이버 같은 국내 서비스까지, 한국 환경에 딱 맞춘 스킬 모음입니다."
     },
     {
       "id": "business",
       "meta": "growth",
       "name": "그로스 · 마케팅",
+      "short": "그로스",
       "emoji": "💼",
       "en": "Growth · Marketing",
-      "desc": "CRO, 카피, SEO, 멀티채널 캠페인까지 매출·고객 그로스 실험을 빠르게 돌릴 수 있게 돕는 스킬들이에요."
+      "desc": "CRO, 카피, SEO, 멀티채널 캠페인까지 매출·고객 그로스 실험을 빠르게 돌릴 수 있게 돕는 스킬들입니다."
     },
     {
       "id": "finance",
       "meta": "growth",
       "name": "투자 · 금융",
+      "short": "금융",
       "emoji": "💹",
       "en": "Investment · Finance",
-      "desc": "트레이딩부터 포트폴리오 관리, 리서치까지 투자와 금융 업무에 특화된 스킬들이에요."
+      "desc": "트레이딩부터 포트폴리오 관리, 리서치까지 투자와 금융 업무에 특화된 스킬들입니다."
     },
     {
       "id": "geo",
       "meta": "growth",
       "name": "GEO · AEO",
+      "short": "GEO",
       "emoji": "🔎",
       "en": "GEO · AEO (AI Search)",
-      "desc": "ChatGPT·Perplexity·Claude 같은 생성형 AI 검색에서 내 브랜드·콘텐츠가 인용되도록 최적화하는 GEO(Generative Engine Optimization)·AEO(Answer Engine Optimization) 스킬이에요."
+      "desc": "ChatGPT·Perplexity·Claude 같은 생성형 AI 검색에서 내 브랜드·콘텐츠가 인용되도록 최적화하는 GEO(Generative Engine Optimization)·AEO(Answer Engine Optimization) 스킬입니다."
     },
     {
       "id": "research",
       "meta": "execution",
       "name": "리서치 · 인사이트",
+      "short": "리서치",
       "emoji": "📊",
       "en": "Research · Insights",
-      "desc": "논문 분석, 지식 그래프, 딥 리서치처럼 깊이 있는 조사와 인사이트 도출이 필요할 때 쓰는 스킬들이에요."
+      "desc": "논문 분석, 지식 그래프, 딥 리서치처럼 깊이 있는 조사와 인사이트 도출이 필요할 때 쓰는 스킬들입니다."
     },
     {
       "id": "design",
       "meta": "execution",
       "name": "디자인",
+      "short": "디자인",
       "emoji": "🎨",
       "en": "Design",
-      "desc": "UI·슬라이드·디자인 시스템 같은 시각 결과물을 만들 때 쓰기 좋은 스킬들이에요."
+      "desc": "UI·슬라이드·디자인 시스템 같은 시각 결과물을 만들 때 쓰기 좋은 스킬들입니다."
     },
     {
       "id": "video",
       "meta": "execution",
       "name": "동영상 제작",
+      "short": "영상",
       "emoji": "🎬",
       "en": "Video Production",
-      "desc": "편집·자막·모션 그래픽·영상 생성·더빙까지, 영상 결과물을 만들고 다듬을 때 쓰기 좋은 스킬들이에요."
+      "desc": "편집·자막·모션 그래픽·영상 생성·더빙까지, 영상 결과물을 만들고 다듬을 때 쓰기 좋은 스킬들입니다."
     },
     {
       "id": "writing",
       "meta": "execution",
       "name": "글쓰기",
+      "short": "글쓰기",
       "emoji": "✍️",
       "en": "Writing",
-      "desc": "블로그·소설·에디팅·문서 작업까지, 텍스트 산출물을 만들고 다듬을 때 쓰기 좋은 스킬들이에요."
+      "desc": "블로그·소설·에디팅·문서 작업까지, 텍스트 산출물을 만들고 다듬을 때 쓰기 좋은 스킬들입니다."
     },
     {
       "id": "legal",
       "meta": "execution",
       "name": "법무 · 컴플라이언스",
+      "short": "법무",
       "emoji": "⚖️",
       "en": "Legal · Compliance",
-      "desc": "계약서 검토, NDA 초안, 컴플라이언스 체크처럼 법무 리스크를 빠르게 1차 스크리닝할 때 쓰는 스킬들이에요."
+      "desc": "계약서 검토, NDA 초안, 컴플라이언스 체크처럼 법무 리스크를 빠르게 1차 스크리닝할 때 쓰는 스킬들입니다."
     },
     {
       "id": "career",
       "meta": "execution",
       "name": "커리어 · 이직",
+      "short": "커리어",
       "emoji": "🧭",
       "en": "Career · Job Search",
-      "desc": "이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 커리어 전환을 체계적으로 준비하게 돕는 스킬들이에요."
+      "desc": "이력서, 자기소개서, 면접 준비, 지원 현황 추적까지 커리어 전환을 체계적으로 준비하게 돕는 스킬들입니다."
     }
   ],
   "skills": [
@@ -2433,36 +2447,6 @@
         "#salary-negotiation"
       ],
       "forks": 60
-    },
-    {
-      "category": "korea",
-      "name": "Korean Law MCP",
-      "repo": "chrisryugj/korean-law-mcp",
-      "author": "chrisryugj",
-      "stars": 2847,
-      "added_at": "2026-11-06",
-      "desc": "이 MCP는 법제처 API 42개를 도구 10개로 묶어 법령·판례·해석례·자치법규 조회와 AI 답변의 법령 인용 검증을 한국어로 처리합니다. Claude.ai 커넥터에 주소 한 줄만 넣으면 설치 없이 쓸 수 있어, 법령 근거를 직접 확인해야 하는 리더에게 적합합니다.",
-      "tags": [
-        "#korean-law",
-        "#mcp",
-        "#citation-verification"
-      ],
-      "forks": 584
-    },
-    {
-      "category": "automation",
-      "name": "Excel MCP Server",
-      "repo": "haris-musa/excel-mcp-server",
-      "author": "haris-musa",
-      "stars": 4280,
-      "added_at": "2026-11-06",
-      "desc": "이 MCP는 Excel이 설치되지 않은 환경에서도 Claude가 엑셀 파일을 만들고 수식, 차트, 피벗 테이블까지 편집하게 해 줍니다. 보고용 표와 피벗을 말로 요청해 바로 xlsx 파일로 받을 수 있어, 숫자 정리가 많은 리더에게 잘 어울립니다.",
-      "tags": [
-        "#excel",
-        "#mcp",
-        "#pivot-table"
-      ],
-      "forks": 479
     },
     {
       "category": "geo",
