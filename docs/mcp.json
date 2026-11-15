@@ -206,14 +206,14 @@
       "auth_label": "API 발급 필요"
     },
     {
-      "name": "toss-securities",
+      "name": "toss-investment",
       "category": "금융·투자",
       "source": "토스증권",
       "repo": "NomaDamas/k-skill",
-      "url": "https://github.com/NomaDamas/k-skill/tree/main/toss-securities",
+      "url": "https://github.com/NomaDamas/k-skill/tree/main/toss-investment",
       "stars": 8422,
       "forks": 1008,
-      "desc": "계좌·주식 정보 조회 공식 Open API",
+      "desc": "토스증권 공식 Open API로 계좌·보유주식·시세·주문 조회",
       "auth": "login",
       "auth_label": "로그인만 필요"
     },
@@ -362,40 +362,40 @@
       "auth_label": "API 발급 필요"
     },
     {
-      "name": "srt-booking",
-      "category": "지도·교통",
-      "source": "SRT",
+      "name": "court-auction-notice-search",
+      "category": "부동산",
+      "source": "법원경매",
       "repo": "NomaDamas/k-skill",
-      "url": "https://github.com/NomaDamas/k-skill/tree/main/srt-booking",
+      "url": "https://github.com/NomaDamas/k-skill/tree/main/court-auction-notice-search",
       "stars": 8422,
       "forks": 1008,
-      "desc": "SRT 열차 조회·예약·예약 확인·취소",
-      "auth": "login",
-      "auth_label": "로그인만 필요"
+      "desc": "법원 경매 부동산 매각공고 검색과 감정가·최저매각가 조회",
+      "auth": "none",
+      "auth_label": "바로 사용"
     },
     {
-      "name": "ktx-booking",
+      "name": "railway-timetable",
       "category": "지도·교통",
       "source": "코레일",
       "repo": "NomaDamas/k-skill",
-      "url": "https://github.com/NomaDamas/k-skill/tree/main/ktx-booking",
+      "url": "https://github.com/NomaDamas/k-skill/tree/main/railway-timetable",
       "stars": 8422,
       "forks": 1008,
-      "desc": "KTX 열차 조회·좌석 확인·예약·취소",
-      "auth": "login",
-      "auth_label": "로그인만 필요"
+      "desc": "KTX 코레일 공식 시간표 조회",
+      "auth": "none",
+      "auth_label": "바로 사용"
     },
     {
-      "name": "hipass-receipt",
-      "category": "지도·교통",
-      "source": "하이패스",
+      "name": "nts-business-registration",
+      "category": "영업·CRM",
+      "source": "국세청",
       "repo": "NomaDamas/k-skill",
-      "url": "https://github.com/NomaDamas/k-skill/tree/main/hipass-receipt",
+      "url": "https://github.com/NomaDamas/k-skill/tree/main/nts-business-registration",
       "stars": 8422,
       "forks": 1008,
-      "desc": "하이패스 사용내역 조회와 영수증 발급",
-      "auth": "login",
-      "auth_label": "로그인만 필요"
+      "desc": "사업자등록번호 상태 조회와 사업자등록정보 진위 확인",
+      "auth": "none",
+      "auth_label": "바로 사용"
     },
     {
       "name": "kakao-api-mcp-server",
@@ -650,28 +650,28 @@
       "auth_label": "로그인만 필요"
     },
     {
-      "name": "catchtable-sniper",
+      "name": "myrealtrip-search",
       "category": "생활·여행",
-      "source": "캐치테이블",
+      "source": "마이리얼트립",
       "repo": "NomaDamas/k-skill",
-      "url": "https://github.com/NomaDamas/k-skill/tree/main/catchtable-sniper",
+      "url": "https://github.com/NomaDamas/k-skill/tree/main/myrealtrip-search",
       "stars": 8422,
       "forks": 1008,
-      "desc": "빈자리 감시와 자동 예약 시도",
-      "auth": "login",
-      "auth_label": "로그인만 필요"
+      "desc": "마이리얼트립 공식 MCP로 항공권·숙소·투어 검색",
+      "auth": "none",
+      "auth_label": "바로 사용"
     },
     {
-      "name": "yebigun-training",
-      "category": "생활·여행",
-      "source": "예비군",
+      "name": "hankookilbo-news",
+      "category": "검색·리서치",
+      "source": "한국일보",
       "repo": "NomaDamas/k-skill",
-      "url": "https://github.com/NomaDamas/k-skill/tree/main/yebigun-training",
+      "url": "https://github.com/NomaDamas/k-skill/tree/main/hankookilbo-news",
       "stars": 8422,
       "forks": 1008,
-      "desc": "예비군 훈련 일정·장소 조회",
-      "auth": "login",
-      "auth_label": "로그인만 필요"
+      "desc": "한국일보 공식 MCP로 헤드라인·많이 본 기사·주제 검색",
+      "auth": "none",
+      "auth_label": "바로 사용"
     },
     {
       "name": "korea-unipass-mcp",
@@ -842,14 +842,14 @@
       "auth_label": "API 발급 필요"
     },
     {
-      "name": "notebooklm-mcp-cli",
+      "name": "gemini-notebook-mcp-cli",
       "category": "문서·협업",
       "source": "NotebookLM",
-      "repo": "jacob-bd/notebooklm-mcp-cli",
-      "url": "https://github.com/jacob-bd/notebooklm-mcp-cli",
-      "stars": 5478,
-      "forks": 844,
-      "desc": "NotebookLM 노트북을 조회·질의하는 CLI+MCP",
+      "repo": "jacob-bd/gemini-notebook-mcp-cli",
+      "url": "https://github.com/jacob-bd/gemini-notebook-mcp-cli",
+      "stars": 6517,
+      "forks": 982,
+      "desc": "NotebookLM(Gemini Notebook) 노트북을 조회·질의하는 CLI+MCP",
       "auth": "login",
       "auth_label": "로그인만 필요"
     },

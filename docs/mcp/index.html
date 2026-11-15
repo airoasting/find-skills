@@ -565,7 +565,7 @@ const DATA = [
   ["korea-finance-mcp","K","금융·투자","한국은행·국토부·금감원 외",54,8,"거시지표·실거래가·공시·시세 통합 조회","emceeKim/korea-finance-mcp","api"],
   ["KIS_MCP_Server","K","금융·투자","한국투자증권",25,17,"국내외 주식 시세 조회와 주문 기능","migusdn/KIS_MCP_Server","api"],
   ["quickbooks-online-mcp","Q","금융·투자","QuickBooks",318,178,"인튜이트 퀵북스 회계장부·인보이스·거래 조회","intuit/quickbooks-online-mcp-server","api"],
-  ["toss-securities","T","금융·투자","토스증권",8422,1008,"계좌·주식 정보 조회 공식 Open API","NomaDamas/k-skill/tree/main/toss-securities","login"],
+  ["toss-investment","T","금융·투자","토스증권",8422,1008,"토스증권 공식 Open API로 계좌·보유주식·시세·주문 조회","NomaDamas/k-skill/tree/main/toss-investment","login"],
   ["popbill","P","금융·투자","팝빌",8422,1008,"전자세금계산서·현금영수증 등 업무 API","NomaDamas/k-skill/tree/main/popbill","api"],
   ["portone-mcp-server","P","금융·투자","포트원",26,2,"결제·거래 내역 조회 공식 MCP 서버","portone-io/mcp-server","api"],
   // 경제·통계 — 통계·경제지표·범용 공공데이터 포털
@@ -581,9 +581,9 @@ const DATA = [
   ["archhub-mcp","A","부동산","국토교통부",52,7,"건축물대장·건축인허가·노후건축물 분석","chrisryugj/archhub-mcp","none"],
   ["zillow-mcp-server","Z","부동산","Zillow",46,9,"미국 부동산 시세·매물 데이터 조회","sap156/zillow-mcp-server","api"],
   // 지도·교통
-  ["srt-booking","S","지도·교통","SRT",8422,1008,"SRT 열차 조회·예약·예약 확인·취소","NomaDamas/k-skill/tree/main/srt-booking","login"],
-  ["ktx-booking","K","지도·교통","코레일",8422,1008,"KTX 열차 조회·좌석 확인·예약·취소","NomaDamas/k-skill/tree/main/ktx-booking","login"],
-  ["hipass-receipt","H","지도·교통","하이패스",8422,1008,"하이패스 사용내역 조회와 영수증 발급","NomaDamas/k-skill/tree/main/hipass-receipt","login"],
+  ["court-auction-notice-search","C","부동산","법원경매",8422,1008,"법원 경매 부동산 매각공고 검색과 감정가·최저매각가 조회","NomaDamas/k-skill/tree/main/court-auction-notice-search","none"],
+  ["railway-timetable","R","지도·교통","코레일",8422,1008,"KTX 코레일 공식 시간표 조회","NomaDamas/k-skill/tree/main/railway-timetable","none"],
+  ["nts-business-registration","N","영업·CRM","국세청",8422,1008,"사업자등록번호 상태 조회와 사업자등록정보 진위 확인","NomaDamas/k-skill/tree/main/nts-business-registration","none"],
   ["kakao-api-mcp-server","K","지도·교통","카카오",16,5,"카카오맵 장소 검색·좌표 변환·길찾기","jeong-sik/kakao-api-mcp-server","api"],
   ["mcp-naver-map","M","지도·교통","네이버 클라우드",7,2,"IP 기반 위치 조회와 드라이빙 경로 탐색","yeonupark/mcp-naver-map","api"],
   // 검색·리서치
@@ -607,8 +607,8 @@ const DATA = [
   ["data4library-mcp","D","생활·여행","도서관정보나루",8,2,"공공도서관 검색·대출 현황·독서 통계","isnow890/data4library-mcp","api"],
   ["k-mfds-fooddb-mcp","K","생활·여행","식약처",5,3,"식품영양성분 DB 검색·조회","slicequeue/k-mfds-fooddb-mcp-server","api"],
   ["foresttrip-vacancy","F","생활·여행","숲나들e",8422,1008,"자연휴양림 예약 가능 객실 조회","NomaDamas/k-skill/tree/main/foresttrip-vacancy","login"],
-  ["catchtable-sniper","C","생활·여행","캐치테이블",8422,1008,"빈자리 감시와 자동 예약 시도","NomaDamas/k-skill/tree/main/catchtable-sniper","login"],
-  ["yebigun-training","Y","생활·여행","예비군",8422,1008,"예비군 훈련 일정·장소 조회","NomaDamas/k-skill/tree/main/yebigun-training","login"],
+  ["myrealtrip-search","M","생활·여행","마이리얼트립",8422,1008,"마이리얼트립 공식 MCP로 항공권·숙소·투어 검색","NomaDamas/k-skill/tree/main/myrealtrip-search","none"],
+  ["hankookilbo-news","H","검색·리서치","한국일보",8422,1008,"한국일보 공식 MCP로 헤드라인·많이 본 기사·주제 검색","NomaDamas/k-skill/tree/main/hankookilbo-news","none"],
   ["korea-unipass-mcp","K","생활·여행","관세청",0,0,"관세청 해외직구 실시간 통관 정보 조회","NotNull92/korea-unipass-mcp","api"],
   ["coupang-mcp","C","생활·여행","쿠팡",16,2,"쿠팡 상품 검색과 최저가·로켓배송 비교","uju777/coupang-mcp","none"],
   // 채용·HR
@@ -626,7 +626,7 @@ const DATA = [
   ["telegram-mcp","T","문서·협업","Telegram",2047,514,"텔레그램 대화 읽기와 메시지·그룹·연락처 관리","chigwell/telegram-mcp","api"],
   ["whatsapp-mcp","W","문서·협업","WhatsApp",6890,1502,"왓츠앱 대화 검색과 메시지 전송","lharries/whatsapp-mcp","login"],
   ["line-bot-mcp-server","L","문서·협업","LINE",806,159,"라인 공식 계정으로 메시지를 보내는 라인 공식 서버","line/line-bot-mcp-server","api"],
-  ["notebooklm-mcp-cli","N","문서·협업","NotebookLM",5478,844,"NotebookLM 노트북을 조회·질의하는 CLI+MCP","jacob-bd/notebooklm-mcp-cli","login"],
+  ["gemini-notebook-mcp-cli","G","문서·협업","NotebookLM",6517,982,"NotebookLM(Gemini Notebook) 노트북을 조회·질의하는 CLI+MCP","jacob-bd/gemini-notebook-mcp-cli","login"],
   ["kordoc","K","문서·협업","HWP·PDF",2994,526,"한글·PDF 문서 파싱과 표 추출 등 7개 도구","chrisryugj/kordoc","none"],
   ["excel-mcp-server","E","문서·협업","Excel",4305,486,"엑셀 설치 없이 엑셀 파일 생성과 수식·차트·피벗 테이블 편집","haris-musa/excel-mcp-server","none"],
   ["ko-stdict-mcp","K","문서·협업","국립국어원",25,2,"표준국어대사전 표제어·뜻풀이·용례 조회","dahlia/ko-stdict-mcp","none"],
